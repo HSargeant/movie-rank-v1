@@ -1,0 +1,259 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html{
+    font-size: 1em;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+body{
+    height: 100vh;
+    background: #f6f6f3;
+
+}
+a{
+    color:#333;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:hover{
+    color:rgb(78, 75, 75);
+    border-bottom: #333 solid 1px;
+
+}
+
+.container {
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+header.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 250px;
+}
+
+header nav{
+    width: 100%;
+    display: flex;
+}
+.mainLogo {
+    width: 400px;
+}
+header nav ul{
+    display: flex;
+    align-items: left;
+    width: 300px;
+    justify-content: space-between;
+    /* margin:2% 0; */
+    padding: 1% 0;
+    list-style: none;
+}
+
+.search {
+    height: 50px;
+}
+input[type="search"] {
+    display: block;
+    padding: 10px;
+    font-size: 20px;
+    border: 0;
+    border-radius: 5px;
+    width: 60%;
+    margin: 0 auto;
+    border-bottom: 1px #333 solid;
+    background-color: transparent;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
+.cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 1rem;
+    gap: 1rem;
+}
+.card {
+    height: 420px;
+    /* background-color: white; */
+}
+
+.card img {
+    width: 100%;
+}
+
+.card li {
+    list-style: none;
+    padding-bottom: 5px;
+}
+.card h2 {
+    font-size: 18px;
+
+}
+
+.docImg {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+}
+
+.fa-thumbs-up,.fa-trash{
+    cursor: pointer;
+}
+.fa-thumbs-up{
+    color: rgba(51, 51, 51, 0.546);
+}
+.fa-thumbs-up:hover{
+    color: #333;
+}
+footer{
+    padding: 10px 0 20px 0;
+    width:100%;
+    text-align: center;
+}
+footer a{
+    margin-right: 1em;
+}
+.hide{
+    display: none;
+}
+.aboutPopup, .addMovie{
+    
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.896);
+    color: white;
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom: 0;
+    overflow:hidden;
+}
+.popUpSection{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height:60%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.aboutMenu:hover, .addLink:hover{
+    border-bottom: #333 solid 1px;
+    cursor:pointer;
+    color: rgba(0, 0, 0, 0.667);
+    
+}
+.card .longName{
+    font-size: 1em;
+}
+
+.closeAbout, .closeAdd{
+    margin-top: 2%;
+    background-color:rgb(175, 169, 169);
+    border-radius: 10px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+}
+
+.addMovie input{
+        padding: 10px;
+        font-size: 1em;
+        border: 0;
+        cursor: pointer;
+        background-color: #f6f6f3;
+}
+.addMovie input+input{
+   width:185px;
+}
+.addMovie input[type="submit"]{
+    padding: 10px;
+    font-size: 1em;
+    border: 0;
+    background-color:rgb(203, 201, 201);
+    width: 75px;
+}
+.liked{
+    color:#333;
+}
+@media (max-width: 1000px) {
+    .card h2{
+        font-size: 1em;
+    }
+}
+@media (max-width: 950px) {
+    .card{
+      height: 325px;
+    }
+  }
+ @media (max-width: 776px) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .card{
+        height:400px;
+        
+
+    }
+} 
+@media (max-width: 775px) {
+
+ 
+    .card{
+        height:450px;
+
+    }
+
+}
+@media (max-width: 550px) {
+
+ 
+    .card{
+        height:325px;
+
+    }
+
+}
+
+@media (max-width: 480px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+        font-size: 0.8em;
+    }
+    .mainLogo {
+        width: 300px;
+    }
+ 
+    .card{
+        height:400px;
+
+    }
+
+}
+@media (max-width: 420px) {
+    .card{
+        height:350px;
+
+    }
+
+}
+
+@media (max-width: 380px) {
+    .card{
+        height:300px;
+
+    }
+
+}
+.hide{
+    display: none;
+}

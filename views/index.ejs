@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- <link rel="icon" type="image/x-icon" href="thewire.jpg"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Movie Rank</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </head>
+    <body>
+            <div class="container">
+                <header class="center">
+                    <nav>
+                        <ul>
+                            <li><a class="addLink">Add Your Favorite Movies</a></li>
+                            <li><a class="aboutMenu">About</a></li>
+                        </ul>
+                    </nav>
+                    <h1 class="hide">Movie Rank</h1>
+                    <div class="logos">
+                        <img class="mainLogo" src="logo.png" alt="the wire logo" >
+                    </div>
+
+                    <section class="addMovie hide">
+                        <section class="popUpSection">
+                            <h3>Add A Movie:</h3>
+                            <form action="/addMovie" method="POST">
+                                <input type="text" placeholder="Movie Name" name="name">
+                                <input type="text" placeholder="Release Year (optional)" name="year">
+                                <input type="submit">
+                            </form>
+                            <button class="closeAdd">close</button>
+                        </section>
+                    </section>
+                </header>
+
+                <section class="search"> 
+                    <input id="search" type="search" placeholder="Search movie">
+                </section>
+                
+                <section class="cards">
+                    <% for(let i=0; i < movie.length; i++) { %>
+                    <section class="card">
+                        <img src="<%=movie[i].image %>" alt="<%=movie[i].name%> movie poster">
+                        <ul>
+                            <% if(movie[i].name.length > 23){ %>
+                                <li> <h2 class="longName"><%=movie[i].name%></h2></li>
+
+
+                            <%} else{ %>
+                                <li> <h2><%=movie[i].name%></h2></li>
+                            <%}%>
+                            <li><%=movie[i].year %></li>
+                            <li>
+                                <span><%= movie[i].likes %></span>
+                                <span class='fa fa-thumbs-up no-like'></span>
+                                <span class='fa fa-trash'></span>
+                            </li>
+                        </ul>
+                    </section>
+                    <%}%>
+                    
+                </section>
+
+            </div>
+            <section class="aboutPopup hide">
+                <section class="popUpSection">
+                Add a few of your favorite movies to the list and give them a like. The goal of Movie Rank is to gather a collection of everyones favortire movies and see which one comes out on top!
+                <button class="closeAbout">close</button>
+                </section>
+            </section>
+            <footer id="footer">
+                <p class="copyright">&copy; <a href="https://hendersonsargeant.netlify.app" target="_blank">Henderson Sargeant</a>All rights reserved.</p>
+            </footer>
+        <script src="js/main.js"></script>
+    </body>
+</html>
