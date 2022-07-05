@@ -104,15 +104,15 @@ app.put('/removeLike', (req, res) => {
 
 })
 
-app.delete('/deleteMovie', (req, res) => {
-    db.collection('movie-names').deleteOne({"name": req.body.movieName})
-    .then(result => {
-        console.log(req.body.movieName)
-        console.log('Movie Deleted')
-        res.json('Movie Deleted')
-    })
-    .catch(error => console.error(error))
-})
+// app.delete('/deleteMovie', (req, res) => {
+//     db.collection('movie-names').deleteOne({"name": req.body.movieName})
+//     .then(result => {
+//         console.log(req.body.movieName)
+//         console.log('Movie Deleted')
+//         res.json('Movie Deleted')
+//     })
+//     .catch(error => console.error(error))
+// })
 
 app.listen(process.env.PORT || PORT,()=>{
     console.log(`The server is running on port ${PORT}`)
