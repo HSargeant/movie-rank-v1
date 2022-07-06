@@ -33,11 +33,12 @@ async function addLike(){
 
     const movieName =this.parentNode.parentNode.childNodes[1].innerText
     const currentlikes = Number(this.parentNode.childNodes[1].innerText)
+    console.log(movieName,currentlikes)
     // store likes
     localStorage.setItem(movieName,"liked")
 
     try{
-        const response = await fetch('addOneLike', {
+        const response = await fetch('/addOneLike', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -58,6 +59,7 @@ async function addLike(){
 
     const movieName =this.parentNode.parentNode.childNodes[1].innerText
     const currentlikes = Number(this.parentNode.childNodes[1].innerText)
+    console.log(movieName,",",currentlikes)
 
     if(currentlikes ==0){
         return
@@ -66,7 +68,7 @@ async function addLike(){
     localStorage.removeItem(movieName)
 
     try{
-        const response = await fetch('removeLike', {
+        const response = await fetch('/removeLike', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -83,6 +85,25 @@ async function addLike(){
 }
 
 //delete movie
+async function deleteMovie(){
+    const mName = this.parentNode.parentNode.childNodes[1].innerText
+    console.log(mName)
+    
+    try{
+        const response = await fetch('/deleteMovie', {
+            method: 'delete',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                'movieName': mName
+            })
+          })
+        const data = await response.json()
+        console.log(data)
+        location.reload()
+    }catch(err){
+        console.log(err)
+    }
+}
 
 // Filter Movies
 
