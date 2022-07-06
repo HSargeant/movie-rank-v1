@@ -25,17 +25,7 @@
                         <img class="mainLogo" src="logo.png" alt="the wire logo" >
                     </div>
 
-                    <section class="addMovie hide">
-                        <section class="popUpSection">
-                            <h3>Add A Movie:</h3>
-                            <form action="/addMovie" method="POST">
-                                <input type="text" placeholder="Movie Name" name="name" id="name">
-                                <input type="text" placeholder="Release Year (optional)" name="year" id="year">
-                                <input type="submit" id="submitMovie">
-                            </form>
-                            <button class="closeAdd">close</button>
-                        </section>
-                    </section>
+                    
 
                 </header>
                 <section class="search"> 
@@ -77,9 +67,22 @@
                 </section>
 
             </div>
+            <section class="addMovie hide">
+                <section class="popUpSection">
+                    <h3>Add A Movie:</h3>
+                    <form action="/addMovie" method="POST">
+                        <input type="text" placeholder="Movie Name" name="name" id="name">
+                        <input type="text" placeholder="Release Year (optional)" name="year" id="year">
+                        <input type="submit" id="submitMovie">
+                    </form>
+                    <button class="closeAdd">close</button>
+                </section>
+            </section>
             <section class="aboutPopup hide">
                 <section class="popUpSection">
-                Add a few of your favorite movies to the list and give them a like. The goal of Movie Rank is to gather a collection of everyones favortire movies and see which one comes out on top!
+                    <p>Welcome to <h1>Movie Rank</h1></p>
+
+               <p> Add a few of your favorite movies to the list and give them a like. The goal of Movie Rank is to gather a collection of everyones favortire movies and see which one comes out on top!</p>
                 <button class="closeAbout">close</button>
                 </section>
             </section>

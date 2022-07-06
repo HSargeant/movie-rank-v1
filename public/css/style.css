@@ -6,11 +6,11 @@
 html{
     font-size: 1em;
     font-family: 'Roboto', sans-serif;
-    color: #333;
+    color: #151515;
 }
 body{
     height: 100vh;
-    background: #f6f6f3;
+    background: #eee;
 
 }
 a{
@@ -114,13 +114,35 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 }
 footer{
     margin-top: 25px;
-    padding: 10px 0 20px 0;
+    padding: 25px 0 ;
     width:100%;
     text-align: center;
 }
 footer a{
     margin-right: 1em;
 }
+.count{
+    display: block;
+    position: relative;
+    top:6%;
+    left:1%;
+    background-color: rgb(255, 255, 255);
+    /* padding: 0 5% 0 5%; */
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+}
+.first-place{
+   background-color: gold;
+}
+.second-place{
+    background-color: #c0c0c0;
+ }
+ .third-place{
+    background-color: #cd7F32;
+ }
+
 .hide{
     display: none;
 }
@@ -147,6 +169,16 @@ footer a{
     justify-content: center;
     
 }
+.popUpSection p {
+    font-size: 1.3em;
+    line-height: 1.8;
+    color: rgb(203, 196, 196)
+  }
+  .popUpSection h1 {
+    font-size: 1.7em;
+    padding: 5px;
+    color: #aaa;
+  }
 
 .aboutMenu:hover, .addLink:hover{
     border-bottom: #333 solid 1px;
@@ -161,10 +193,11 @@ footer a{
 .closeAbout, .closeAdd{
     margin-top: 2%;
     background-color:rgb(175, 169, 169);
-    border-radius: 10px;
+    border-radius: 2px;
     cursor: pointer;
     width: 50px;
     height: 50px;
+    font-size: 1.125em;
 }
 
 .addMovie input{
@@ -215,6 +248,7 @@ footer a{
     .card .longName{
         font-size: 0.7em;
     }
+ 
 } 
 @media (max-width: 775px) {
 
@@ -230,10 +264,9 @@ footer a{
 
  
     .card{
-        height:325px;
+        height:400px;
 
     }
-  
 
 }
 
@@ -252,6 +285,12 @@ footer a{
     }
     .card .longName{
         font-size: 0.9em;
+    }
+    .addMovie input+input {
+        width: auto;
+    }
+    #submitMovie{
+        margin-top:3px;
     }
 
 }
@@ -272,29 +311,8 @@ footer a{
 
     }
 
-}
-.hide{
-    display: none;
-}
+    footer{
+        padding: 40px 0;
+    }
 
-.count{
-    display: block;
-    position: relative;
-    top:6%;
-    left:1%;
-    background-color: rgb(255, 255, 255);
-    /* padding: 0 5% 0 5%; */
-    border-radius: 50%;
-    height: 20px;
-    width: 20px;
-    text-align: center;
 }
-.first-place{
-   background-color: gold;
-}
-.second-place{
-    background-color: #c0c0c0;
- }
- .third-place{
-    background-color: #cd7F32;
- }
