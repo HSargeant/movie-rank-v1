@@ -9,6 +9,7 @@ require('dotenv').config()
 let db
 const dbName = process.env.DBNAME
 const connectionString = process.env.MONGO_URL
+const apikey = process.env.APIKEY
 
 MongoClient.connect(connectionString,{ useUnifiedTopology: true })
     .then(client => {
@@ -44,7 +45,7 @@ app.post('/addMovie', async (req, res) => {
     let year = req.body.year
 
     //get api data
-        const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=0ad3ff819fd0c4926c23cadfaecd9bf7&query=${movieName}&year=${year}`)
+        const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${movieName}&year=${year}`)
         const data = await response.json()
         if(data.total_results==0){
             res.redirect('/')
