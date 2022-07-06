@@ -1,5 +1,6 @@
 //express + MONGO SET UP
 const express = require("express")
+const fetch = require('node-fetch');
 const app = express()
 const PORT = 8500
 const MongoClient = require("mongodb").MongoClient
