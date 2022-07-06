@@ -1,8 +1,8 @@
 //express + MONGO SET UP
 const express = require("express")
-const fetch = require('node-fetch');
 const app = express()
 const PORT = 8500
+const fetch = require('node-fetch');
 const MongoClient = require("mongodb").MongoClient
 // const cors = require("cors")
 require('dotenv').config()
@@ -38,7 +38,6 @@ app.get('/',(req, res)=>{
 
 app.post('/addMovie', async (req, res) => {
     if(!req.body.name){
-        res.json('enter a valid movie')
         res.redirect('/')
         return
     }
@@ -46,6 +45,7 @@ app.post('/addMovie', async (req, res) => {
     let year = req.body.year
 
     //get api data
+    try{
         const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${movieName}&year=${year}`)
         const data = await response.json()
         if(data.total_results==0){
@@ -67,6 +67,9 @@ app.post('/addMovie', async (req, res) => {
 
     console.log('Movie Added')
     res.redirect('/')
+    }catch(error){
+        console.log(error)
+    }
      
 })
 

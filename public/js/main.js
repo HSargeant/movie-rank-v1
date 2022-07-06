@@ -111,7 +111,6 @@ let about = document.querySelector('.aboutMenu')
 let addPop = document.querySelector('.addMovie')
 let addLink = document.querySelector('.addLink')
 
-console.log(about,"about")
 about.addEventListener('click',()=>{
     console.log('click')
     popUp.classList.remove('hide')
