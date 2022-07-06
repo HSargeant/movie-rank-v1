@@ -85,25 +85,7 @@ async function addLike(){
 }
 
 //delete movie
-async function deleteMovie(){
-    const mName = this.parentNode.parentNode.childNodes[1].innerText
-    console.log(mName)
-    
-    try{
-        const response = await fetch('/deleteMovie', {
-            method: 'delete',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                'movieName': mName
-            })
-          })
-        const data = await response.json()
-        console.log(data)
-        location.reload()
-    }catch(err){
-        console.log(err)
-    }
-}
+
 
 // Filter Movies
 

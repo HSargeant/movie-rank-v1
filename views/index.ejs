@@ -36,8 +36,8 @@
                             <button class="closeAdd">close</button>
                         </section>
                     </section>
-                </header>
 
+                </header>
                 <section class="search"> 
                     <input id="search" type="search" placeholder="Search movie">
                 </section>
@@ -45,6 +45,16 @@
                 <section class="cards">
                     <% for(let i=0; i < movie.length; i++) { %>
                     <section class="card">
+                        <% if(i==0){ %>
+                        <span class="count first-place"><%=i+1%></span>
+                        <%} else if(i==1){ %>
+                            <span class="count second-place"><%=i+1%></span>
+                        <%} else if(i==2){%>
+                            <span class="count third-place"><%=i+1%></span>
+                            <%} else{%>
+                                <span class="count"><%=i+1%></span>
+                                <%}%>
+
                         <img src="<%=movie[i].image %>" alt="<%=movie[i].name%> movie poster">
                         <ul>
                             <% if(movie[i].name.length > 23){ %>
