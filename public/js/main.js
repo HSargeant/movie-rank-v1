@@ -84,7 +84,6 @@ async function addLike(){
 
 //delete movie
 
-
 // Filter Movies
 
 let input = document.querySelector('#search')
