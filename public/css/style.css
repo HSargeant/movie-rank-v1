@@ -273,7 +273,7 @@ span.count.second-place{
     background-color: #333;
     color: #f7f7ed;
 }
-.dark-mode input{
+.dark-mode input[type="search"]{
     color: #f7f7ed;
     border-bottom: #f7f7ed 1px solid;
 
