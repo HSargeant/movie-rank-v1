@@ -44,9 +44,11 @@
                             <span class="count second-place"><%=i+1%></span>
                         <%} else if(i==2){%>
                             <span class="count third-place"><%=i+1%></span>
-                            <%} else{%>
+                            <%} else if(i+1>99){%>
+                                <span class="count longCount"><%=i+1%></span>
+                            <%}else{%>
                                 <span class="count"><%=i+1%></span>
-                                <%}%>
+                            <%}%>
 
                         <img src="<%=movie[i].image %>" alt="<%=movie[i].name%> movie poster">
                         <ul>
