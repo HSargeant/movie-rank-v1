@@ -1,9 +1,10 @@
 let h2s = Array.from(document.querySelectorAll('h2'))
 let storage = Object.keys(localStorage)
 
+
 h2s.forEach((x,i)=>{
     if(storage.includes(x.innerText)){
-        h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].style.color = '#333'
+        // h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].style.color = '#333'
         h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].classList.add('liked')
         h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].classList.remove('no-like')
 
@@ -130,3 +131,70 @@ document.querySelector('.closeAdd').addEventListener('click',()=>{
     addPop.classList.add('hide')
 
 })
+
+let theme = document.querySelector('#themeSwitch')
+
+theme.addEventListener('click',changeTheme)
+
+function changeTheme(){
+    document.querySelector('.fa-moon').classList.toggle('hide')
+    document.querySelector('.fa-sun').classList.toggle('hide')
+
+    const body = document.querySelector('body')
+    const searchBar = document.querySelector('.search')
+    const lightLogo = document.querySelector('.mainLogo')
+    const darkLogo = document.querySelector('.lightLogo')
+
+    Array.from(clickedLike).forEach((element)=>{
+        element.classList.toggle('light')
+    })
+    
+    Array.from(thumbText).forEach((element)=>{
+        element.classList.toggle('light')
+    })
+    
+
+
+
+    let counts= Array.from(document.querySelectorAll('.count'))
+    body.classList.toggle("dark-mode")
+    searchBar.classList.toggle("dark-mode")
+    // body.style.color= "#f7f7ed"
+    lightLogo.classList.toggle('hide')
+    darkLogo.classList.toggle("hide")
+    //heder
+    addLink.classList.toggle('light')
+    about.classList.toggle('light')
+    console.log(about)
+
+document.querySelector('.profile').classList.toggle('light')
+    counts.forEach(x=>{
+        console.log(x)
+        x.classList.toggle('light')
+     })
+
+
+
+}
+
+document.querySelector('#themeSwitchDark').addEventListener('click',switchDark)
+
+function switchDark(){
+    // document.querySelector('.fa-moon').classList.toggle('hide')
+    // document.querySelector('.fa-sun').classList.toggle('hide')
+    // localStorage.setItem('current theme','dark')
+}
+document.querySelector('.fa-moon').addEventListener('click',()=>{
+    localStorage.removeItem('site-theme')
+    changeTheme()
+})
+document.querySelector('.fa-sun').addEventListener('click',()=>{
+    localStorage.setItem('site-theme','light')
+})
+
+
+
+if(localStorage.getItem('site-theme')=='light'){
+    console.log('change')
+    changeTheme()
+}
