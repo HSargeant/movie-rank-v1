@@ -6,6 +6,7 @@ const fetch = require('node-fetch');
 const MongoClient = require("mongodb").MongoClient
 // const cors = require("cors")
 require('dotenv').config()
+app.enable('trust proxy')
 
 let db
 const dbName = process.env.DBNAME
