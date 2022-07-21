@@ -24,6 +24,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.get('/',(req, res)=>{
+    console.log(req.ip, req.ips)
 
     db.collection('movie-names').find().sort({likes: -1}).toArray()
     .then(data => {
@@ -63,7 +64,7 @@ app.post('/addMovie', async (req, res) => {
         }
     //send to db
     const post = await db.collection('movie-names').insertOne({name: data.results[0].original_title,
-    image: path, year: data.results[0].release_date.split("-")[0],  likes: 0})
+    image: path, year: data.results[0].release_date.split("-")[0],  likes: 0, ip: req.ip})
 
     console.log('Movie Added')
     res.redirect('/')
