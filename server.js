@@ -65,7 +65,7 @@ app.post('/addMovie', async (req, res) => {
         }
     //send to db
     const post = await db.collection('movie-names').insertOne({name: data.results[0].original_title,
-    image: path, year: data.results[0].release_date.split("-")[0],  likes: 0, ip: req.ip})
+    image: path, year: data.results[0].release_date.split("-")[0],  likes: 0})
 
     console.log('Movie Added')
     res.redirect('/')
@@ -76,7 +76,22 @@ app.post('/addMovie', async (req, res) => {
 })
 
 //add likes
-app.put('/addOneLike', (req, res) => {
+app.put('/addOneLike', async (req, res) => {
+
+    let ip = await db.collection('ip').find().toArray()
+
+    if(!ip.find(elem=>elem.ipadd == req.ip)){
+        await db.collection('ip').insertOne({
+         ipadd: req.ip,like: [req.body.movieName]})
+     }else {
+       await db.collection('ip').updateOne({ipadd: req.ip}, {$push:{like: req.body.movieName}})
+
+     }
+
+    //    db.collection('ip').updateOne({ipadd: req.ip}, {$set:{"like": "Unconfirmed Reports"}})
+
+
+
     let updatelikes = req.body.currentLikes + 1
     db.collection('movie-names').updateOne({name: req.body.movieName},{
         $set: {
@@ -93,7 +108,8 @@ app.put('/addOneLike', (req, res) => {
     .catch(error => console.error(error))
 
 })
-app.put('/removeLike', (req, res) => {
+
+app.put('/removeLike', async (req, res) => {
     let updatelikes =req.body.currentLikes - 1
     db.collection('movie-names').updateOne({name: req.body.movieName},{
         $set: {
@@ -108,6 +124,8 @@ app.put('/removeLike', (req, res) => {
         res.json('Like removed')
     })
     .catch(error => console.error(error))
+
+    await db.collection('ip').updateOne({ipadd: req.ip}, {$pop:{like: 1}})
 
 })
 
