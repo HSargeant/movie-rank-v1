@@ -32,7 +32,7 @@ Array.from(deleteText).forEach((element)=>{
 
 async function addLike(){
 
-    const movieName =this.parentNode.parentNode.childNodes[1].innerText
+    const movieName =this.parentNode.parentNode.childNodes[1].innerText.trim()
     const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src
     const releaseYear = this.parentNode.parentNode.childNodes[3].innerText
     console.log(releaseYear)
@@ -63,7 +63,7 @@ async function addLike(){
  async function removeLike(){
     console.log('click to remove')
 
-    const movieName =this.parentNode.parentNode.childNodes[1].innerText
+    const movieName =this.parentNode.parentNode.childNodes[1].innerText.trim()
     const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src
     const releaseYear = this.parentNode.parentNode.childNodes[3].innerText
     const currentlikes = Number(this.parentNode.childNodes[1].innerText)
