@@ -100,7 +100,7 @@ app.put('/addOneLike', async (req, res) => {
     }
 
     let updatelikes = req.body.currentLikes + 1
-    db.collection('movie-names').updateOne({name: req.body.movieName},{
+    db.collection('movie-names').updateOne({name: req.body.movieName,image: req.body.moviePoster, year:req.body.releaseYear,likes:req.body.currentLikes},{
         $set: {
             likes: updatelikes
           }
@@ -118,7 +118,7 @@ app.put('/addOneLike', async (req, res) => {
 
 app.put('/removeLike', async (req, res) => {
     let updatelikes =req.body.currentLikes - 1
-    db.collection('movie-names').updateOne({name: req.body.movieName},{
+    db.collection('movie-names').updateOne({name: req.body.movieName,image: req.body.moviePoster, year:req.body.releaseYear,likes:req.body.currentLikes},{
         $set: {
             likes: updatelikes
           }

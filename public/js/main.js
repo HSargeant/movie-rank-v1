@@ -33,6 +33,9 @@ Array.from(deleteText).forEach((element)=>{
 async function addLike(){
 
     const movieName =this.parentNode.parentNode.childNodes[1].innerText
+    const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src
+    const releaseYear = this.parentNode.parentNode.childNodes[3].innerText
+    console.log(releaseYear)
     const currentlikes = Number(this.parentNode.childNodes[1].innerText)
     console.log(movieName,currentlikes)
     // store likes
@@ -44,6 +47,8 @@ async function addLike(){
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
               'movieName': movieName,
+              'moviePoster': moviePoster,
+              'releaseYear': releaseYear,
               'currentLikes': currentlikes
             })
         })
@@ -59,6 +64,8 @@ async function addLike(){
     console.log('click to remove')
 
     const movieName =this.parentNode.parentNode.childNodes[1].innerText
+    const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src
+    const releaseYear = this.parentNode.parentNode.childNodes[3].innerText
     const currentlikes = Number(this.parentNode.childNodes[1].innerText)
     console.log(movieName,",",currentlikes)
 
@@ -74,6 +81,8 @@ async function addLike(){
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
               'movieName': movieName,
+              'moviePoster': moviePoster,
+              'releaseYear': releaseYear,
               'currentLikes': currentlikes
             })
         })
