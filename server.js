@@ -25,7 +25,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.get('/',(req, res)=>{
-    console.log(req.ip, req.ips)
 
     db.collection('movie-names').find().sort({likes: -1}).toArray()
     .then(data => {
@@ -43,8 +42,8 @@ app.post('/addMovie', async (req, res) => {
         res.redirect('/')
         return
     }
-    let movieName = req.body.name.toLowerCase()
-    let year = req.body.year
+    let movieName = req.body.name.toLowerCase().trim()
+    let year = req.body.year.trim()
 
     //get api data
     try{
@@ -78,26 +77,7 @@ app.post('/addMovie', async (req, res) => {
 //add likes
 app.put('/addOneLike', async (req, res) => {
 
-    let ip = await db.collection('ip').find().toArray()
-    console.log(ip.filter(x=>x.ipadd==req.ip)[0].like.includes(req.body.movieName))
-
-    if(!ip.find(elem=>elem.ipadd == req.ip)){
-        await db.collection('ip').insertOne({
-         ipadd: req.ip,like: [req.body.movieName]})
-     }else {
-        if(ip.filter(x=>x.ipadd==req.ip)[0].like.includes(req.body.movieName)){
-            res.redirect('/')
-            return
-        }
-       await db.collection('ip').updateOne({ipadd: req.ip}, {$push:{like: req.body.movieName}})
-
-     }
-
-
-    if(ip.filter(x=>x.ipadd==req.ip)[0].like.includes(req.body.movieName)){
-        res.redirect('/')
-        return
-    }
+    addIPtoDB(req.ip,req.body.movieName)
 
     let updatelikes = req.body.currentLikes + 1
     db.collection('movie-names').updateOne({name: req.body.movieName,image: req.body.moviePoster, year:req.body.releaseYear,likes:req.body.currentLikes},{
@@ -131,10 +111,9 @@ app.put('/removeLike', async (req, res) => {
         res.json('Like removed')
     })
     .catch(error => console.error(error))
-    // if()
-    // await db.collection('ip').updateOne({ipadd: req.ip}, {$pop:{like: 1}})
-    let ip = await db.collection('ip').find().toArray()
-    await db.collection('ip').updateOne({ipadd: req.ip}, {$set:{like: ip.filter(x=>x.ipadd==req.ip)[0].like.filter(x=>x!== req.body.movieName)}})
+
+
+    updateIPLikeList(req.ip,req.body.movieName)
 
 })
 
@@ -147,6 +126,36 @@ app.put('/removeLike', async (req, res) => {
 //     })
 //     .catch(error => console.error(error))
 // })
+
+
+async function addIPtoDB(address,name){
+    let ip = await db.collection('ip').find().toArray()
+    // console.log(ip.filter(x=>x.ipadd==req.ip)[0].like.includes(req.body.movieName))
+
+    if(!ip.find(elem=>elem.ipadd == address)){
+        await db.collection('ip').insertOne({
+         ipadd: address,like: [name]})
+     }else {
+        if(ip.filter(x=>x.ipadd==address)[0].like.includes(name)){
+            // res.redirect('/')
+            return
+        }
+       await db.collection('ip').updateOne({ipadd: address}, {$push:{like: name}})
+
+     }
+
+
+    if(ip.filter(x=>x.ipadd==address)[0].like.includes(name)){
+        // res.redirect('/')
+        return
+    }
+    
+}
+
+async function updateIPLikeList(address,name){
+    let ip = await db.collection('ip').find().toArray()
+    await db.collection('ip').updateOne({ipadd: address}, {$set:{like: ip.filter(x=>x.ipadd==address)[0].like.filter(x=>x!== name)}})
+}
 
 app.listen(process.env.PORT || PORT,()=>{
     console.log(`The server is running on port ${PORT}`)

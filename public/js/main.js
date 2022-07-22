@@ -33,13 +33,10 @@ Array.from(deleteText).forEach((element)=>{
 async function addLike(){
 
     const movieName =this.parentNode.parentNode.childNodes[1].innerText.trim()
-    const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src
-    const releaseYear = this.parentNode.parentNode.childNodes[3].innerText
-    console.log(releaseYear)
-    const currentlikes = Number(this.parentNode.childNodes[1].innerText)
-    console.log(movieName,currentlikes)
-    // store likes
-    localStorage.setItem(movieName,"liked")
+    const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src.trim()
+    const releaseYear = this.parentNode.parentNode.childNodes[3].innerText.trim()
+    const currentlikes = Number(this.parentNode.childNodes[1].innerText.trim())
+
 
     try{
         const response = await fetch('/addOneLike', {
@@ -58,22 +55,21 @@ async function addLike(){
     }catch(err){
         console.log(err)
     }
+        // store likes
+        localStorage.setItem(movieName,"liked")
 }
 
  async function removeLike(){
-    console.log('click to remove')
 
     const movieName =this.parentNode.parentNode.childNodes[1].innerText.trim()
-    const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src
-    const releaseYear = this.parentNode.parentNode.childNodes[3].innerText
-    const currentlikes = Number(this.parentNode.childNodes[1].innerText)
-    console.log(movieName,",",currentlikes)
+    const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src.trim()
+    const releaseYear = this.parentNode.parentNode.childNodes[3].innerText.trim()
+    const currentlikes = Number(this.parentNode.childNodes[1].innerText.trim())
 
     if(currentlikes ==0){
         return
     }
-    // remove like from storage
-    localStorage.removeItem(movieName)
+
 
     try{
         const response = await fetch('/removeLike', {
@@ -92,6 +88,8 @@ async function addLike(){
     }catch(err){
         console.log(err)
     }
+        // remove like from storage
+        localStorage.removeItem(movieName)
 }
 
 //delete movie
