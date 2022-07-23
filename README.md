@@ -1,5 +1,5 @@
 # Movie Rank Ver1
-Movie Rank is a site where people can add their favorite movies to the list and vote on movies they like. The goal is to get a community ranking of everyones favorite movies.
+Movie Rank is where people can help build of a list and help to rank everyones favorite movies.
 
 **Link to project:** https://movierankv1.herokuapp.com/
 
@@ -7,7 +7,7 @@ Movie Rank is a site where people can add their favorite movies to the list and 
 
 ## How It's Made:
 
-**Tech used:** HTML, CSS, JavaScript, Node.Js, Express, MongoDb, EJS
+**Tech used:** JavaScript, Node.js, Express, MongoDb, EJS, HTML, CSS
 
 I used node/express to build the server to handle the request to add movies and add/remove user likes. Used MongoDb for my database to store the current list of movies and their like count. EJS was used to keep the front end up to date with current rankings and movies that are added/deleted.
 
