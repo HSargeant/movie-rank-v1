@@ -50,7 +50,7 @@ async function addLike(){
             })
         })
         const data = await response.json()
-        console.log(data)
+        // console.log(data)
         location.reload()
     }catch(err){
         console.log(err)
@@ -83,7 +83,7 @@ async function addLike(){
             })
         })
         const data = await response.json()
-        console.log(data)
+        // console.log(data)
         location.reload()
     }catch(err){
         console.log(err)
@@ -121,23 +121,23 @@ let about = document.querySelector('.aboutMenu')
 let addPop = document.querySelector('.addMovie')
 let addLink = document.querySelector('.addLink')
 
-about.addEventListener('click',()=>{
-    console.log('click')
-    popUp.classList.remove('hide')
-})
+// about.addEventListener('click',()=>{
+//     console.log('click')
+//     popUp.classList.remove('hide')
+// })
 
-document.querySelector('.closeAbout').addEventListener('click',()=>{
-    popUp.classList.add('hide')
-})
+// document.querySelector('.closeAbout').addEventListener('click',()=>{
+//     popUp.classList.add('hide')
+// })
 
-addLink.addEventListener('click',()=>{
-    addPop.classList.remove('hide')
-})
+// addLink.addEventListener('click',()=>{
+//     addPop.classList.remove('hide')
+// })
 
-document.querySelector('.closeAdd').addEventListener('click',()=>{
-    addPop.classList.add('hide')
+// document.querySelector('.closeAdd').addEventListener('click',()=>{
+//     addPop.classList.add('hide')
 
-})
+// })
 
 let theme = document.querySelector('#themeSwitch')
 
@@ -172,11 +172,9 @@ function changeTheme(){
     //heder
     addLink.classList.toggle('light')
     about.classList.toggle('light')
-    console.log(about)
 
 document.querySelector('.profile').classList.toggle('light')
     counts.forEach(x=>{
-        console.log(x)
         x.classList.toggle('light')
      })
 
@@ -202,6 +200,48 @@ document.querySelector('.fa-sun').addEventListener('click',()=>{
 
 
 if(localStorage.getItem('site-theme')=='light'){
-    console.log('change')
     changeTheme()
 }
+
+//modals
+
+addLink.addEventListener('click',()=>{
+    document.getElementById("backdrop").style.display = "block"
+    document.getElementById("exampleModal").style.display = "block"
+    document.getElementById("exampleModal").classList.add("show")
+})
+
+document.querySelector("#closeModal").addEventListener('click',closeModal)
+
+
+function closeModal(){
+
+    document.getElementById("backdrop").style.display = "none"
+    document.getElementById("exampleModal").style.display = "none"
+    document.getElementById("exampleModal").classList.remove("show")
+
+    document.getElementById("aboutBackdrop").style.display = "none"
+    document.getElementById("aboutModal").style.display = "none"
+    document.getElementById("aboutModal").classList.remove("show")
+
+}
+// Get the modal
+const modal = document.getElementById('exampleModal');
+const aboutModal =document.getElementById('aboutModal');
+    
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal || event.target == aboutModal ) {
+        closeModal()
+    }
+}
+//about Modal
+about.addEventListener('click',()=>{
+    document.getElementById("aboutBackdrop").style.display = "block"
+    document.getElementById("aboutModal").style.display = "block"
+    document.getElementById("aboutModal").classList.add("show")
+
+})
+
+document.querySelector("#closeAboutModal").addEventListener('click',closeModal)
+
