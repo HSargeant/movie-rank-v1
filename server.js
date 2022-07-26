@@ -86,7 +86,7 @@ app.put('/addOneLike', async (req, res) => {
           }
     },{
         sort: {likes: -1},
-        upsert: true
+        upsert: false
     })
     .then(result => {
         console.log('Added One Like')
@@ -104,7 +104,7 @@ app.put('/removeLike', async (req, res) => {
           }
     },{
         sort: {likes: -1},
-        upsert: true
+        upsert: false
     })
     .then(result => {
         console.log('removed One Like')
