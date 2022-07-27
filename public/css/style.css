@@ -19,7 +19,7 @@ body{
 }
 
 a{
-    color: #f7f7ed;
+    color: #eee;
     text-decoration: none;
     font-weight: bold;
 }
@@ -27,16 +27,36 @@ a.light{
     color:#333
 }
 
+#footer a{
+    border-bottom: #eee dotted 1px;
+    font-size: 1.115em;
 
+}
+#footer a:hover{
+    border-bottom: #eee solid 1px;
+    font-size: 1.128em;
+    color:
+
+}
 a:hover{
-    /* font-size: 1.1em; */
     font-weight: bold;
-    border-bottom: #f7f7ed solid 1px;
+    border-bottom: #eee solid 1px;
 
 }
 a.light:hover{
     font-weight: bold;
     border-bottom: #333 solid 1px;
+
+}
+#footer a.light{
+    font-weight: bold;
+    border-bottom: #333 dotted 1px;
+
+}
+#footer a.light:hover{
+    font-weight: bold;
+    border-bottom: #333 solid 1px;
+    font-size: 1.128em;
 
 }
 
@@ -282,6 +302,7 @@ span.count.second-place{
     font-size: 1.8em;
     padding: 10px;
 }
+
 @media (max-width: 1000px) {
     .card h2{
         font-size: 1em;
