@@ -15,7 +15,7 @@ body{
 }
 
 .light,.liked.light{
-    color:#333;
+    color:#2a2a2a;
 }
 
 a{
@@ -24,7 +24,7 @@ a{
     font-weight: bold;
 }
 a.light{
-    color:#333
+    color:#2a2a2a
 }
 
 #footer a{
@@ -43,17 +43,17 @@ a:hover{
 }
 a.light:hover{
     font-weight: bold;
-    border-bottom: #333 solid 1px;
+    border-bottom: #2a2a2a solid 1px;
 
 }
 #footer a.light{
     font-weight: bold;
-    border-bottom: #333 dotted 1px;
+    border-bottom: #2a2a2a dotted 1px;
 
 }
 #footer a.light:hover{
     font-weight: bold;
-    border-bottom: #333 solid 1px;
+    border-bottom: #2a2a2a solid 1px;
     font-size: 1.128em;
 
 }
@@ -100,7 +100,7 @@ input[type="search"] {
     border-radius: 5px;
     width: 60%;
     margin: 0 auto;
-    border-bottom: 1px #333 solid;
+    border-bottom: 1px #2a2a2a solid;
     background-color: transparent;
 }
 
@@ -142,7 +142,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
     cursor: pointer;
 }
 .no-like{
-    color: #f7f7ed67;
+    color: #ffffff3a;
 }
 .no-like.light{
     color: #3333337f;
@@ -249,7 +249,7 @@ span.count.second-place{
     cursor:pointer;    
 }
 .aboutMenu.light:hover, .addLink.light:hover{
-    border-bottom: #333 solid 1px;
+    border-bottom: #2a2a2a solid 1px;
     cursor:pointer;    
 }
 
@@ -257,7 +257,7 @@ span.count.second-place{
     font-size: 1em;
 }
 
-.closeAbout, .closeAdd{
+/* .closeAbout, .closeAdd{
     margin-top: 2%;
     background-color:rgb(175, 169, 169);
     border-radius: 2px;
@@ -265,9 +265,9 @@ span.count.second-place{
     width: 50px;
     height: 50px;
     font-size: 1.125em;
-}
+} */
 
-.addMovie input{
+/* .addMovie input{
         padding: 10px;
         font-size: 1em;
         border: 0;
@@ -283,7 +283,7 @@ span.count.second-place{
     border: 0;
     background-color:rgb(203, 201, 201);
     width: 75px;
-}
+} */
 .liked{
     color:#f7f7ed;
 }
