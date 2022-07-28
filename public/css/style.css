@@ -295,7 +295,7 @@ span.count.second-place{
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    background-image: linear-gradient(#2a2a2afa, #2a2a2afa),url("/movie-theater-10.jpg");
+    background-image: linear-gradient(#2a2a2afc, #2a2a2afc),url("/movie-theater-10.jpg");
 
 }
 .dark-mode input[type="search"]{
