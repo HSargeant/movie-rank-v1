@@ -179,6 +179,7 @@ document.querySelector("#closeModal").addEventListener('click',closeModal)
 
 
 function closeModal(){
+    
 
     document.getElementById("backdrop").style.display = "none"
     document.getElementById("exampleModal").style.display = "none"
