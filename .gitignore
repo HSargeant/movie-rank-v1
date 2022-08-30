@@ -1,3 +1,6 @@
 node_modules
 .env
 testing
+views/login.ejs
+config
+views/dashboard.ejs
