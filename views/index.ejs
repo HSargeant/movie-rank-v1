@@ -9,8 +9,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link href="css/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     </head>
     <body class="dark-mode">
             <div class="container">
@@ -19,7 +19,6 @@
                         <ul>
                             <li><a class="addLink" id="addMovie">Add Your Favorite Movies</a></li>
                             <li><a class="aboutMenu">About</a></li>
-
                             <li id="themeSwitch" class="fa fa-solid fa-sun"></li>
                             <li id="themeSwitchDark" class= "fa fa-solid fa-moon hide" ></li>
                         </ul>
@@ -29,10 +28,14 @@
                         <img class="mainLogo hide" src="logo.png" alt="Movie Rank logo" >
                         <img class="mainLogo lightLogo" src="logo-light.png" alt="Movie Rank logo" >
                     </div>
+
+                    
+
                 </header>
                 <section class="search dark-mode"> 
                     <input id="search" type="search" placeholder="Search movie list"> 
-                </section>              
+                </section>
+                
                 <section class="cards">
                     <% for(let i=0; i < movie.length; i++) { %>
                     <section class="card">
@@ -47,10 +50,13 @@
                             <%}else{%>
                                 <span class="count"><%=i+1%></span>
                             <%}%>
+
                         <img src="<%=movie[i].image %>" alt="<%=movie[i].name%> movie poster">
                         <ul>
                             <% if(movie[i].name.length > 23){ %>
                                 <li> <h2 class="longName"><%=movie[i].name%></h2></li>
+
+
                             <%} else{ %>
                                 <li> <h2><%=movie[i].name%></h2></li>
                             <%}%>
@@ -62,8 +68,10 @@
                             </li>
                         </ul>
                     </section>
-                    <%}%>                    
+                    <%}%>
+                    
                 </section>
+
             </div>
             <!-- <section class="addMovie hide">
                 <section class="popUpSection">
@@ -75,7 +83,8 @@
                     </form>
                     <button class="closeAdd">close</button>
                 </section>
-            </section> -->           
+            </section> -->
+            
             <div class="modal fade" id="exampleModal">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -90,7 +99,6 @@
                                     <input type="number" placeholder="Release Year (optional)" name="year" id="year">
                                     <input type="submit" id="submitMovie" value="Submit" class="btn btn-primary">
                                 </form>        </div>
-   
                     <div class="modal-footer">
                       <button type="button" id="closeModal" class="btn btn-secondary">Close</button>
                     </div>
