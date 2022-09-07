@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" type="image/x-icon" href="icon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Movie Rank</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    </head>
+    <body class="dark-mode">
+        <div class="container login-container">
+                <header class="center">
+                    <nav class="grey darken-3">
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/login" class="login">Login</a></li>
+                        </ul>
+                    </nav>
+                    <h1 class="hide">Movie Rank</h1>
+                    <div class="logos">
+                        
+                    </div>
+                </header>
+                    <div class="card center">
+                        <div class="card-content">
+                            <img class="mainLogo" src="logo.png" alt="Movie Rank logo" >
+                            <section class="section">
+                                <h5> <p class="lead">Help Rank your favorite movies and create a collection of your personal favorites</p></h5>
+                            </section>
+                            <div class="divider"></div>
+                            <section class="section ">
+                                <a href="/auth/google" class="btn red darken-1">
+                                    <i class="fa-brands fa-google left"></i>Login with Google
+                                </a>
+                            </section>
+                            <section class="section ">
+                                <a href="/auth/email" class="btn blue darken-1">
+                                    <i class="fas fa-envelope left"></i>Login with Email
+                                </a>
+                            </section>
+            
+                        </div>
+                    </div>
+            
+                </div>
+
+            
+            
+            <footer id="footer" class="page-footer center container transparent black-text">
+                <p class="copyright">&copy; <a href="https://hendersonsargeant.netlify.app" target="_blank" class="profile">Henderson Sargeant</a>All rights reserved.</p>
+            </footer>
+            <style>
+                footer{
+    margin-top: 25px;
+    padding: 25px 0 ;
+    width:100%;
+    text-align: center;
+}
+footer a{
+    margin-right: 1em;
+}
+footer{
+    color:#333 !important ;
+}
+#footer a{
+    border-bottom: #333 dotted 1px;
+    font-size: 1.05em;
+    color:#333 !important ;
+
+
+}
+#footer a:hover{
+    border-bottom: #333 solid 1px;
+    font-size: 1.07em;
+}
+            </style>
+
+
+        <script src="js/main.js"></script>
+    </body>
+</html>
