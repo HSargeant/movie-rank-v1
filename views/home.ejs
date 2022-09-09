@@ -1,11 +1,10 @@
 <%- include('partials/header') -%>
-
                 <section class="search dark-mode"> 
                     <input id="search" type="search" placeholder="Search movie list"> 
                 </section>              
-                <section class="cards">
+                <section class="cards" >
                     <% for(let i=0; i < movie.length; i++) { %>
-                    <section class="card">
+                    <section class="card" data="<%=movie[i]._id%>">
                         <% if(i==0){ %>
                         <span class="count first-place"><%=i+1%></span>
                         <%} else if(i==1){ %>
@@ -27,8 +26,8 @@
                             <li><%=movie[i].year %></li>
                             <li>
                                 <span><%= movie[i].likes %></span>
-                                <span class='fa fa-thumbs-up no-like'></span>
-                                <!-- <span class='fa fa-trash'></span> -->
+                                <span data="<%=movie._id%>" class='fa fa-thumbs-up no-like'></span>
+                                <!-- <span data=<%=movie._id%> class='fa fa-trash'></span> -->
                             </li>
                         </ul>
                     </section>
@@ -55,7 +54,7 @@
                     </div>
                     <div class="modal-body">
                         <span>**Tip: Including the release year is helpful when dealing with a movie that has sequels or has been remade**</span><br><br><br>
-                                <form action="/addMovie" method="POST">
+                                <form action="/home/addMovie" method="POST">
                                     <input type="text" placeholder="Movie Name" name="name" id="name">
                                     <input type="number" placeholder="Release Year (optional)" name="year" id="year">
                                     <input type="submit" id="submitMovie" value="Submit" class="btn btn-primary">

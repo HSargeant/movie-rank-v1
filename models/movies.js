@@ -20,7 +20,11 @@ const MoviesSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "G-User"
   }
-},{ collection: 'movie-names' })
+})
 
 module.exports = mongoose.model('Movies', MoviesSchema)

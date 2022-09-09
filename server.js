@@ -1,36 +1,42 @@
 //express + MONGO SET UP
+require('dotenv').config({path: './.env'})
+const path = require('path')
 const express = require("express")
 const app = express()
 const PORT = 8500
 const passport = require('passport')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
-const fetch = require('node-fetch')
-const user = require('./models/user')
 const mongoose = require('mongoose')
+const user = require('./models/user')
 const logger = require("morgan");
+const connectDB = require('./config/database')
+const mainRoutes = require('./routes/main')
+const homeRoutes = require('./routes/home')
+// const dashboardRoutes = require('./routes/dashboard')
 
 
+connectDB()
 
-const MongoClient = require("mongodb").MongoClient
+
+// const MongoClient = require("mongodb").MongoClient
 // const cors = require("cors")
-require('dotenv').config()
 app.enable('trust proxy')
 
-let db
-const dbName = process.env.DBNAME
-const connectionString = process.env.MONGO_URL
-const apikey = process.env.APIKEY
+// let db
+// const dbName = process.env.DBNAME
+// const connectionString = process.env.MONGO_URL
+// const apikey = process.env.APIKEY
 
 //Logging
 app.use(logger("dev"));
 
 
-MongoClient.connect(connectionString,{ useUnifiedTopology: true })
-    .then(client => {
-        console.log(`Connected to ${dbName} Database`)
-        db = client.db(dbName)
-    })
+// MongoClient.connect(connectionString,{ useUnifiedTopology: true })
+//     .then(client => {
+//         console.log(`Connected to ${dbName} Database`)
+//         db = client.db(dbName)
+//     })
 // async function goose(){
 //         try {
 //             const conn = await mongoose.connect(process.env.MONGO_URL,{
@@ -66,96 +72,100 @@ require('./config/passport')(passport)
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.get('/',(req, res)=>{
+app.use('/', mainRoutes)
+app.use('/home', homeRoutes)
+// app.use('/dashboard', dashboardRoutes)
 
-    db.collection('movie-names').find().sort({likes: -1}).toArray()
-    .then(data => {
-        res.render('home.ejs', { movie: data, user:req.user })
-    })
-    .catch(error => console.error(error))
-})
+// app.get('/',(req, res)=>{
 
-app.get('/login',(req, res)=>{
-        res.render('login.ejs')
-})
+//     db.collection('movie-names').find().sort({likes: -1}).toArray()
+//     .then(data => {
+//         res.render('index.ejs', { movie: data, user:req.user })
+//     })
+//     .catch(error => console.error(error))
+// })
+
+// app.get('/login',(req, res)=>{
+//         res.render('login.ejs')
+// })
 
 //authenticate
-app.get('/auth/google',passport.authenticate('google',{scope: ['profile']}))
+// app.get('/auth/google',passport.authenticate('google',{scope: ['profile']}))
 
-app.get('/auth/google/callback',passport.authenticate('google',{failureRedirect:'/'}),(req, res)=>{
-    console.log("redir")
-    res.redirect('/profile')
-})
+// app.get('/auth/google/callback',passport.authenticate('google',{failureRedirect:'/'}),(req, res)=>{
+//     console.log("redir")
+//     res.redirect('/profile')
+// })
 
 // log out user
-app.post('/logout',(req, res, next)=> {
-    req.logout((err)=> {
-        console.log("logging out")
-      if (err) { return next(err); }
-      res.redirect('/');
-    });
-});
+// app.post('/logout',(req, res, next)=> {
+//     req.logout((err)=> {
+//         console.log("logging out")
+//       if (err) { return next(err); }
+//       res.redirect('/');
+//     });
+// });
 
-app.get('/profile',(req, res)=>{
-    if(!req.user){
-        res.redirect("/")
-        return
-    }
-    //user movie collection
-    db.collection('g-users').find({_id: req.user._id}).sort({"movies.likes": -1}).toArray()
-    .then(data => {
-        // console.log(data,"$$$$$$$$-----$$$$$$$$$$$$")
-        res.render('dashboard.ejs', { movie: data,user:req.user })
-    })
-    .catch(error => console.error(error))
-})
+// app.get('/profile',(req, res)=>{
+//     if(!req.user){
+//         res.redirect("/")
+//         return
+//     }
+//     //user movie collection
+//     db.collection('g-users').find({_id: req.user._id}).sort({"movies.likes": -1}).toArray()
+//     .then(data => {
+//         // console.log(data,"$$$$$$$$-----$$$$$$$$$$$$")
+//         res.render('dashboard.ejs', { movie: data,user:req.user })
+//     })
+//     .catch(error => console.error(error))
+// })
 
 
 //add movie to database
 
-app.post('/addMovie', async (req, res) => {
-    if(!req.body.name){
-        res.redirect('/')
-        return
-    }
-    let movieName = req.body.name.toLowerCase().trim()
-    let year = req.body.year.trim()
+// app.post('/addMovie', async (req, res) => {
+//     if(!req.body.name){
+//         res.redirect('/')
+//         return
+//     }
+//     let movieName = req.body.name.toLowerCase().trim()
+//     let year = req.body.year.trim()
 
-    //get api data
-    try{
-        const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${movieName}&year=${year}`)
-        const data = await response.json()
-        if(data.total_results==0){
-            res.redirect('/')
-            return
-        }
-        const path = `https://image.tmdb.org/t/p/original${data.results[0].poster_path}` || 'https://skydomepictures.com/wp-content/uploads/2018/08/movie-poster-coming-soon-2.png'
-
-
-        //check if 
-        const check = await db.collection('movie-names').find().toArray()
-        if(check.find(elem=>elem.name ==data.results[0].original_title )){
-            res.redirect('/')
-            return
-        }
-    //send to db
-    const post = await db.collection('movie-names').insertOne({name: data.results[0].original_title,
-    image: path, year: data.results[0].release_date.split("-")[0],  likes: 0})
+//     //get api data
+//     try{
+//         const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${movieName}&year=${year}`)
+//         const data = await response.json()
+//         if(data.total_results==0){
+//             res.redirect('/')
+//             return
+//         }
+//         const path = `https://image.tmdb.org/t/p/original${data.results[0].poster_path}` || 'https://skydomepictures.com/wp-content/uploads/2018/08/movie-poster-coming-soon-2.png'
 
 
-    if(req.user){
-        const user = await db.collection('g-users').updateOne( { _id: req.user._id },{ $push: { movies: {name: data.results[0].original_title,
-            image: path, year: data.results[0].release_date.split("-")[0],  likes: 0} } })
-            console.log(user,req.user._id,"asfafaf")
-    }
+//         //check if 
+//         const check = await db.collection('movie-names').find().toArray()
+//         if(check.find(elem=>elem.name ==data.results[0].original_title )){
+//             res.redirect('/')
+//             return
+//         }
+//     //send to db
+//     const post = await db.collection('movie-names').insertOne({name: data.results[0].original_title,
+//     image: path, year: data.results[0].release_date.split("-")[0],  likes: 0})
 
-    console.log('Movie Added')
-    res.redirect('/')
-    }catch(error){
-        console.log(error)
-    }
+
+//     if(req.user){
+//         const user = await db.collection('g-users').updateOne( { _id: req.user._id },{ $push: { movies: {name: data.results[0].original_title,
+//             image: path, year: data.results[0].release_date.split("-")[0],  likes: 0} } })
+//             console.log(user,req.user._id,"asfafaf")
+//     }
+
+//     console.log('Movie Added')
+//     res.redirect('/')
+//     }catch(error){
+//         console.log(error)
+//     }
      
-})
+// })
 
 //add likes
 app.put('/addOneLike', async (req, res) => {
