@@ -8,6 +8,8 @@ const MongoStore = require('connect-mongo')
 const fetch = require('node-fetch')
 const user = require('./models/user')
 const mongoose = require('mongoose')
+const logger = require("morgan");
+
 
 
 const MongoClient = require("mongodb").MongoClient
@@ -20,25 +22,29 @@ const dbName = process.env.DBNAME
 const connectionString = process.env.MONGO_URL
 const apikey = process.env.APIKEY
 
+//Logging
+app.use(logger("dev"));
+
+
 MongoClient.connect(connectionString,{ useUnifiedTopology: true })
     .then(client => {
         console.log(`Connected to ${dbName} Database`)
         db = client.db(dbName)
     })
-async function goose(){
-        try {
-            const conn = await mongoose.connect(process.env.MONGO_URL,{
-                useNewURLParser: true,
-                useUnifiedTopology: true,
-            })
-            console.log(`connected to ${conn.connection.host}`)
+// async function goose(){
+//         try {
+//             const conn = await mongoose.connect(process.env.MONGO_URL,{
+//                 useNewURLParser: true,
+//                 useUnifiedTopology: true,
+//             })
+//             console.log(`connected to ${conn.connection.host}`)
     
-        } catch (error) {
-            console.log(error)
-            process.exit(1)
-        }
-    }
-    goose()
+//         } catch (error) {
+//             console.log(error)
+//             process.exit(1)
+//         }
+//     }
+//     goose()
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
@@ -64,7 +70,7 @@ app.get('/',(req, res)=>{
 
     db.collection('movie-names').find().sort({likes: -1}).toArray()
     .then(data => {
-        res.render('index.ejs', { movie: data, user:req.user })
+        res.render('home.ejs', { movie: data, user:req.user })
     })
     .catch(error => console.error(error))
 })
