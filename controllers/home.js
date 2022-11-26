@@ -2,9 +2,6 @@ const Movies = require('../models/movies')
 // const fetch = require('node-fetch')
 
 
-// const fetch = require('node-fetch')
-
-
 module.exports = {
     getHomepage: async (req,res)=>{
         try{

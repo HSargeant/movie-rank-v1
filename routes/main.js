@@ -20,5 +20,3 @@ router.get('/auth/google/callback',passport.authenticate('google',{failureRedire
 // router.post('/signup', authController.postSignup)
 
 module.exports = router
-
-// app.get('/auth/google',passport.authenticate('google',{scope: ['profile']}))
