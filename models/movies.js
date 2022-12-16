@@ -17,14 +17,10 @@ const MoviesSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "G-User"
   }
-})
+},{ timestamps: true })
 
 module.exports = mongoose.model('Movies', MoviesSchema)

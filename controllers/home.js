@@ -1,9 +1,11 @@
 const Movies = require('../models/movies')
+const User = require('../models/user')
 // const fetch = require('node-fetch')
 
 
 module.exports = {
     getHomepage: async (req,res)=>{
+        console.log(req.user.id)
         try{
             const movies = await Movies.find()
             .populate('userId')
@@ -45,7 +47,7 @@ module.exports = {
 //////////////
 console.log(data.results[0].original_title,path,data.results[0].release_date.split("-")[0])
 
-            await Movies.create({
+          const newEntry=  await Movies.create({
                 name: data.results[0].original_title,
                 image: path,
                 year: data.results[0].release_date.split("-")[0],
@@ -53,6 +55,10 @@ console.log(data.results[0].original_title,path,data.results[0].release_date.spl
 
 
             })
+            await User.findOneAndUpdate({_id: req.user.id},
+                {
+                    $push:{addedMovies: newEntry._id  }
+                })
         console.log('Movie Added')
         res.redirect('/home')
         }catch(error){
@@ -61,11 +67,41 @@ console.log(data.results[0].original_title,path,data.results[0].release_date.spl
          
     },
     addLike: async (req,res)=>{
+            try{
+                const checkMovie = await Movies.findOne({_id: req.params.id}).lean()
+                const currentMovies = await User.findOne({_id: req.user.id}).lean()
+                let stringOBJs = currentMovies.likedMovies.map(x=>x.toString())
+                // console.log(stringOBJs,"-----------")
 
+                if(stringOBJs.indexOf(checkMovie._id.toString())==-1){
+                    const likedMovie = await Movies.findOneAndUpdate({_id: req.params.id},
+                        {$inc: { likes: 1 },})
+                    res.redirect("back")
+                    console.log('added like')
     
+                            await User.findOneAndUpdate({_id: req.user.id},
+                                {
+                                    $push:{likedMovies: likedMovie._id  }
+                                })
+                }else res.redirect("back")
 
+
+
+
+                    
+            }catch(err){
+                console.log(err)
+            }
     },
     removeLike: async (req,res)=>{
+        try{
+            await Movies.findOneAndUpdate({_id: req.params.id},
+                {$inc: { likes: -1 },})
+            res.redirect("back")
+            console.log('removed like')
+        }catch(err){
+            console.log(err)
+        }
         
     }
     // deleteMovie: async (req,res)=>{

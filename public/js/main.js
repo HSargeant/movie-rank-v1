@@ -1,13 +1,13 @@
 let h2s = Array.from(document.querySelectorAll('h2'))
 let storage = Object.keys(localStorage)
 
-h2s.forEach((x,i)=>{
-    if(storage.includes(x.innerText)){
-        // h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].style.color = '#333'
-        h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].classList.add('liked')
-        h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].classList.remove('no-like')
-    }
-})
+// h2s.forEach((x,i)=>{
+//     if(storage.includes(x.innerText)){
+//         // h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].style.color = '#333'
+//         h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].classList.add('liked')
+//         h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].classList.remove('no-like')
+//     }
+// })
 
 const thumbText = document.querySelectorAll('.no-like')
 const deleteText = document.querySelectorAll('.fa-trash')
@@ -26,64 +26,59 @@ Array.from(deleteText).forEach((element)=>{
 })
 
 async function addLike(){
-
     const movieName =this.parentNode.parentNode.childNodes[1].innerText.trim()
     const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src.trim()
     const releaseYear = this.parentNode.parentNode.childNodes[3].innerText.trim()
     const currentlikes = Number(this.parentNode.childNodes[1].innerText.trim())
-
-    try{
-        const response = await fetch('/addOneLike', {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              'movieName': movieName,
-              'moviePoster': moviePoster,
-              'releaseYear': releaseYear,
-              'currentLikes': currentlikes
-            })
-        })
-        const data = await response.json()
-        // console.log(data)
-        location.reload()
-    }catch(err){
-        console.log(err)
-    }
+        // const response = await fetch('/addOneLike', {
+        //     method: 'PUT',
+        //     headers: {'Content-Type': 'application/json'},
+        //     body: JSON.stringify({
+        //       'movieName': movieName,
+        //       'moviePoster': moviePoster,
+        //       'releaseYear': releaseYear,
+        //       'currentLikes': currentlikes
+        //     })
+        // })
+        // const data = await response.json()
+        // // console.log(data)
+        // location.reload()
+ 
     // store likes
     localStorage.setItem(movieName,"liked")
 }
 
-async function removeLike(){
+// async function removeLike(){
 
-    const movieName =this.parentNode.parentNode.childNodes[1].innerText.trim()
-    const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src.trim()
-    const releaseYear = this.parentNode.parentNode.childNodes[3].innerText.trim()
-    const currentlikes = Number(this.parentNode.childNodes[1].innerText.trim())
+//     const movieName =this.parentNode.parentNode.childNodes[1].innerText.trim()
+//     const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src.trim()
+//     const releaseYear = this.parentNode.parentNode.childNodes[3].innerText.trim()
+//     const currentlikes = Number(this.parentNode.childNodes[1].innerText.trim())
 
-    if(currentlikes ==0){
-        return
-    }
+//     if(currentlikes ==0){
+//         return
+//     }
 
-    try{
-        const response = await fetch('/home/removeLike', {
-            method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              'movieName': movieName,
-              'moviePoster': moviePoster,
-              'releaseYear': releaseYear,
-              'currentLikes': currentlikes
-            })
-        })
-        const data = await response.json()
-        // console.log(data)
-        location.reload()
-    }catch(err){
-        console.log(err)
-    }
-    // remove like from storage
-    localStorage.removeItem(movieName)
-}
+//     try{
+//         const response = await fetch('/home/removeLike', {
+//             method: 'put',
+//             headers: {'Content-Type': 'application/json'},
+//             body: JSON.stringify({
+//               'movieName': movieName,
+//               'moviePoster': moviePoster,
+//               'releaseYear': releaseYear,
+//               'currentLikes': currentlikes
+//             })
+//         })
+//         const data = await response.json()
+//         // console.log(data)
+//         location.reload()
+//     }catch(err){
+//         console.log(err)
+//     }
+//     // remove like from storage
+//     localStorage.removeItem(movieName)
+// }
 
 //delete movie
 

@@ -817,3 +817,11 @@ textarea {
    font-size: 1.4em;
    align-self: center;
 }
+
+button.likeBtn{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden; 
+}

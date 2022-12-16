@@ -10,6 +10,7 @@ const MongoStore = require('connect-mongo')
 const mongoose = require('mongoose')
 const user = require('./models/user')
 const logger = require("morgan");
+const methodOverride = require("method-override");
 const connectDB = require('./config/database')
 const mainRoutes = require('./routes/main')
 const homeRoutes = require('./routes/home')
@@ -30,6 +31,9 @@ app.enable('trust proxy')
 
 //Logging
 app.use(logger("dev"));
+
+//Use forms for put / delete
+app.use(methodOverride("_method"));
 
 
 // MongoClient.connect(connectionString,{ useUnifiedTopology: true })
@@ -168,49 +172,42 @@ app.use('/home', homeRoutes)
 // })
 
 //add likes
-app.put('/addOneLike', async (req, res) => {
-
-    addIPtoDB(req.ip,req.body.movieName)
-
-    let updatelikes = req.body.currentLikes + 1
-    db.collection('movie-names').updateOne({name: req.body.movieName,image: req.body.moviePoster, year:req.body.releaseYear,likes:req.body.currentLikes},{
-        $set: {
-            likes: updatelikes
-          }
-    },{
-        sort: {likes: -1},
-        upsert: false
-    })
-    .then(result => {
-        console.log('Added One Like')
-        res.json('Like Added')
-    })
-    .catch(error => console.error(error))
+// app.put('/addOneLike', async (req, res) => {
+//     let updatelikes = req.body.currentLikes + 1
+//     db.collection('movie-names').updateOne({name: req.body.movieName,image: req.body.moviePoster, year:req.body.releaseYear,likes:req.body.currentLikes},{
+//         $set: {
+//             likes: updatelikes
+//           }
+//     },{
+//         sort: {likes: -1},
+//         upsert: false
+//     })
+//     .then(result => {
+//         console.log('Added One Like')
+//         res.json('Like Added')
+//     })
+//     .catch(error => console.error(error))
 
     
 
-})
+// })
 
-app.put('/removeLike', async (req, res) => {
-    let updatelikes =req.body.currentLikes - 1
-    db.collection('movie-names').updateOne({name: req.body.movieName,image: req.body.moviePoster, year:req.body.releaseYear,likes:req.body.currentLikes},{
-        $set: {
-            likes: updatelikes
-          }
-    },{
-        sort: {likes: -1},
-        upsert: false
-    })
-    .then(result => {
-        console.log('removed One Like')
-        res.json('Like removed')
-    })
-    .catch(error => console.error(error))
-
-
-    updateIPLikeList(req.ip,req.body.movieName)
-
-})
+// app.put('/removeLike', async (req, res) => {
+//     let updatelikes =req.body.currentLikes - 1
+//     db.collection('movie-names').updateOne({name: req.body.movieName,image: req.body.moviePoster, year:req.body.releaseYear,likes:req.body.currentLikes},{
+//         $set: {
+//             likes: updatelikes
+//           }
+//     },{
+//         sort: {likes: -1},
+//         upsert: false
+//     })
+//     .then(result => {
+//         console.log('removed One Like')
+//         res.json('Like removed')
+//     })
+//     .catch(error => console.error(error))
+// })
 
 // app.delete('/deleteMovie', (req, res) => {
 //     db.collection('movie-names').deleteOne({"name": req.body.movieName})
@@ -222,35 +219,6 @@ app.put('/removeLike', async (req, res) => {
 //     .catch(error => console.error(error))
 // })
 
-
-async function addIPtoDB(address,name){
-    let ip = await db.collection('ip').find().toArray()
-    // console.log(ip.filter(x=>x.ipadd==req.ip)[0].like.includes(req.body.movieName))
-
-    if(!ip.find(elem=>elem.ipadd == address)){
-        await db.collection('ip').insertOne({
-         ipadd: address,like: [name]})
-     }else {
-        if(ip.filter(x=>x.ipadd==address)[0].like.includes(name)){
-            // res.redirect('/')
-            return
-        }
-       await db.collection('ip').updateOne({ipadd: address}, {$push:{like: name}})
-
-     }
-
-
-    if(ip.filter(x=>x.ipadd==address)[0].like.includes(name)){
-        // res.redirect('/')
-        return
-    }
-    
-}
-
-async function updateIPLikeList(address,name){
-    let ip = await db.collection('ip').find().toArray()
-    await db.collection('ip').updateOne({ipadd: address}, {$set:{like: ip.filter(x=>x.ipadd==address)[0].like.filter(x=>x!== name)}})
-}
 
 app.listen(process.env.PORT || PORT,()=>{
     console.log(`The server is running on port ${PORT}`)

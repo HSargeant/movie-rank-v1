@@ -8,7 +8,8 @@ const {ensureAuth, ensureGuest} = require('../middleware/authMiddleware')
 router.get("/", ensureAuth,homeController.getHomepage)
 
 router.post("/addMovie",ensureAuth,homeController.addMovie)
-router.post("/addLike",ensureAuth,homeController.addMovie)
-router.post("/removeLike",ensureAuth,homeController.addMovie)
+router.put("/addLike/:id",ensureAuth,homeController.addLike)
+router.put("/removeLike/:id",ensureAuth,homeController.removeLike)
 
 module.exports = router
+
