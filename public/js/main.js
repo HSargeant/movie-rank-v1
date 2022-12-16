@@ -1,88 +1,13 @@
-let h2s = Array.from(document.querySelectorAll('h2'))
-let storage = Object.keys(localStorage)
+// const thumbText = document.querySelectorAll('.no-like')
+// const clickedLike = document.querySelectorAll('.liked')
 
-// h2s.forEach((x,i)=>{
-//     if(storage.includes(x.innerText)){
-//         // h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].style.color = '#333'
-//         h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].classList.add('liked')
-//         h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].classList.remove('no-like')
-//     }
+// Array.from(clickedLike).forEach((element)=>{
+//     element.addEventListener('click',removeLike)
 // })
 
-const thumbText = document.querySelectorAll('.no-like')
-const deleteText = document.querySelectorAll('.fa-trash')
-const clickedLike = document.querySelectorAll('.liked')
-
-Array.from(clickedLike).forEach((element)=>{
-    element.addEventListener('click',removeLike)
-})
-
-Array.from(thumbText).forEach((element)=>{
-    element.addEventListener('click', addLike)
-})
-
-Array.from(deleteText).forEach((element)=>{
-    element.addEventListener('click', deleteMovie)
-})
-
-async function addLike(){
-    const movieName =this.parentNode.parentNode.childNodes[1].innerText.trim()
-    const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src.trim()
-    const releaseYear = this.parentNode.parentNode.childNodes[3].innerText.trim()
-    const currentlikes = Number(this.parentNode.childNodes[1].innerText.trim())
-        // const response = await fetch('/addOneLike', {
-        //     method: 'PUT',
-        //     headers: {'Content-Type': 'application/json'},
-        //     body: JSON.stringify({
-        //       'movieName': movieName,
-        //       'moviePoster': moviePoster,
-        //       'releaseYear': releaseYear,
-        //       'currentLikes': currentlikes
-        //     })
-        // })
-        // const data = await response.json()
-        // // console.log(data)
-        // location.reload()
- 
-    // store likes
-    localStorage.setItem(movieName,"liked")
-}
-
-// async function removeLike(){
-
-//     const movieName =this.parentNode.parentNode.childNodes[1].innerText.trim()
-//     const moviePoster = this.parentNode.parentNode.parentNode.childNodes[3].src.trim()
-//     const releaseYear = this.parentNode.parentNode.childNodes[3].innerText.trim()
-//     const currentlikes = Number(this.parentNode.childNodes[1].innerText.trim())
-
-//     if(currentlikes ==0){
-//         return
-//     }
-
-//     try{
-//         const response = await fetch('/home/removeLike', {
-//             method: 'put',
-//             headers: {'Content-Type': 'application/json'},
-//             body: JSON.stringify({
-//               'movieName': movieName,
-//               'moviePoster': moviePoster,
-//               'releaseYear': releaseYear,
-//               'currentLikes': currentlikes
-//             })
-//         })
-//         const data = await response.json()
-//         // console.log(data)
-//         location.reload()
-//     }catch(err){
-//         console.log(err)
-//     }
-//     // remove like from storage
-//     localStorage.removeItem(movieName)
-// }
-
-//delete movie
-
-
+// Array.from(thumbText).forEach((element)=>{
+//     element.addEventListener('click', addLike)
+// })
 
 // let popUp = document.querySelector('.aboutPopup')
 let about = document.querySelector('.aboutMenu')

@@ -25,17 +25,31 @@
                             <%}%>
                             <li><%=movie[i].year %></li>
                             <li>
-                              
-                              <form
-                                action="home/addLike/<%=movie[i]._id%>?_method=PUT"
-                                method="POST"
-                              >
-                                <span><%= movie[i].likes %></span>
-                                <button class="likeBtn" type="submit">
+                              <%if(user.likedMovies.includes(movie[i]._id)){%>
+                                <form
+                                  action="home/removeLike/<%=movie[i]._id%>?_method=PUT"
+                                  method="POST"
+                                  class=""
+                                >
+                                  <span><%= movie[i].likes %></span>
+                                  <button class="likeBtn" type="submit">
+                                    <i class='fa fa-thumbs-up liked' ></i>
+                                  </button>
+                                </form>
+                             <% } else {%>
+                                <form
+                                  action="home/addLike/<%=movie[i]._id%>?_method=PUT"
+                                  method="POST"
+                                  class=""
+                                >
+                                  <span><%= movie[i].likes %></span>
+                                  <button class="likeBtn" type="submit">
+                                    <i class='fa fa-thumbs-up no-like' ></i>
+                                  </button>
+                                </form>
+                              <%}%>
 
-                                  <i class='fa fa-thumbs-up no-like' ></i>
-                                </button>
-                              </form>
+
                                 <!-- <span data="<%=movie._id%>" ></span> -->
                                 <!-- <span data=<%=movie._id%> class='fa fa-trash'></span> -->
                             </li>
