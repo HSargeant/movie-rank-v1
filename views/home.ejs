@@ -1,125 +1,103 @@
 <%- include('partials/header') -%>
-                <section class="search dark-mode"> 
-                    <input id="search" type="search" placeholder="Search movie list"> 
-                </section>              
-                <section class="cards" >
-                    <% for(let i=0; i < movie.length; i++) { %>
-                    <section class="card" data="<%=movie[i]._id%>">
-                        <% if(i==0){ %>
-                        <span class="count first-place"><%=i+1%></span>
-                        <%} else if(i==1){ %>
-                            <span class="count second-place"><%=i+1%></span>
-                        <%} else if(i==2){%>
-                            <span class="count third-place"><%=i+1%></span>
-                            <%} else if(i+1>99){%>
-                                <span class="count longCount"><%=i+1%></span>
-                            <%}else{%>
-                                <span class="count"><%=i+1%></span>
-                            <%}%>
-                        <img src="<%=movie[i].image %>" alt="<%=movie[i].name%> movie poster">
-                        <ul>
-                            <% if(movie[i].name.length > 23){ %>
-                                <li> <h2 class="longName"><%=movie[i].name%></h2></li>
-                            <%} else{ %>
-                                <li> <h2><%=movie[i].name%></h2></li>
-                            <%}%>
-                            <li><%=movie[i].year %></li>
-                            <li>
-                              <%if(user.likedMovies.includes(movie[i]._id)){%>
-                                <form
-                                  action="home/removeLike/<%=movie[i]._id%>?_method=PUT"
-                                  method="POST"
-                                  class=""
-                                >
-                                  <span><%= movie[i].likes %></span>
-                                  <button class="likeBtn" type="submit">
-                                    <i class='fa fa-thumbs-up liked' ></i>
-                                  </button>
-                                </form>
-                             <% } else {%>
-                                <form
-                                  action="home/addLike/<%=movie[i]._id%>?_method=PUT"
-                                  method="POST"
-                                  class=""
-                                >
-                                  <span><%= movie[i].likes %></span>
-                                  <button class="likeBtn" type="submit">
-                                    <i class='fa fa-thumbs-up no-like' ></i>
-                                  </button>
-                                </form>
-                              <%}%>
+<section class="search dark-mode"> 
+	<input id="search" type="search" placeholder="Search movie list"> 
+</section>              
+      <section class="cards" >
+          <% for(let i=0; i < movie.length; i++) { %>
+          <section class="card">
+              <% if(i==0){ %>
+              <span class="count first-place"><%=i+1%></span>
+              <%} else if(i==1){ %>
+                  <span class="count second-place"><%=i+1%></span>
+              <%} else if(i==2){%>
+                  <span class="count third-place"><%=i+1%></span>
+                  <%} else if(i+1>99){%>
+                      <span class="count longCount"><%=i+1%></span>
+                  <%}else{%>
+                      <span class="count"><%=i+1%></span>
+                  <%}%>
+              <img src="<%=movie[i].image %>" alt="<%=movie[i].name%> movie poster">
+              <ul>
+                  <% if(movie[i].name.length > 23){ %>
+                      <li> <h2 class="longName"><%=movie[i].name%></h2></li>
+                  <%} else{ %>
+                      <li> <h2><%=movie[i].name%></h2></li>
+                  <%}%>
+                  <li><%=movie[i].year %></li>
+                  <li>
+                    <%if(user.likedMovies.includes(movie[i]._id)){%>
+                      <form
+                        action="home/removeLike/<%=movie[i]._id%>?_method=PUT"
+                        method="POST"
+                        class=""
+                      >
+                        <span><%= movie[i].likes %></span>
+                        <button class="likeBtn" type="submit">
+                          <i class='fa fa-thumbs-up liked' ></i>
+                        </button>
+                      </form>
+                    <% } else {%>
+                      <form
+                        action="home/addLike/<%=movie[i]._id%>?_method=PUT"
+                        method="POST"
+                        class=""
+                      >
+                        <span><%= movie[i].likes %></span>
+                        <button class="likeBtn" type="submit">
+                          <i class='fa fa-thumbs-up no-like' ></i>
+                        </button>
+                      </form>
+                    <%}%>
+                      <!-- <span  ></span> -->
+                      <!-- <span  class='fa fa-trash'></span> -->
+                  </li>
+              </ul>
+          </section>
+          <%}%>                    
+      </section>
+  </div>  
+       <!--end of container  -->
+  <div class="modal fade" id="exampleModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalLabel">Add a Movie</h2>
+          </div>
+          <div class="modal-body">
+              <span>**Tip: Including the release year is helpful when dealing with a movie that has sequels or has been remade**</span><br><br><br>
+                      <form action="/home/addMovie" method="POST">
+                          <input type="text" placeholder="Movie Name" name="name" id="name">
+                          <input type="number" placeholder="Release Year (optional)" name="year" id="year">
+                          <input type="submit" id="submitMovie" value="Submit" class="btn btn-primary">
+                      </form>        </div>
 
-
-                                <!-- <span data="<%=movie._id%>" ></span> -->
-                                <!-- <span data=<%=movie._id%> class='fa fa-trash'></span> -->
-                            </li>
-                        </ul>
-                    </section>
-                    <%}%>                    
-                </section>
-            </div>
-            <!-- <section class="addMovie hide">
-                <section class="popUpSection">
-                    <h3>Add A Movie</h3>
-                    <form action="/addMovie" method="POST">
-                        <input type="text" placeholder="Movie Name" name="name" id="name">
-                        <input type="number" placeholder="Release Year (optional)" name="year" id="year">
-                        <input type="submit" id="submitMovie">
-                    </form>
-                    <button class="closeAdd">close</button>
-                </section>
-            </section> -->           
-            <div class="modal fade" id="exampleModal">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h2 class="modal-title" id="exampleModalLabel">Add a Movie</h2>
-                      <!-- </button> -->
-                    </div>
-                    <div class="modal-body">
-                        <span>**Tip: Including the release year is helpful when dealing with a movie that has sequels or has been remade**</span><br><br><br>
-                                <form action="/home/addMovie" method="POST">
-                                    <input type="text" placeholder="Movie Name" name="name" id="name">
-                                    <input type="number" placeholder="Release Year (optional)" name="year" id="year">
-                                    <input type="submit" id="submitMovie" value="Submit" class="btn btn-primary">
-                                </form>        </div>
-   
-                    <div class="modal-footer">
-                      <button type="button" id="closeModal" class="btn btn-secondary">Close</button>
-                    </div>
+          <div class="modal-footer">
+            <button type="button" id="closeModal" class="btn btn-secondary">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="modal-backdrop fade show" id="backdrop"  style="display: none;"></div>
+  <div class="modal fade" id="aboutModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title" id="aboutModalLabel">Welcome to Movie Rank</h1>
+          </div>
+          <div class="modal-body">
+              <p> Movie Rank is where you can help build a list of great movies and with your 'likes' help the communty to rank them.</p><br>
+                  
+              <p>Don't see your favorite movies on the site? Click 'Add Your Favorite Movies' in the menu to add them. Be sure to browse the movies and give a like to Movies that are some of your favorites. </p><br>
+              
+              <p>The goal of Movie Rank is to gather a collection of everyones favorite movies and see which one comes out on top!</p><br>
+              
+              <p>--More updates coming soon---</p>      
                   </div>
-                </div>
-              </div>
-            <div class="modal-backdrop fade show" id="backdrop"  style="display: none;"></div>
-            <!-- <section class="aboutPopup hide">
-                <section class="popUpSection">
-                    <p>Welcome to <h1>Movie Rank</h1></p>
-
-               <p> Add a few of your favorite movies to the list and give them a like. The goal of Movie Rank is to gather a collection of everyones favortire movies and see which one comes out on top!<br>---Under Contruction---</p>
-                <button class="closeAbout">close</button>
-                </section>
-            </section> -->
-            <div class="modal fade" id="aboutModal">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title" id="aboutModalLabel">Welcome to Movie Rank</h1>
-                      <!-- </button> -->
-                    </div>
-                    <div class="modal-body">
-                        <p> Movie Rank is where you can help build a list of great movies and with your 'likes' help the communty to rank them.</p><br>
-                            
-                        <p>Don't see your favorite movies on the site? Click 'Add Your Favorite Movies' in the menu to add them. Be sure to browse the movies and give a like to Movies that are some of your favorites. </p><br>
-                        
-                        <p>The goal of Movie Rank is to gather a collection of everyones favorite movies and see which one comes out on top!</p><br>
-                        
-                        <p>--More updates coming soon---</p>      
-                            </div>
-                    <div class="modal-footer">
-                      <button type="button" id="closeAboutModal" class="btn btn-secondary">Close</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <div class="modal-backdrop fade show" id="aboutBackdrop"  style="display: none;"></div>
-            <%- include('partials/footer') -%>
+          <div class="modal-footer">
+            <button type="button" id="closeAboutModal" class="btn btn-secondary">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="modal-backdrop fade show" id="aboutBackdrop"  style="display: none;"></div>
+<%- include('partials/footer') -%>

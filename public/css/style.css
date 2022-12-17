@@ -79,7 +79,7 @@ header.center {
 header nav{
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 .mainLogo {
     width: 400px;

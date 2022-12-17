@@ -17,6 +17,10 @@
                 <header class="center">
                     <nav>
                         <ul>
+                            <%if(user){%>
+                                <li><a href="/profile" class="login">Profile</a></li>
+                            <form action="/logout" method="POST" id="logoutForm" class="hide"></form>
+                            <%}%>
                             <li><a class="addLink" id="addMovie">Add Your Favorite Movies</a></li>
                             <li><a class="aboutMenu">About</a></li>
                             <%if(!user){%>
@@ -25,7 +29,6 @@
                             <%}%>
 
                             <%if(user){%>
-                                <li><a href="/profile" class="login">Profile</a></li>
                                 <li><a class="logout">Logout</a></li>
                             <form action="/logout" method="POST" id="logoutForm" class="hide"></form>
 
