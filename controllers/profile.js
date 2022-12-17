@@ -3,11 +3,24 @@ const User = require('../models/user')
 // const fetch = require('node-fetch')
 
 module.exports = {
-    getHomepage: async (req,res)=>{
+    getProfile: async (req,res)=>{
         try{
-            const movies = await Movies.find().lean().sort({likes: -1})
-            .populate('userId')
-            res.render('home.ejs', {movie: movies, user: req.user})
+            const movies = await User.findOne({_id: req.user.id}).lean()
+            .populate('likedMovies')
+            const addedMovies = await Movies.find({userId: req.user.id}).lean()
+            let obj={},resultArr=[]
+            let combineMovies= movies.likedMovies.concat(addedMovies)
+            for(let i=0; i<combineMovies.length; i++){
+                obj[combineMovies[i]._id]=true
+            }
+            for(let i=0; i<combineMovies.length; i++){
+                if(obj[combineMovies[i]._id]==true){
+                    resultArr.push(combineMovies[i])
+                    obj[combineMovies[i]._id]=false
+                }
+            }
+            resultArr.sort((a,b)=>b.likes-a.likes)
+            res.render('profile.ejs', {movie: resultArr, user: req.user})
         }catch(err){
             console.log(err)
         }
@@ -84,9 +97,9 @@ module.exports = {
     removeLike: async (req,res)=>{
         try{
             const currentMovie = await Movies.findOneAndUpdate({_id: req.params.id},{$inc: { likes: -1 },})
-            const moviesArray = await User.findOne({_id: req.user.id})
+            const moviesArray = await User.findOne({_id: req.user.id}).lean()
             const newArray = moviesArray.likedMovies.filter(x=>x.toString()!==currentMovie._id.toString())
-            await moviesArray.update({$set:{likedMovies: newArray }})
+            await moviesArray.update({likedMovies: newArray })
 
             res.redirect("back")
             console.log('removed like')

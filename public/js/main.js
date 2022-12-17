@@ -1,5 +1,5 @@
-// const thumbText = document.querySelectorAll('.no-like')
-// const clickedLike = document.querySelectorAll('.liked')
+const thumbText = document.querySelectorAll('.no-like')
+const clickedLike = document.querySelectorAll('.liked')
 
 // Array.from(clickedLike).forEach((element)=>{
 //     element.addEventListener('click',removeLike)
@@ -28,9 +28,9 @@ function changeTheme(){
     const darkLogo = document.querySelector('.lightLogo')
     const searchBar = document.querySelector('.search')
 
-    Array.from(clickedLike).forEach((element)=>{
-        element.classList.toggle('light')
-    })
+    // Array.from(clickedLike).forEach((element)=>{
+    //     element.classList.toggle('light')
+    // })
     
     Array.from(thumbText).forEach((element)=>{
         element.classList.toggle('light')
@@ -44,7 +44,7 @@ function changeTheme(){
     counts.forEach(x=>{
         x.classList.toggle('light')
      })
-     searchBar.classList.toggle("dark-mode")
+     if(window.location.pathname=="/home") searchBar.classList.toggle("dark-mode")
 
 }
 
@@ -69,8 +69,12 @@ if(localStorage.getItem('site-theme')=='light'){
 
 // Filter Movies
 
-let input = document.querySelector('#search')
-input.addEventListener('keyup',filterCards)
+
+if(window.location.pathname=="/home"){
+
+    let input = document.querySelector('#search')
+    input.addEventListener('keyup',filterCards)
+}
 
 function filterCards(){
   let section=document.querySelectorAll('.card')
@@ -90,6 +94,7 @@ function filterCards(){
 //modals
 
 addLink.addEventListener('click',()=>{
+    console.log("click")
     document.getElementById("backdrop").style.display = "block"
     document.getElementById("exampleModal").style.display = "block"
     document.getElementById("exampleModal").classList.add("show")
