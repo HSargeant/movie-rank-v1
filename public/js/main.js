@@ -38,20 +38,21 @@ if(localStorage.getItem('site-theme')=='light'){
 if(window.location.pathname=="/home"){
     let input = document.querySelector('#search')
     input.addEventListener('keyup',filterCards)
-}
-function filterCards(){
-  let section=document.querySelectorAll('.card')
-  let txtValue;
-  let filter = input.value.toUpperCase();
-  let h2 = document.querySelectorAll('h2')
-  for (i = 0; i < h2.length; i++) {
-    txtValue=h2[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      section[i].style.display = "";
-    } else {
-        section[i].style.display = "none";
+
+    function filterCards(){
+    let section=document.querySelectorAll('.card')
+    let txtValue;
+    let filter = input.value.toUpperCase();
+    let h2 = document.querySelectorAll('h2')
+    for (i = 0; i < h2.length; i++) {
+        txtValue=h2[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        section[i].style.display = "";
+        } else {
+            section[i].style.display = "none";
+        }
     }
-  }
+    }
 }
 //modals
 addLink.addEventListener('click',()=>{
