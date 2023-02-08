@@ -17,6 +17,10 @@ MongoClient.connect(connectionString,{ useUnifiedTopology: true })
     .then(client => {
         console.log(`Connected to ${dbName} Database`)
         db = client.db(dbName)
+        app.listen(process.env.PORT || PORT,()=>{
+          console.log(`The server is running on port ${PORT}`)
+      })
+
     })
 
 app.set('view engine', 'ejs')
@@ -157,6 +161,3 @@ async function updateIPLikeList(address,name){
     await db.collection('ip').updateOne({ipadd: address}, {$set:{like: ip.filter(x=>x.ipadd==address)[0].like.filter(x=>x!== name)}})
 }
 
-app.listen(process.env.PORT || PORT,()=>{
-    console.log(`The server is running on port ${PORT}`)
-})
