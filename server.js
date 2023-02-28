@@ -94,7 +94,7 @@ app.put('/addOneLike', async (req, res) => {
     })
     .then(result => {
         console.log('Added One Like')
-        res.json('Like Added')
+        res.json({'Like Added':true})
     })
     .catch(error => console.error(error))
 
@@ -112,7 +112,7 @@ app.put('/removeLike', async (req, res) => {
     })
     .then(result => {
         console.log('removed One Like')
-        res.json('Like removed')
+        res.json({'Like removed':true})
     })
     .catch(error => console.error(error))
 
