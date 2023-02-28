@@ -50,8 +50,8 @@ async function addLike(){
             })
         })
         const data = await response.json()
-        // console.log(data)
-        location.reload()
+        console.log(data)
+        window.location.reload(true)
     }catch(err){
         console.log(err)
     }
@@ -84,7 +84,7 @@ async function addLike(){
         })
         const data = await response.json()
         // console.log(data)
-        location.reload()
+        window.location.reload(true)
     }catch(err){
         console.log(err)
     }
