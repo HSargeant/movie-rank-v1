@@ -94,7 +94,7 @@ app.put('/addOneLike', async (req, res) => {
     })
     .then(result => {
         console.log('Added One Like')
-        res.json({'Like Added':true})
+        res.json({added:true})
     })
     .catch(error => console.error(error))
 

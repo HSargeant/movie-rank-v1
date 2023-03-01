@@ -37,7 +37,7 @@ async function addLike(){
     const releaseYear = this.parentNode.parentNode.childNodes[3].innerText.trim()
     const currentlikes = Number(this.parentNode.childNodes[1].innerText.trim())
 
-
+    console.log(movieName,"adding like")
     try{
         const response = await fetch('/addOneLike', {
             method: 'put',
@@ -50,13 +50,14 @@ async function addLike(){
             })
         })
         const data = await response.json()
-        console.log(data)
-        window.location.reload(true)
+        if(data.added) return data.json()
     }catch(err){
         console.log(err)
     }
         // store likes
         localStorage.setItem(movieName,"liked")
+        window.location.reload(true)
+
 }
 
  async function removeLike(){
