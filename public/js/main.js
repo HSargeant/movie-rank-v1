@@ -2,8 +2,8 @@ let h2s = Array.from(document.querySelectorAll('h2'))
 let storage = Object.keys(localStorage)
 
 
-h2s.forEach((x,i)=>{
-    if(storage.includes(x.innerText)){
+h2s.forEach((movie,i)=>{
+    if(storage.includes(movie.innerText)){
         // h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].style.color = '#333'
         h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].classList.add('liked')
         h2s[i].parentNode.parentNode.childNodes[5].childNodes[3].classList.remove('no-like')
@@ -49,14 +49,15 @@ async function addLike(){
               'currentLikes': currentlikes
             })
         })
-        const data = await response.json()
-        console.log(data)
+        // const data = await response.json()
+        // console.log(data)
         window.location.reload(true)
+        // store likes
+        localStorage.setItem(movieName,"liked")
     }catch(err){
         console.log(err)
     }
-        // store likes
-        localStorage.setItem(movieName,"liked")
+        return
 }
 
  async function removeLike(){
@@ -82,14 +83,15 @@ async function addLike(){
               'currentLikes': currentlikes
             })
         })
-        const data = await response.json()
+        // const data = await response.json()
         // console.log(data)
         window.location.reload(true)
+        // remove like from storage
+        localStorage.removeItem(movieName)
     }catch(err){
         console.log(err)
     }
-        // remove like from storage
-        localStorage.removeItem(movieName)
+        return
 }
 
 //delete movie

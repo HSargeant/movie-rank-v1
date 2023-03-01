@@ -83,7 +83,7 @@ app.post('/addMovie', async (req, res) => {
 })
 
 //add likes
-app.put('/addOneLike', async (req, res) => {
+app.put('/addOneLike', (req, res) => {
 
     addIPtoDB(req.ip,req.body.movieName)
 
@@ -98,7 +98,7 @@ app.put('/addOneLike', async (req, res) => {
     })
     .then(result => {
         console.log('Added One Like')
-        res.json({added:true})
+        res.json({"success":true})
     })
     .catch(error => console.error(error))
 
@@ -116,7 +116,7 @@ app.put('/removeLike', async (req, res) => {
     })
     .then(result => {
         console.log('removed One Like')
-        res.json({added:true})
+        res.json({"success":true})
     })
     .catch(error => console.error(error))
 

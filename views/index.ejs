@@ -38,7 +38,7 @@
                 
                 <section class="cards">
                     <% for(let i=0; i < movie.length; i++) { %>
-                    <section class="card">
+                    <section class="card" loading="lazy">
                         <% if(i==0){ %>
                         <span class="count first-place"><%=i+1%></span>
                         <%} else if(i==1){ %>
@@ -51,7 +51,7 @@
                                 <span class="count"><%=i+1%></span>
                             <%}%>
 
-                        <img src="<%=movie[i].image %>" alt="<%=movie[i].name%> movie poster">
+                        <img src="<%=movie[i].image %>" alt="<%=movie[i].name%> movie poster" loading="lazy">
                         <ul>
                             <% if(movie[i].name.length > 23){ %>
                                 <li> <h2 class="longName"><%=movie[i].name%></h2></li>
