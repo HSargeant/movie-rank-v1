@@ -13,7 +13,7 @@ router.get('/auth/google',passport.authenticate('google',{scope: ['profile']}))
 router.post('/logout', authController.logout)
 
 router.get('/auth/google/callback',passport.authenticate('google',{failureRedirect:'/'}),(req, res)=>{
-    console.log("redir")
+    console.log("user logged in")
     res.redirect('/home')
 })
 // router.get('/signup', authController.getSignup)
