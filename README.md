@@ -1,7 +1,7 @@
 # Movie Rank Ver1
 Movie Rank is where people can help build of a list and help to rank everyones favorite movies.
 
-**Link to project:** https://movierank.cyclic.app
+**Link to project:** https://movierank.up.railway.app/
 
 ![movie rank](https://images4.imagebam.com/69/b3/91/MEBTATL_o.png)
 
