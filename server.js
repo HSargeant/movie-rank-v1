@@ -17,9 +17,13 @@ MongoClient.connect(connectionString,{ useUnifiedTopology: true })
     .then(client => {
         console.log(`Connected to ${dbName} Database`)
         db = client.db(dbName)
+    
+
+    })
+    .then(()=>{
         app.listen(process.env.PORT || PORT,()=>{
-          console.log(`The server is running on port ${PORT}`)
-      })
+            console.log(`The server is running on port ${PORT}`)
+        })
 
     })
 
@@ -112,7 +116,7 @@ app.put('/removeLike', async (req, res) => {
     })
     .then(result => {
         console.log('removed One Like')
-        res.json({'Like removed':true})
+        res.json({added:true})
     })
     .catch(error => console.error(error))
 
