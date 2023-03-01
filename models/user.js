@@ -22,6 +22,9 @@ const GoogleUserSchema = new mongoose.Schema({
   },
   addedMovies:[{ type : mongoose.Schema.Types.ObjectId, ref: 'Movies' }],
   likedMovies:[{ type : mongoose.Schema.Types.ObjectId, ref: 'Movies' }],
+  likedMovies2:{
+    type: Object
+  }
 },{ timestamps: true })
 
 module.exports = mongoose.model('G-User', GoogleUserSchema)

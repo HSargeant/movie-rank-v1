@@ -68,12 +68,16 @@ module.exports = {
 
             if(stringOBJs.indexOf(checkMovie._id.toString())==-1){
                 await checkMovie.update({$inc: { likes: 1 },})
-                    res.redirect("back")
-                    console.log('added like')
                 await User.findOneAndUpdate({_id: req.user.id},
                     {
-                        $push:{likedMovies: checkMovie._id  }
+                        $push:{likedMovies: checkMovie._id  },
                     })
+                await User.findOneAndUpdate({_id: req.user.id},
+                    {
+                       [`likedMovies2[${checkMovie}]`]:true
+                    })
+                    res.redirect("back")
+                    console.log('added like')
             }else {
                 res.redirect("back")
             }
