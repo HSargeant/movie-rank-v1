@@ -20,9 +20,10 @@ const GoogleUserSchema = new mongoose.Schema({
   image: {
     type: String,
   },
-  addedMovies:[{ type : mongoose.Schema.Types.ObjectId, ref: 'Movies' }],
-  likedMovies:[{ type : mongoose.Schema.Types.ObjectId, ref: 'Movies' }],
-  likedMovies2:{
+  likedMovies:{
+    type: Object
+  },
+  addedMovies:{
     type: Object
   }
 },{ timestamps: true })

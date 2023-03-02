@@ -25,7 +25,7 @@
                   <%}%>
                   <li><%=movie[i].year %></li>
                   <li>
-                    <%if(user.likedMovies.includes(movie[i]._id)){%>
+                    <%if(user.likedMovies[movie[i]._id]||user.addedMovies[movie[i]._id]){%>
                       <form
                         action="home/removeLike/<%=movie[i]._id%>?_method=PUT"
                         method="POST"

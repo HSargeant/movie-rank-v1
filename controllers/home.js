@@ -47,10 +47,11 @@ module.exports = {
                 image: path,
                 year: data.results[0].release_date.split("-")[0],
                 userId: req.user.id,
+                likes:1
             })
             await User.findOneAndUpdate({_id: req.user.id},
                 {
-                    $push:{addedMovies: newEntry._id  }
+                    $set : {[`addedMovies.${newEntry._id}`]:true,[`likedMovies.${newEntry._id}`]:true}
                 })
         console.log('Movie Added')
         res.redirect('/home')
@@ -63,18 +64,15 @@ module.exports = {
         try{
             const checkMovie = await Movies.findOne({_id: req.params.id})
             const currentMovies = await User.findOne({_id: req.user.id}).lean()
-            let stringOBJs = currentMovies.likedMovies.map(x=>x.toString())
+            // let stringOBJs = currentMovies.likedMovies.map(x=>x.toString())
             // console.log(stringOBJs,"-----------")
-
-            if(stringOBJs.indexOf(checkMovie._id.toString())==-1){
+            console.log(currentMovies.likedMovies)
+            console.log(currentMovies.likedMovies[checkMovie._id],"does it exist")
+            if(!currentMovies.likedMovies[checkMovie._id]){
                 await checkMovie.update({$inc: { likes: 1 },})
                 await User.findOneAndUpdate({_id: req.user.id},
                     {
-                        $push:{likedMovies: checkMovie._id  },
-                    })
-                await User.findOneAndUpdate({_id: req.user.id},
-                    {
-                       [`likedMovies2[${checkMovie}]`]:true
+                        $set : {[`likedMovies.${checkMovie._id}`]:true}
                     })
                     res.redirect("back")
                     console.log('added like')
@@ -87,10 +85,16 @@ module.exports = {
     },
     removeLike: async (req,res)=>{
         try{
-            const currentMovie = await Movies.findOneAndUpdate({_id: req.params.id},{$inc: { likes: -1 },})
-            const moviesArray = await User.findOne({_id: req.user.id})
-            const newArray = moviesArray.likedMovies.filter(x=>x.toString()!==currentMovie._id.toString())
-            await moviesArray.update({$set:{likedMovies: newArray }})
+            const user = await User.findOne({_id: req.user.id})
+            if(user.addedMovies[req.params.id]) {
+                res.redirect("back")
+                return
+            }
+
+            await Movies.findOneAndUpdate({_id: req.params.id},{$inc: { likes: -1 },})
+            await user.update({$unset : {[`likedMovies.${req.params.id}`]:true}})
+            // const newArray = moviesArray.likedMovies.filter(x=>x.toString()!==currentMovie._id.toString())
+            // await moviesArray.update({$set:{likedMovies: newArray }})
 
             res.redirect("back")
             console.log('removed like')

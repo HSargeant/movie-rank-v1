@@ -40,8 +40,11 @@
                 </div>
             </header>
             <section class="">
-                <h1>Your Top Movies</h1>
+                <h1><%=user.firstName%>'s Top Movies</h1>
             </section>
+            <section class="search dark-mode"> 
+                <input id="search" type="search" placeholder="Search movie list"> 
+            </section> 
             <section class="cards">
                 <% for(let i=0; i < movie.length ; i++) { %>
                 <section class="card" data="<%=movie[i]._id%>">
@@ -65,8 +68,8 @@
                         <%}%>
                         <li><%=movie[i].year %></li>
                         <li>
-                            <%if(user.likedMovies.includes(movie[i]._id)){%>
-                            <form action="home/removeLike/<%=movie[i]._id%>?_method=PUT" method="POST" class="">
+                            <%if(user.likedMovies[movie[i]._id]||user.addedMovies[movie[i]._id]){%>
+                                <form action="home/removeLike/<%=movie[i]._id%>?_method=PUT" method="POST" class="">
                                 <span><%= movie[i].likes %></span>
                                 <button class="likeBtn" type="submit">
                                     <i class="fa fa-thumbs-up liked"></i>
@@ -99,9 +102,9 @@
                         <br />
                         <br />
                         <form action="/home/addMovie" method="POST">
-                            <input type="text" placeholder="Movie Name" name="name" id="name" />
-                            <input type="number" placeholder="Release Year (optional)" name="year" id="year" />
-                            <input type="submit" id="submitMovie" value="Submit" class="btn btn-primary" />
+                            <input type="text" placeholder="Movie Name" name="name" id="name" required autocomplete="on">
+                            <input type="number" placeholder="Release Year" name="year" id="year" required>
+                            <input type="submit" id="submitMovie" value="Submit" class="btn btn-primary" >
                         </form>
                     </div>
 
