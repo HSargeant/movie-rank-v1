@@ -1,6 +1,7 @@
 const thumbText = document.querySelectorAll('.no-like')
 const deleteText = document.querySelectorAll('.fa-trash')
 const clickedLike = document.querySelectorAll('.liked')
+const Atags = document.querySelectorAll("a")
 
 // Filter Movies
 
@@ -48,37 +49,13 @@ function changeTheme(){
     Array.from(thumbText).forEach((element)=>{
         element.classList.toggle('light')
     })
-    
-
-
-
     let counts= Array.from(document.querySelectorAll('.count'))
     body.classList.toggle("dark-mode")
     searchBar.classList.toggle("dark-mode")
     // body.style.color= "#f7f7ed"
     lightLogo.classList.toggle('hide')
     darkLogo.classList.toggle("hide")
-    //heder
-    addLink.classList.toggle('light')
-    about.classList.toggle('light')
-
-document.querySelector('.profile').classList.toggle('light')
-    counts.forEach(x=>{
-        x.classList.toggle('light')
-     })
-
-     
-
-
-
-}
-
-document.querySelector('#themeSwitchDark').addEventListener('click',switchDark)
-
-function switchDark(){
-    // document.querySelector('.fa-moon').classList.toggle('hide')
-    // document.querySelector('.fa-sun').classList.toggle('hide')
-    // localStorage.setItem('current theme','dark')
+    Atags.forEach(x=>x.classList.toggle("light"))
 }
 document.querySelector('.fa-moon').addEventListener('click',()=>{
     localStorage.removeItem('site-theme')
@@ -104,17 +81,13 @@ addLink.addEventListener('click',()=>{
 
 document.querySelector("#closeModal").addEventListener('click',closeModal)
 
-
 function closeModal(){
-
     document.getElementById("backdrop").style.display = "none"
     document.getElementById("exampleModal").style.display = "none"
     document.getElementById("exampleModal").classList.remove("show")
-
     document.getElementById("aboutBackdrop").style.display = "none"
     document.getElementById("aboutModal").style.display = "none"
     document.getElementById("aboutModal").classList.remove("show")
-
 }
 // Get the modal
 const modal = document.getElementById('exampleModal');
