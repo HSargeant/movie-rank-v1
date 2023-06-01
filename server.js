@@ -85,8 +85,6 @@ app.post('/addMovie', async (req, res) => {
 //add likes
 app.put('/addOneLike', (req, res) => {
 
-    addIPtoDB(req.ip,req.body.movieName)
-
     let updatelikes = req.body.currentLikes + 1
     db.collection('movie-names').updateOne({name: req.body.movieName,image: req.body.moviePoster, year:req.body.releaseYear,likes:req.body.currentLikes},{
         $set: {
@@ -119,10 +117,6 @@ app.put('/removeLike', async (req, res) => {
         res.json({"success":true})
     })
     .catch(error => console.error(error))
-
-
-    updateIPLikeList(req.ip,req.body.movieName)
-
 })
 
 // app.delete('/deleteMovie', (req, res) => {
@@ -134,34 +128,3 @@ app.put('/removeLike', async (req, res) => {
 //     })
 //     .catch(error => console.error(error))
 // })
-
-
-async function addIPtoDB(address,name){
-    let ip = await db.collection('ip').find().toArray()
-    // console.log(ip.filter(x=>x.ipadd==req.ip)[0].like.includes(req.body.movieName))
-
-    if(!ip.find(elem=>elem.ipadd == address)){
-        await db.collection('ip').insertOne({
-         ipadd: address,like: [name]})
-     }else {
-        if(ip.filter(x=>x.ipadd==address)[0].like.includes(name)){
-            // res.redirect('/')
-            return
-        }
-       await db.collection('ip').updateOne({ipadd: address}, {$push:{like: name}})
-
-     }
-
-
-    if(ip.filter(x=>x.ipadd==address)[0].like.includes(name)){
-        // res.redirect('/')
-        return
-    }
-    
-}
-
-async function updateIPLikeList(address,name){
-    let ip = await db.collection('ip').find().toArray()
-    await db.collection('ip').updateOne({ipadd: address}, {$set:{like: ip.filter(x=>x.ipadd==address)[0].like.filter(x=>x!== name)}})
-}
-
