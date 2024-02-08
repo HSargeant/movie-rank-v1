@@ -2,6 +2,7 @@ const express = require("express")
 // const path = require('path')
 require('dotenv').config({path: './.env'})
 const app = express()
+const cors = require('cors');
 const PORT = 8500
 const passport = require('passport')
 const session = require('express-session')
@@ -44,8 +45,12 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/', mainRoutes)
-app.use('/home', homeRoutes)
-app.use('/profile', profileRoutes)
+app.use('/api/home', homeRoutes)
+app.use('/api/profile', profileRoutes)
+
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
 
 app.listen(process.env.PORT || PORT,()=>{
     console.log(`The server is running on port ${PORT}`)

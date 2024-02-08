@@ -14,8 +14,9 @@ router.post('/logout', authController.logout)
 
 router.get('/auth/google/callback',passport.authenticate('google',{failureRedirect:'/'}),(req, res)=>{
     console.log("user logged in")
-    res.redirect('/home')
+    res.redirect('/')
 })
+router.get("/api/user",authController.getUser )
 // router.get('/signup', authController.getSignup)
 // router.post('/signup', authController.postSignup)
 
