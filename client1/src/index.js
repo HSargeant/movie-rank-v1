@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import './index.css';
 import Root from "./pages/Root.js"
-import Index from './pages/Index.js';
+import Index from './pages/Index/Index.js';
 import Logout from './pages/Logout.js';
-import Home from './pages/Home.js';
+import Home from './pages/Home/Home.js';
 import Profile from './pages/Profile.js';
 import ProtectedRoute from "./components/ProtectedRoute"
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
@@ -16,7 +15,7 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <QueryClientProvider><Root /></QueryClientProvider>,
+        element: <QueryClientProvider client={queryClient}><Root /></QueryClientProvider>,
         // errorElement: <ErrorPage />,
         children: [
             {

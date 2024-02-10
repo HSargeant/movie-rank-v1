@@ -1,7 +1,8 @@
-import { useNavigate, useOutletContext, Link as RouterLink } from "react-router-dom";
+import { useNavigate, useOutletContext, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import logo from "../logo.png"
 import {API_BASE} from "../constants"
+// import "./indexPage.module.css"
 
 const footStyle = {
     marginTop: "25px",
@@ -28,7 +29,7 @@ const loadM = () => {
     link.rel = "stylesheet";
     window.document.getElementsByTagName('head')[0].appendChild(link);
 }
-loadM()
+// loadM()
 
 const handleLogin = (e)=>{
     e.preventDefault()
@@ -47,7 +48,13 @@ export default function Index() {
                 <header className="center">
                     <nav className="grey darken-3">
                         <ul>
-                            <li><a href="/">Home</a></li>
+                            <li><Link to="/">index</Link></li>
+                        </ul>
+                        <ul>
+                            <li><Link to="/profile">prof</Link></li>
+                        </ul>
+                        <ul>
+                            <li><Link to="/home">Home</Link></li>
                         </ul>
                     </nav>
                     <h1 className="hide">Movie Rank</h1>
