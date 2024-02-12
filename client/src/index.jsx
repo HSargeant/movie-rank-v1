@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./pages/Root"
-import Index from './pages/Index';
+import Index from './pages/Index/Index';
 import Logout from './pages/Logout';
-import Home from './pages/Home';
+import Home from './pages/Home/Home';
 import Profile from './pages/Profile';
 import ProtectedRoute from "./components/ProtectedRoute"
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"

@@ -1,7 +1,7 @@
 import { useNavigate, useOutletContext, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import logo from "../logo.png"
-import {API_BASE} from "../constants"
+import logo from "../../logo.png"
+import {API_BASE} from "../../constants"
 // import "./indexPage.module.css"
 
 const footStyle = {

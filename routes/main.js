@@ -6,7 +6,7 @@ const { ensureAuth,ensureGuest } = require('../middleware/authMiddleware')
 const passport = require('passport')
 
 
-router.get('/', indexController.getIndex)
+// router.get('/api', indexController.getIndex)
 router.get('/auth/google',passport.authenticate('google',{scope: ['profile']}))
 // router.post('/login', authController.postLogin)
 

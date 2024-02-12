@@ -1,5 +1,5 @@
 const express = require("express")
-// const path = require('path')
+const path = require('path')
 require('dotenv').config({path: './.env'})
 const app = express()
 const cors = require('cors');
@@ -25,7 +25,7 @@ app.use(logger("dev"));
 app.use(methodOverride("_method"));
 
 app.set('view engine', 'ejs')
-app.use(express.static('public'))
+app.use(express.static('client/dist'))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
@@ -49,7 +49,8 @@ app.use('/api/home', homeRoutes)
 app.use('/api/profile', profileRoutes)
 
 app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+  // res.sendFile(path.join(__dirname, '/client1/build/index.html'));
+  res.sendFile(path.join(__dirname, '/client/dist/index.html'));
 });
 
 app.listen(process.env.PORT || PORT,()=>{

@@ -6,7 +6,7 @@ module.exports = {
     getHomepage: async (req, res) => {
         try {
             const movies = await Movies.find().lean().sort({ likes: -1 })
-                // .populate('userId')
+                .populate('userId')
             // res.render('home.ejs', { movie: movies, user: req.user })
             res.json(movies)
         } catch (err) {
