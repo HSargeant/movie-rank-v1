@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useOutletContext } from "react-router-dom"
 import AddMovie from "../../components/addMovie"
 import { useQuery } from '@tanstack/react-query'
-import "./home.css"
+// import "./home.css"
 import logo from "../../logo.png"
 import lightLogo from "../../logo-light.png"
 

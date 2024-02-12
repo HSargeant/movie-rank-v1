@@ -33,9 +33,9 @@ export default function Profile() {
       <Grid container spacing={2}>
 
         {
-          movies.map(movie => (
-            <Grid item xs={12} sm={6} md={4} lg={12 / 5} key={movie.name + Math.random()} >
-              <MyCard {...movie} backgroundColor={"#333"} />
+          movies.map((movie,i) => (
+            <Grid item xs={6} sm={4} md={3} lg={12 / 5} key={movie.name + Math.random()} alignItems={"center"} >
+              <MyCard movie={movie} i={i} backgroundColor={"#333"} />
             </Grid>
 
           ))

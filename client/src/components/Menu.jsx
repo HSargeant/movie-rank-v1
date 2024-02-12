@@ -1,8 +1,6 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-// import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
@@ -14,14 +12,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { Link as RouterLink } from "react-router-dom"
+import { Link } from '@mui/material';
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
 
 function MyAppBar(props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -33,13 +31,33 @@ function MyAppBar(props) {
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+        {/* {navItems.map((item) => ( */}
+          <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+              <ListItemText primary="Profile" />
             </ListItemButton>
           </ListItem>
-        ))}
+          <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: 'center' }}>
+              <ListItemText primary="Add Your Favorite Movies" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: 'center' }}>
+              <ListItemText primary="About" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: 'center' }}>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: 'center' }}>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
+        {/* ))} */}
       </List>
     </Box>
   );
@@ -47,7 +65,7 @@ function MyAppBar(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex',height:70 }}>
       {/* <CssBaseline /> */}
       <AppBar component="nav" position='static' color="transparent" elevation={0}>
         <Toolbar>
@@ -65,18 +83,29 @@ function MyAppBar(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            {/* MUI */}
+            {/* */}
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
+          <Box sx={{ display: { xs: 'none', sm: 'block',height:"auto" } }}>
+            <Link component={RouterLink} to="/profile">
+              <Button  sx={{ color: '#fff' }}>
+              Profile
               </Button>
-            ))}
+            </Link>
+            <Link component={RouterLink} to="/add">
+              <Button sx={{ color: '#fff' }}>
+                Add Your Favorite Movies
+              </Button>
+              </Link>
+              <Button sx={{ color: '#fff' }}>
+                About
+              </Button>
+              <Button sx={{ color: '#fff' }}>
+                Logout
+              </Button>
           </Box>
         </Toolbar>
       </AppBar>
-      <nav>
+      {/* <nav> */}
         <Drawer
           container={container}
           variant="temporary"
@@ -92,7 +121,7 @@ function MyAppBar(props) {
         >
           {drawer}
         </Drawer>
-      </nav>
+      {/* </nav> */}
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
    

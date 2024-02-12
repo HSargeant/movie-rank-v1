@@ -1,8 +1,26 @@
-import { useNavigate, useOutletContext, Link } from "react-router-dom";
+import { useNavigate, useOutletContext, Link as RouterLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import logo from "../../logo.png"
-import {API_BASE} from "../../constants"
-// import "./indexPage.module.css"
+import { API_BASE } from "../../constants"
+import "./indexPage.css"
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import MenuIcon from '@mui/icons-material/Menu';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import { Link } from '@mui/material';
+import Card from "@mui/material/Card"
+import { CardContent, CardMedia, Grid } from '@mui/material';
+import Google from "@mui/icons-material/Google"
+
 
 const footStyle = {
     marginTop: "25px",
@@ -31,67 +49,50 @@ const loadM = () => {
 }
 // loadM()
 
-const handleLogin = (e)=>{
+const handleLogin = (e) => {
     e.preventDefault()
     fetch(API_BASE + "/auth/google")
-    .then(res=>res.json())
-    .then(data=>{
-        console.log(data)
-    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+        })
 
 }
 export default function Index() {
 
     return (
-        <>
-            <div className="container login-container">
-                <header className="center">
-                    <nav className="grey darken-3">
-                        <ul>
-                            <li><Link to="/">index</Link></li>
-                        </ul>
-                        <ul>
-                            <li><Link to="/profile">prof</Link></li>
-                        </ul>
-                        <ul>
-                            <li><Link to="/home">Home</Link></li>
-                        </ul>
-                    </nav>
-                    <h1 className="hide">Movie Rank</h1>
-                    <div className="logos">
-                    </div>
-                </header>
-                <div className="card center">
-                    <div className="card-content">
-                        <img className="mainLogo" src={logo} alt="Movie Rank logo" />
-                        <section className="section">
-                            <h5> <p className="lead">Help Rank your favorite movies and create a collection of your personal favorites</p></h5>
-                        </section>
-                        <div className="divider"></div>
-                        <section className="section ">
-                            <a href={API_BASE + "/auth/google"} className="btn red darken-1" >
-                                <i className="fa-brands fa-google left"></i>Login with Google
-                            </a>
-                        </section>
-                        {/* <!-- <section className="section ">
-                                <a href="/auth/email" className="btn blue darken-1">
-                                    <i className="fas fa-envelope left"></i>Login with Email
-                                </a>
-                            </section> --> */}
-
-                    </div>
-                </div>
-
-            </div>
-
-            <footer id="footer" className="page-footer center container transparent black-text"
-                style={footStyle}
-            >
-                <p className="copyright">&copy; <a href="https://hendersonsargeant.netlify.app" target="_blank" className="profile"
-                    style={linkStyle}
-                >Henderson Sargeant</a>All rights reserved.</p>
-            </footer>
-        </>
-
-    )
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: 1220, margin: '0 auto' }}>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton edge="start" color="inherit" aria-label="menu">
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" color="inherit">
+                Home
+              </Typography>
+            </Toolbar>
+          </AppBar>
+    
+          {/* Logo */}
+          <img src="your-logo.png" alt="Your Logo" style={{ width: '100px', margin: '16px 0' }} />
+    
+          {/* Divider */}
+          <Divider style={{ width: '100%', margin: '16px 0' }} />
+    
+          {/* Google Login Button */}
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<Google />}
+            style={{ width: '200px', margin: '16px 0' }}
+          >
+            Login with Google
+          </Button>
+    
+          {/* Copyright Statement */}
+          <Typography variant="body2" color="textSecondary" align="center">
+            &copy; 2024 Your Author Name
+          </Typography>
+        </div>
+      );
 }
