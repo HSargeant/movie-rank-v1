@@ -1,17 +1,29 @@
 import { useEffect } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext,redirect } from "react-router-dom";
+import { getUser } from "../utility/getUser";
+
+export async function loader() {
+	const user = await getUser()
+	if (!user) {
+	  return redirect("/")
+	}
+	const res = await fetch("/api/home")
+	const data = await res.json()
+	console.log(data)
+	return { loaderData: data, user: user }
+}
 
 export default function Logout() {
-	const { setUser } = useOutletContext();
+	// const { setUser } = useOutletContext();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetch("/logout", { credentials: "include" })
+		fetch("/api/logout", { method:"POST",credentials: "include" })
 			.then(() => {
-				setUser(null);
+				// setUser(null);
 				navigate("/");
 			});
-	}, [setUser, navigate]);
+	}, []);
 
 	return <main className="container">
 		<div style={{

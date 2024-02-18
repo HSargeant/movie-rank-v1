@@ -32,31 +32,31 @@ function MyAppBar(props) {
       <Divider />
       <List>
         {/* {navItems.map((item) => ( */}
-          <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary="Profile" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary="Add Your Favorite Movies" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary="About" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary="Logout" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary="Logout" />
-            </ListItemButton>
-          </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemText primary="Profile" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemText primary="Add Your Favorite Movies" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemText primary="About" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemText primary="Logout" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemText primary="Logout" />
+          </ListItemButton>
+        </ListItem>
         {/* ))} */}
       </List>
     </Box>
@@ -65,7 +65,7 @@ function MyAppBar(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex',height:70 }}>
+    <Box sx={{ display: 'flex', height: 70 }}>
       {/* <CssBaseline /> */}
       <AppBar component="nav" position='static' color="transparent" elevation={0}>
         <Toolbar>
@@ -85,46 +85,56 @@ function MyAppBar(props) {
           >
             {/* */}
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block',height:"auto" } }}>
-            <Link component={RouterLink} to="/profile">
-              <Button  sx={{ color: '#fff' }}>
-              Profile
-              </Button>
-            </Link>
+          <Box sx={{ display: { xs: 'none', sm: 'block', height: "auto" } }}>
+            {
+              props.profile ? (
+                <Link component={RouterLink} to="/home">
+                  <Button sx={{ color: '#fff' }}>
+                    Home
+                  </Button>
+                </Link>
+              ) : (
+                <Link component={RouterLink} to="/profile">
+                  <Button sx={{ color: '#fff' }}>
+                    Profile
+                  </Button>
+                </Link>
+              )
+            }
             <Link component={RouterLink} to="/add">
               <Button sx={{ color: '#fff' }}>
                 Add Your Favorite Movies
               </Button>
-              </Link>
-              <Button sx={{ color: '#fff' }}>
-                About
-              </Button>
-              <Button sx={{ color: '#fff' }}>
-                Logout
-              </Button>
+            </Link>
+            <Button sx={{ color: '#fff' }}>
+              About
+            </Button>
+            <Button sx={{ color: '#fff' }}>
+              Logout
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
       {/* <nav> */}
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-        >
-          {drawer}
-        </Drawer>
+      <Drawer
+        container={container}
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
+        }}
+        sx={{
+          display: { xs: 'block', sm: 'none' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+        }}
+      >
+        {drawer}
+      </Drawer>
       {/* </nav> */}
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
-   
+
       </Box>
     </Box>
   );

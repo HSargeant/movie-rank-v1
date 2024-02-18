@@ -1,29 +1,43 @@
 import { useState, useEffect } from "react"
-import { useOutletContext } from "react-router-dom"
+import { useOutletContext, useLoaderData, redirect  } from "react-router-dom"
 import AddMovie from "../../components/addMovie"
 import { useQuery } from '@tanstack/react-query'
+import logo from "../../logo-light.png"
 import "./home.css"
 const placeBadge = (i) => {
   if (i == 0) return <span className="count first-place">1</span>
-  if (i == 1) return <span className="cout second-place">2</span>
+  if (i == 1) return <span className="count second-place">2</span>
   if (i == 2) return <span className="count third-place">3</span>
   if (i + 1 > 99) return <span className="count longCount">{i + 1}</span>
   return <span className="count">{i + 1}</span>
 }
 
+export async function loader() {
+  const res1 = await fetch("/api/user", { credentials: "include" })
+  const user = await res1.json()
+  if (!user) {
+    return redirect("/")
+  }
 
+  const res = await fetch("/api/home")
+  const data = await res.json()
+  console.log(data)
+  return { loaderData: data, user: user }
+}
 export default function Home() {
-  // const [movies,setMovies] = useState([])
+  const { loaderData, user } = useLoaderData()
+  console.log(user)
   const getMovies = async () => {
     const res = await fetch("/api/home")
     const data = await res.json()
-    console.log(data)
+    console.log("r query")
     return data
   }
   const { isPending, error, data: movies, isFetching } = useQuery({
     queryKey: ['movies'],
     queryFn: getMovies,
     refetchOnWindowFocus: false,
+    initialData: loaderData
 
   })
 
@@ -39,10 +53,9 @@ export default function Home() {
   //     }
   //   }
   // );
-  const { user } = useOutletContext()
 
   const likeIconRender = (movie) => {
-    if (user.likedMovies[movie._id] || user.addedMovies[movie._id]) {
+    if (user?.likedMovies[movie._id] || user?.addedMovies[movie._id]) {
       return (
         <>
           <span>{movie.likes}</span>
@@ -81,46 +94,46 @@ export default function Home() {
   const handleLogout = (e) => {
     e.preventDefault()
     // naviagteTo ("/logout")
-    // <li><a class="logout">Logout</a></li>
-    // <form action="/logout" method="POST" id="logoutForm" class="hide"></form>
+    // <li><a className="logout">Logout</a></li>
+    // <form action="/logout" method="POST" id="logoutForm" className="hide"></form>
   }
   if (isPending) return <>Loading...</>
 
   return (
     <>
-      <div class="container">
-        <header class="center">
+      <div className="container">
+        <header className="center">
           <nav>
             <ul>
-              {user && <li><a href="/profile" class="login">Profile</a></li>}
-              <li><a class="addLink" id="addMovie">Add Your Favorite Movies</a></li>
-              <li><a class="aboutMenu">About</a></li>
+              {user && <li><a href="/profile" className="login">Profile</a></li>}
+              <li><a className="addLink" id="addMovie">Add Your Favorite Movies</a></li>
+              <li><a className="aboutMenu">About</a></li>
               {
-                !user ? <li><a href="/login" class="login">Login</a></li>
-                  : <li><a class="logout">Logout</a></li>
+                !user ? <li><a href="/login" className="login">Login</a></li>
+                  : <li><a className="logout">Logout</a></li>
               }
 
-              {user && <li><a class="logout" onClick={handleLogout}>Logout</a></li>}
+              {user && <li><a className="logout" onClick={handleLogout}>Logout</a></li>}
 
-              <li id="themeSwitch" class="fa fa-solid fa-sun"></li>
-              <li id="themeSwitchDark" class="fa fa-solid fa-moon hide" ></li>
+              <li id="themeSwitch" className="fa fa-solid fa-sun"></li>
+              <li id="themeSwitchDark" className="fa fa-solid fa-moon hide" ></li>
             </ul>
           </nav>
-          <h1 class="hide">Movie Rank</h1>
-          <div class="logos">
-            <img class="mainLogo hide" src="logo.png" alt="Movie Rank logo" />
-            <img class="mainLogo lightLogo" src="logo-light.png" alt="Movie Rank logo" />
+          <h1 className="hide">Movie Rank</h1>
+          <div className="logos">
+            <img className="mainLogo hide" src={logo} alt="Movie Rank logo" />
+            <img className="mainLogo lightLogo" src={logo} alt="Movie Rank logo" />
           </div>
         </header>
         <div>
           <section className="search dark-mode">
-            <input id="search1" type="text" placeholder="Search movie list" />
+            <input id="search" type="search" placeholder="Search movie list" />
           </section>
           <section className="cards" >
 
             {
               movies.map((movie, i) => (
-                <section className="card1" key={movie._id}>
+                <section className="card" key={movie._id}>
                   {placeBadge(i)}
                   <img src={movie.image} alt={`${movie.name} movie poster`} />
                   <ul>
@@ -140,7 +153,7 @@ export default function Home() {
       
       
                       < !--end of container-- > */}
-        <AddMovie />
+        {/* <AddMovie /> */}
       </div>
     </>
   )

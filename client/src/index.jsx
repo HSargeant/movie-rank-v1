@@ -6,9 +6,10 @@ import Index from './pages/Index/Index';
 import Logout from './pages/Logout';
 import Home from './pages/Home/Home';
 import Profile from './pages/Profile';
-import ProtectedRoute from "./components/ProtectedRoute"
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
-
+import { loader as homeLoader } from './pages/Home/Home';
+import { loader as indexLoader } from './pages/Index/Index';
+import { loader as profileLoader } from './pages/Profile';
 
 const queryClient = new QueryClient();
 
@@ -20,24 +21,23 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Index /> //users will land at the login page
+                element: <Index />, //users will land at the login page
+                loader: indexLoader
             },
             {
                 path: "/logout",
-                element: <ProtectedRoute><Logout /></ProtectedRoute>,
+                element: <Logout />,
             },
             {
                 path: "/home",
-                element:  <ProtectedRoute><Home /> </ProtectedRoute>,
+                element:  <Home /> ,
+                loader: homeLoader
             },
             {
                 path: "/profile",
-                element: <ProtectedRoute><Profile /></ProtectedRoute>,
+                element: <Profile />,
+                loader: profileLoader
             },
-            // {
-            //   path:"",
-            //   element:<ProtectedRoute/>
-            // }
         ]
     },
 ]);

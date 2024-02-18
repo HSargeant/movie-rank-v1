@@ -6,7 +6,7 @@ export default function Logout() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetch("/logout", { credentials: "include" })
+		fetch("/api/logout", { method:"POST",credentials: "include" })
 			.then(() => {
 				setUser(null);
 				navigate("/");

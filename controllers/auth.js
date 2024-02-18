@@ -22,7 +22,7 @@ module.exports={
       });
     },
     getUser: (req, res) => {
-      res.json({ user: req.user || null });
+      res.json(req.user || null);
     }
 
 

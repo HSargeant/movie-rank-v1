@@ -1,30 +1,29 @@
 import React from 'react';
 import { Card, CardContent, CardMedia, Typography, IconButton } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import Badge from '@mui/material/Badge';
-import { useOutletContext } from "react-router-dom"
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+import styles from "../pages/Home/home.module.css"
 
 
 const PlaceBadge = ({ value: i }) => {
-  if (i == 0) return <span className="count first-place">1</span>
-  if (i == 1) return <span className="count second-place">2</span>
-  if (i == 2) return <span className="count third-place">3</span>
-  if (i + 1 > 99) return <span className="count longCount">{i + 1}</span>
-  return <span className="count">{i + 1}</span>
+  if (i == 0) return <span className={[styles.count, styles["first-place"]].join(" ")}>1</span>
+  if (i == 1) return <span className={[styles.count, styles["second-place"]].join(" ")}>2</span>
+  if (i == 2) return <span className={[styles.count, styles["third-place"]].join(" ")}>3</span>
+  if (i + 1 > 99) return <span className={[styles.count, styles.longCount].join(" ")}>{i + 1}</span>
+  return <span className={styles.count}>{i + 1}</span>
 }
 
-function MyCard({ movie, i }) {
-  const { user } = useOutletContext()
+function MyCard({ movie, i,user }) {
   const LikeIcon = ({ movie }) => {
     let icon
     if (user.likedMovies[movie._id] || user.addedMovies[movie._id]) {
-      icon = (<button className="likeBtn" type="submit" onClick={handleUnlike}>
-        <i className='fa fa-thumbs-up liked' ></i>
+      icon = (<button className={styles.likeBtn} type="submit" onClick={handleUnlike}>
+        <i className={["fa","fa-thumb-up", styles.liked].join(" ")} ></i>
       </button>)
     } else {
-      icon = (<button className="likeBtn" type="submit" onClick={handleLike}>
-        <i className='fa fa-thumbs-up no-like' ></i>
+      icon = (<button className={styles.likeBtn} type="submit" onClick={handleLike}>
+        <i className={["fa","fa-thumb-up", styles["no-like"]].join(" ")} ></i>
+        {/* <ThumbUpIcon/> */}
       </button>)
     }
     return (
@@ -52,7 +51,7 @@ function MyCard({ movie, i }) {
     shadows: ["none"]
   });
   return (
-    <Card height={"auto"} key={movie._id} style={{ backgroundColor: 'transparent',color:"#f7f7ed", boxShadow:"none", border:"none" }} variant='outlined' className="card" >
+    <Card height={"auto"} key={movie._id} style={{ backgroundColor: 'transparent',color:"#f7f7ed", boxShadow:"none", border:"none" }} variant='outlined' className={styles.card} >
       <PlaceBadge value={i} />
       <CardMedia component="img" width="100%" image={movie.image} alt={movie.name + " poster"} />
       {/* <img src={movie.image} alt={movie.name + " movie poster"} /> */}

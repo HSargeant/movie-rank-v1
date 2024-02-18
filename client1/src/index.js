@@ -6,9 +6,9 @@ import Index from './pages/Index/Index.js';
 import Logout from './pages/Logout.js';
 import Home from './pages/Home/Home.js';
 import Profile from './pages/Profile.js';
-import ProtectedRoute from "./components/ProtectedRoute"
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
-
+import { loader as homeLoader } from './pages/Home/Home.js';
+import {loader as profileLoader} from "./pages/Profile.js"
 
 const queryClient = new QueryClient();
 
@@ -24,20 +24,18 @@ const router = createBrowserRouter([
             },
             {
                 path: "/logout",
-                element: <ProtectedRoute><Logout /></ProtectedRoute>,
+                element: <Logout />,
             },
             {
                 path: "/home",
-                element:  <ProtectedRoute><Home /> </ProtectedRoute>,
+                element:  <Home />,
+                loader:  homeLoader
             },
             {
                 path: "/profile",
-                element: <ProtectedRoute><Profile /></ProtectedRoute>,
+                element: <Profile />,
+                loader: profileLoader
             },
-            // {
-            //   path:"",
-            //   element:<ProtectedRoute/>
-            // }
         ]
     },
 ]);

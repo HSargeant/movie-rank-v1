@@ -1,3 +1,4 @@
+import styles from "../pages/Home/home.module.css"
 const searchBar = document.querySelector('.search')
 function filterCards(){
   let section=document.querySelectorAll('.card')
@@ -16,7 +17,7 @@ function filterCards(){
 
 export default function SearchBar() {
   return (
-    <section class="search dark-mode" style={{ margin: "20px 0 0 0" }}>
+    <section className={[styles.search, styles["dark-mode"]].join(" ")} style={{ margin: "20px 0 0 0" }}>
       <input id="search" type="search" placeholder="Search movie list" />
     </section>
   );
