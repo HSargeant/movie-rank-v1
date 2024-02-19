@@ -106,7 +106,7 @@ input[type="search"] {
     border-radius: 5px;
     width: 60%;
     margin: 0 auto;
-    border-bottom: 1px #2a2a2a solid;
+    border-bottom: 1px #333 solid;
     background-color: transparent;
 }
 
@@ -293,7 +293,7 @@ span.count.second-place{
     color:#f7f7ed;
 }
 .dark-mode{
-    background-color: #2a2a2a;
+    background-color: #333;
     color: #f7f7ed;
     /* background-repeat: no-repeat;
     background-attachment: fixed;

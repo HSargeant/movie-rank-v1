@@ -2,14 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./pages/Root"
-import Index from './pages/Index/Index';
+import Index from './pages/Index';
 import Logout from './pages/Logout';
-import Home from './pages/Home/Home';
+import Home from './pages/Home';
 import Profile from './pages/Profile';
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
-import { loader as homeLoader } from './pages/Home/Home';
-import { loader as indexLoader } from './pages/Index/Index';
-import { loader as profileLoader } from './pages/Profile';
+import { loader as homeLoader } from './loaders/home';
+import { loader as indexLoader } from "./loaders/index"
+import { loader as profileLoader } from "./loaders/profile";
+import "./App.css"
 
 const queryClient = new QueryClient();
 

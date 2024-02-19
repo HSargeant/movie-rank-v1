@@ -27,13 +27,7 @@ app.use(logger("dev"));
 app.use(methodOverride("_method"));
 
 app.set('view engine', 'ejs')
-// app.use(express.static('client/dist'))
-app.use(express.static('client1/build'))
-// Serve static files from 'client1' directory
-// app.use('/', express.static("loginPage/build"));
-
-// Serve static files from 'client2' directory
-app.use('*', express.static(__dirname + '/loginPage'));
+app.use(express.static('client/dist'))
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
@@ -57,13 +51,8 @@ app.use('/', mainRoutes)
 app.use('/api/home', homeRoutes)
 app.use('/api/profile', profileRoutes)
 
-// app.get('/',(req, res)=>{
-//   res.sendStatus(__dirname, '/loginPage/build/index.html')
-//   // res.send("Asdrfasdfasf")
-// })
 app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/client1/build/index.html'));
-    // res.sendFile(path.join(__dirname, '/client/dist/index.html'));
+    res.sendFile(path.join(__dirname, '/client/dist/index.html'));
 });
 
 app.listen(process.env.PORT || PORT,()=>{

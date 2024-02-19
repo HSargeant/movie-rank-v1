@@ -15,7 +15,8 @@ module.exports = {
             }
             // const uniqueIds = [...new Set(ids)]
             const allMovies = await Movies.find({ '_id': { $in: ids } }).lean().sort({likes:-1});
-            res.render('profile.ejs', {movie: allMovies, user: req.user})
+            // res.render('profile.ejs', {movie: allMovies, user: req.user})
+            res.send(allMovies)
         }catch(err){
             console.log(err)
         }

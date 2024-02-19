@@ -1,24 +1,25 @@
-import styles from "../pages/Home/home.module.css"
-const searchBar = document.querySelector('.search')
-function filterCards(){
-  let section=document.querySelectorAll('.card')
-  let txtValue;
-  let filter = input.value.toUpperCase();
-  let h2 = document.querySelectorAll('h2')
-  for (i = 0; i < h2.length; i++) {
-    txtValue=h2[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      section[i].style.display = "";
-    } else {
-        section[i].style.display = "none";
-    }
-  }
-}
+import styles from "../pages/home.module.css"
 
 export default function SearchBar() {
+  function filterCards(e) {
+    let section = window.document.querySelectorAll(`.${styles.card}`)
+    console.log(section)
+    let txtValue;
+    let filter = e.currentTarget.value.toUpperCase()
+    let h2 = window.document.querySelectorAll('h2')
+    for (let i = 0; i < h2.length; i++) {
+      txtValue = h2[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        section[i].style.display = "";
+      } else {
+        section[i].style.display = "none";
+      }
+    }
+  }
+
   return (
-    <section className={[styles.search, styles["dark-mode"]].join(" ")} style={{ margin: "20px 0 0 0" }}>
-      <input id="search" type="search" placeholder="Search movie list" />
+    <section className={[styles.search, styles["dark-mode"]].join(" ")} style={{ margin: "20px 0 0 0" }} z>
+      <input id="search" type="search" placeholder="Search movie list" onKeyUp={filterCards} />
     </section>
   );
 }

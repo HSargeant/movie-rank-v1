@@ -1,8 +1,8 @@
-import React from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardMedia, Typography, IconButton } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { createTheme } from '@mui/material/styles';
-import styles from "../pages/Home/home.module.css"
+import styles from "../pages/home.module.css"
 
 
 const PlaceBadge = ({ value: i }) => {
@@ -13,16 +13,17 @@ const PlaceBadge = ({ value: i }) => {
   return <span className={styles.count}>{i + 1}</span>
 }
 
-function MyCard({ movie, i,user }) {
+function MyCard({ movie, i, user }) {
+  const [filter, setFilter] = useState("")
   const LikeIcon = ({ movie }) => {
     let icon
     if (user.likedMovies[movie._id] || user.addedMovies[movie._id]) {
       icon = (<button className={styles.likeBtn} type="submit" onClick={handleUnlike}>
-        <i className={["fa","fa-thumb-up", styles.liked].join(" ")} ></i>
+        <i className={["fas", "fa-thumbs-up", styles.liked].join(" ")} ></i>
       </button>)
     } else {
       icon = (<button className={styles.likeBtn} type="submit" onClick={handleLike}>
-        <i className={["fa","fa-thumb-up", styles["no-like"]].join(" ")} ></i>
+        <i className={["fas", "fa-thumbs-up", styles["no-like"]].join(" ")} ></i>
         {/* <ThumbUpIcon/> */}
       </button>)
     }
@@ -51,20 +52,19 @@ function MyCard({ movie, i,user }) {
     shadows: ["none"]
   });
   return (
-    <Card height={"auto"} key={movie._id} style={{ backgroundColor: 'transparent',color:"#f7f7ed", boxShadow:"none", border:"none" }} variant='outlined' className={styles.card} >
+    <section class={styles.card}>
       <PlaceBadge value={i} />
-      <CardMedia component="img" width="100%" image={movie.image} alt={movie.name + " poster"} />
-      {/* <img src={movie.image} alt={movie.name + " movie poster"} /> */}
-      <ul style={{marginTop:5}}>
+      <img src={movie.image} alt={movie.name + " poster"} loading="lazy" />
+      <ul style={{ color: "#eee" }}>
         <li>
-          {movie.name.length > 23 ? <h2 class="longName">{movie.name}</h2> : <h2>{movie.name}</h2>}
+          {movie.name.length > 23 ? <h2 className={styles.longName}>{movie.name}</h2> : <h2>{movie.name}</h2>}
         </li>
         <li>{movie.year}</li>
         <li>
           <LikeIcon movie={movie} />
         </li>
       </ul>
-    </Card>
+    </section>
   );
 }
 

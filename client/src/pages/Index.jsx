@@ -1,7 +1,6 @@
-import { Link as RouterLink, redirect } from "react-router-dom";
-import logo from "../../logo.png"
-import { API_BASE } from "../../constants"
-// import "./indexPage.css"
+import { useLayoutEffect } from "react";
+import logo from "../logo.png"
+import { API_BASE } from "../constants"
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -19,8 +18,7 @@ import { Link } from '@mui/material';
 import Card from "@mui/material/Card"
 import { CardContent, CardMedia, Grid } from '@mui/material';
 import Google from "@mui/icons-material/Google"
-import { getUser } from "../../utility/getUser";
-import { get } from "mongoose";
+import { getUser } from "../utility/getUser";
 
 const footStyle = {
   marginTop: "25px",
@@ -41,14 +39,6 @@ const linkStyle = {
 
 }
 
-const loadM = () => {
-  const link = window.document.createElement('link');
-  link.href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css";
-  link.rel = "stylesheet";
-  window.document.getElementsByTagName('head')[0].appendChild(link);
-}
-// loadM()
-
 const handleLogin = (e) => {
   e.preventDefault()
   fetch(API_BASE + "/auth/google")
@@ -58,28 +48,38 @@ const handleLogin = (e) => {
     })
 }
 
-export async function loader(){
-  const user = await getUser()
-  if(user) return redirect("/home")
-  return null
-}
 export default function Index() {
+  useLayoutEffect(() => {
+    document.body.style.backgroundColor = "#eee"
+  });
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: 1220, margin: '0 auto' }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ mb: 10, backgroundColor: "#333" }}>
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu">
+          {/* <IconButton edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit">
             Home
-          </Typography>
+          </Typography> */}
         </Toolbar>
       </AppBar>
 
       {/* Logo */}
-      <img src={logo} alt="Movie Rank Logo" />
+      <Box
+        component="img"
+        sx={{
+          // height: 233,
+          // width: 350,
+          // maxHeight: { xs: 233, md: 167 },
+          width: { xs: 350, md: "auto" },
+          marginBottom: 5
+        }}
+        alt="The house from the offer."
+        src={logo}
+      />
+      {/* <img src={logo} alt="Movie Rank Logo" style={{marginBottom:30, maxWidth:600}} /> */}
 
       <Typography variant="h5" color="textPrimary" align="center">
         Help Rank your favorite movies and create a collection of your personal favorites
@@ -89,14 +89,14 @@ export default function Index() {
 
       {/* Google Login Button */}
       <a href={API_BASE + "/auth/google"}>
-      <Button
-        variant="contained"
-        color="error"
-        startIcon={<Google />}
-        style={{ width: '200px', margin: '16px 0' }}
-      >
-        Login with Google
-      </Button>
+        <Button
+          variant="contained"
+          color="error"
+          startIcon={<Google />}
+          style={{ width: '200px', margin: '16px 0' }}
+        >
+          Login with Google
+        </Button>
       </a>
       <Divider style={{ width: '75%', margin: '16px 0' }} />
 

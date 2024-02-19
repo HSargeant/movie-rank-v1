@@ -60,7 +60,8 @@ export default function Home() {
         <>
           <span>{movie.likes}</span>
           <button className="likeBtn" type="submit" onClick={handleUnlike}>
-            <i className='fa fa-thumbs-up liked' ></i>
+            {/* <i className='fa fa-thumbs-up liked' ></i> */}
+            <i className="fa fa-thumbs-up liked"></i>
           </button>
         </>
       )
@@ -70,7 +71,8 @@ export default function Home() {
       <>
         <span>{movie.likes}</span>
         <button className="likeBtn" type="submit" onClick={handleLike}>
-          <i className='fa fa-thumbs-up no-like' ></i>
+          {/* <i className='fa fa-thumbs-up no-like' ></i> */}
+          {/* <i className="fa fa-thumb-up no-like"></i> */}
         </button>
       </>
     )

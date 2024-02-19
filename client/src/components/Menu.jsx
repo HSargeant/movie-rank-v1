@@ -33,7 +33,7 @@ function MyAppBar(props) {
       <List>
         {/* {navItems.map((item) => ( */}
         <ListItem disablePadding>
-          <ListItemButton sx={{ textAlign: 'center' }}>
+          <ListItemButton to={"/profile"} element={RouterLink} sx={{ textAlign: 'center' }}>
             <ListItemText primary="Profile" />
           </ListItemButton>
         </ListItem>
@@ -47,13 +47,13 @@ function MyAppBar(props) {
             <ListItemText primary="About" />
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding>
+        <ListItem element={RouterLink} disablePadding>
           <ListItemButton sx={{ textAlign: 'center' }}>
             <ListItemText primary="Logout" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton sx={{ textAlign: 'center' }}>
+        <ListItemButton to={"/logout"} element={RouterLink} sx={{ textAlign: 'center' }}>
             <ListItemText primary="Logout" />
           </ListItemButton>
         </ListItem>
@@ -76,7 +76,7 @@ function MyAppBar(props) {
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{color:"#eee"}} />
           </IconButton>
           <Typography
             variant="h6"
@@ -109,9 +109,11 @@ function MyAppBar(props) {
             <Button sx={{ color: '#fff' }}>
               About
             </Button>
-            <Button sx={{ color: '#fff' }}>
-              Logout
-            </Button>
+            <Link component={RouterLink} to={"/logout"}>
+              <Button sx={{ color: '#fff' }}>
+                Logout
+              </Button>
+            </Link>
           </Box>
         </Toolbar>
       </AppBar>
