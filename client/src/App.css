@@ -3,12 +3,13 @@
     margin: 0;
     padding: 0;
 }
-html{
+
+html {
     font-family: 'Roboto', sans-serif;
     color: #151515;
 }
-body{
+
+body {
     height: 100vh;
     background-color: #333;
-
 }

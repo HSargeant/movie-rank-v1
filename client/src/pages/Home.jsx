@@ -1,10 +1,10 @@
-import { useLayoutEffect, useState, useMemo } from "react";
-import { Link, useLoaderData, redirect } from "react-router-dom"
-import { Container, Grid, CircularProgress } from '@mui/material';
+import { useLoaderData } from "react-router-dom"
+import { CircularProgress } from '@mui/material';
 import SearchBar from "../components/SearchBar"
 import MyCard from "../components/CardSection"
 import LogoImage from "../components/Logo"
 import MyAppBar from "../components/Menu"
+import AddMovie from "../components/addMovie";
 import { useQuery } from '@tanstack/react-query'
 import styles from "./home.module.css"
 
@@ -49,10 +49,11 @@ export default function Home() {
       <section className={styles.cards}>
         {
           movies.map((movie, i) => (
-            <MyCard movie={movie} i={i} backgroundColor={"#333"} user={user} />
+            <MyCard movie={movie} i={i} backgroundColor={"#333"} user={user} key={movie._id} />
           ))
         }
       </section>
+      {/* <AddMovie/> */}
     </div>
   )
 }

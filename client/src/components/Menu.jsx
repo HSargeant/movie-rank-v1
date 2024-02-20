@@ -17,7 +17,7 @@ import { Link } from '@mui/material';
 
 const drawerWidth = 240;
 
-function MyAppBar(props) {
+export default function MyAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
@@ -31,10 +31,9 @@ function MyAppBar(props) {
       </Typography>
       <Divider />
       <List>
-        {/* {navItems.map((item) => ( */}
         <ListItem disablePadding>
           <ListItemButton to={"/profile"} element={RouterLink} sx={{ textAlign: 'center' }}>
-            <ListItemText primary="Profile" />
+            <ListItemText primary="Your Top Movies" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -53,11 +52,10 @@ function MyAppBar(props) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-        <ListItemButton to={"/logout"} element={RouterLink} sx={{ textAlign: 'center' }}>
+          <ListItemButton to={"/logout"} element={RouterLink} sx={{ textAlign: 'center' }}>
             <ListItemText primary="Logout" />
           </ListItemButton>
         </ListItem>
-        {/* ))} */}
       </List>
     </Box>
   );
@@ -66,7 +64,6 @@ function MyAppBar(props) {
 
   return (
     <Box sx={{ display: 'flex', height: 70 }}>
-      {/* <CssBaseline /> */}
       <AppBar component="nav" position='static' color="transparent" elevation={0}>
         <Toolbar>
           <IconButton
@@ -76,7 +73,7 @@ function MyAppBar(props) {
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
-            <MenuIcon sx={{color:"#eee"}} />
+            <MenuIcon sx={{ color: "#eee" }} />
           </IconButton>
           <Typography
             variant="h6"
@@ -96,7 +93,7 @@ function MyAppBar(props) {
               ) : (
                 <Link component={RouterLink} to="/profile">
                   <Button sx={{ color: '#fff' }}>
-                    Profile
+                    Your Movies
                   </Button>
                 </Link>
               )
@@ -117,7 +114,6 @@ function MyAppBar(props) {
           </Box>
         </Toolbar>
       </AppBar>
-      {/* <nav> */}
       <Drawer
         container={container}
         variant="temporary"
@@ -133,15 +129,9 @@ function MyAppBar(props) {
       >
         {drawer}
       </Drawer>
-      {/* </nav> */}
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
-
       </Box>
     </Box>
   );
 }
-
-
-
-export default MyAppBar;

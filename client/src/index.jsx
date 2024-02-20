@@ -10,6 +10,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
 import { loader as homeLoader } from './loaders/home';
 import { loader as indexLoader } from "./loaders/index"
 import { loader as profileLoader } from "./loaders/profile";
+import ErrorPage  from './pages/ErrorPage.jsx';
 import "./App.css"
 
 const queryClient = new QueryClient();
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
     {
         path: "/",
         element: <QueryClientProvider client={queryClient}><Root /></QueryClientProvider>,
-        // errorElement: <ErrorPage />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,

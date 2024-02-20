@@ -7,9 +7,10 @@ import MyAppBar from "../components/Menu"
 import { useQuery } from '@tanstack/react-query'
 import { useOutletContext } from "react-router-dom"
 import { getUser } from "../utility/getUser";
+import styles from "./home.module.css"
 
 export default function Profile() {
-  const {loaderData, user} = useLoaderData()
+  const { loaderData, user } = useLoaderData()
   const getMovies = async () => {
     const res = await fetch("/api/profile")
     const data = await res.json()
@@ -26,20 +27,21 @@ export default function Profile() {
 
   if (isPending) return <>....LOADING</>
   return (
-    <Container style={{ maxWidth: 1220 }}>
-      <MyAppBar profile={true} />
+    <div className={styles.container}>
+      <h1 className={styles.hide}>Movie Rank</h1>
+      <MyAppBar profile="profile" />
       <LogoImage />
+      <section style={{ color: "#eee" }}>
+        <h1>{user.displayName}'s Top Movies</h1>
+      </section>
       <SearchBar />
-      <Grid container spacing={2}>
+      <section className={styles.cards}>
         {
-          movies.map((movie,i) => (
-            <Grid item xs={6} sm={4} md={3} lg={12 / 5} key={movie.name + Math.random()} alignItems={"center"} >
-              <MyCard movie={movie} i={i} backgroundColor={"#333"} user={user} />
-            </Grid>
-
+          movies.map((movie, i) => (
+            <MyCard movie={movie} i={i} backgroundColor={"#333"} user={user} />
           ))
         }
-      </Grid>
-    </Container>
+      </section>
+    </div>
   )
 }

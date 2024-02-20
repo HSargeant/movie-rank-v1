@@ -52,7 +52,7 @@ function MyCard({ movie, i, user }) {
     shadows: ["none"]
   });
   return (
-    <section class={styles.card}>
+    <section className={styles.card}>
       <PlaceBadge value={i} />
       <img src={movie.image} alt={movie.name + " poster"} loading="lazy" />
       <ul style={{ color: "#eee" }}>
