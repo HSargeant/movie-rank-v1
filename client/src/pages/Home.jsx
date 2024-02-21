@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router-dom"
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import SearchBar from "../components/SearchBar"
 import MyCard from "../components/CardSection"
 import LogoImage from "../components/Logo"
@@ -16,14 +16,14 @@ export default function Home() {
     console.log(data)
     return data
   }
-  const { isPending, error, data: movies, isFetching } = useQuery({
+  const { isPending, error, data: movies, isFetching,refetch, isLoading} = useQuery({
     queryKey: ['movies'],
     queryFn: getMovies,
     refetchOnWindowFocus: false,
-    initialData: loaderData
+    initialData: loaderData,
   })
 
-  if (isPending) return (
+  if (isLoading) return (
     <div className={styles.container}>
       <h1 className={styles.hide}>Movie Rank</h1>
       <MyAppBar />
@@ -49,11 +49,16 @@ export default function Home() {
       <section className={styles.cards}>
         {
           movies.map((movie, i) => (
-            <MyCard movie={movie} i={i} backgroundColor={"#333"} user={user} key={movie._id} />
+            <MyCard movie={movie} i={i} user={user} key={movie._id} refetch={refetch} />
           ))
         }
       </section>
-      {/* <AddMovie/> */}
+      {/* <AddMovie/>  */}
+      <footer id="footer" >
+        <Typography variant="body1" style={{ color: "#eee" }} align="center">
+          &copy; 2024 HS Software Engineering
+        </Typography>
+      </footer>
     </div>
   )
 }

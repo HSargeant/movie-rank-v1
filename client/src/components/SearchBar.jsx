@@ -3,7 +3,6 @@ import styles from "../pages/home.module.css"
 export default function SearchBar() {
   function filterCards(e) {
     let section = window.document.querySelectorAll(`.${styles.card}`)
-    console.log(section)
     let txtValue;
     let filter = e.currentTarget.value.toUpperCase()
     let h2 = window.document.querySelectorAll('h2')

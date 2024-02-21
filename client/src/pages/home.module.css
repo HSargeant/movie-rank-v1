@@ -170,29 +170,29 @@ input[type="search"]::-webkit-search-results-decoration {
     cursor: pointer;
 }
 
-.no-like {
-    color: #ffffff3a;
+/* .no-like {
+    color: #ffffffae;
 }
 
 .no-like.light {
     color: #3333337f;
-}
+} */
 
 /* .fa.fa-thumbs-up.nolike.light{
     color:rgba(51, 51, 51, 0.667)
 } */
 
 
-.no-like:hover {
+/* .no-like:hover {
     color: #f7f7ed;
     font-size: 1.2em;
-}
+} */
 
-.no-like.light:hover {
+/* .no-like.light:hover {
     color: #333;
     font-size: 1.2em;
 
-}
+} */
 
 footer {
     margin-top: 25px;
@@ -327,9 +327,9 @@ span.count.third-place {
     background-color:rgb(203, 201, 201);
     width: 75px;
 } */
-.liked {
+/* .liked {
     color: #f7f7ed;
-}
+} */
 
 .dark-mode {
     background-color: #333;

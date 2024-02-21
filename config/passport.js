@@ -9,11 +9,17 @@ module.exports = function (passport) {
     callbackURL: '/auth/google/callback'
   },
     async (accessToken, refreshToken, profile, done) => {
+      console.log(profile)
       const newUser = {
         googleId: profile.id,
         displayName: profile.displayName,
-        image: profile.photos[0].value
+        firstName: profile.name.givenName,
+        image: profile.photos[0].value,
+        addedMovies: new Map(),
+        likedMovies: new Map()
       }
+      console.log("------------",newUser)
+
       try {
         let user = await User.findOne({ googleId: profile.id })
 
@@ -21,15 +27,16 @@ module.exports = function (passport) {
           done(null, user)
         } else {
           user = await User.create(newUser)
+          // user = await User.findOne({ googleId: profile.id })
+          // user.addedMovies={}
+          // user.likedMovies = {}
+          // await user.save()
+          console.log("done",user)
           done(null, user)
         }
       } catch (err) {
         console.error(err)
       }
-
-
-
-
     }))
 
   passport.serializeUser((user, done) => {

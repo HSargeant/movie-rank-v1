@@ -1,12 +1,10 @@
-import { Link, useLoaderData } from "react-router-dom"
-import { Container, Grid } from '@mui/material';
+import { useLoaderData } from "react-router-dom"
+import { Typography, CircularProgress } from '@mui/material';
 import SearchBar from "../components/SearchBar"
 import MyCard from "../components/CardSection"
 import LogoImage from "../components/Logo"
 import MyAppBar from "../components/Menu"
 import { useQuery } from '@tanstack/react-query'
-import { useOutletContext } from "react-router-dom"
-import { getUser } from "../utility/getUser";
 import styles from "./home.module.css"
 
 export default function Profile() {
@@ -25,7 +23,27 @@ export default function Profile() {
 
   })
 
-  if (isPending) return <>....LOADING</>
+  if (isFetching) {
+    return (
+      <div className={styles.container}>
+        <h1 className={styles.hide}>Movie Rank</h1>
+        <MyAppBar />
+        <LogoImage />
+        <section style={{ color: "#eee" }}>
+          <h1>{user.displayName}'s Top Movies</h1>
+        </section>
+        <section>
+          <div style={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "50px 0"
+          }} >
+            <CircularProgress />
+          </div>
+        </section>
+      </div>
+    )
+  }
   return (
     <div className={styles.container}>
       <h1 className={styles.hide}>Movie Rank</h1>
@@ -42,6 +60,11 @@ export default function Profile() {
           ))
         }
       </section>
+      <footer id="footer" >
+        <Typography variant="body1" style={{ color: "#eee" }} align="center">
+          &copy; 2024 HS Software Engineering
+        </Typography>
+      </footer>
     </div>
   )
 }

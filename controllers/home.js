@@ -67,25 +67,25 @@ module.exports = {
             const user = await User.findOne({ _id: req.user.id }).lean()
             // let stringOBJs = currentMovies.likedMovies.map(x=>x.toString())
             // console.log(stringOBJs,"-----------")
-            console.log(user.likedMovies)
             // console.log(currentMovies.likedMovies[checkMovie._id], "does it exist")
             if (!user.likedMovies[checkMovie._id]) {
                 await checkMovie.update({ $inc: { likes: 1 }, })
                 await User.findOneAndUpdate({ _id: req.user.id },
                     { $set: { [`likedMovies.${checkMovie._id}`]: true } }
                 )
-                res.redirect("back")
                 console.log('added like')
-            } else {
-                res.redirect("back")
-            }
+                res.send({"status":"success"})
+            } 
         } catch (err) {
             console.log(err)
+            res.send({"status":"error"})
         }
     },
     removeLike: async (req, res) => {
         try {
             const user = await User.findOne({ _id: req.user.id })
+            console.log("----",user.likedMovies.get(req.params.id))
+            console.log("----",user.likedMovies[req.params.id])
             if (user.addedMovies[req.params.id]) {
                 res.redirect("back")
                 return
