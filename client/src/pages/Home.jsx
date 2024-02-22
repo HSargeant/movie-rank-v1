@@ -23,7 +23,7 @@ export default function Home() {
     initialData: loaderData,
   })
 
-  if (isLoading) return (
+  if (isPending ) return (
     <div className={styles.container}>
       <h1 className={styles.hide}>Movie Rank</h1>
       <MyAppBar />

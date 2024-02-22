@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { createTheme } from '@mui/material/styles';
+import { useState } from 'react';
 import styles from "../pages/home.module.css"
 
 
@@ -12,42 +11,10 @@ const PlaceBadge = ({ value: i }) => {
 }
 
 function MyCard({ movie, i, user, refetch }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [clicked, setClicked] = useState(false)
-  const ThumbsIcon = () => {
-    // if (isHovered) return <i style={{ fontSize: "1.2em",color:"#eee" }} className="fas fa-thumbs-up" />
-
-    return <i style={{ color: "#f7f7ed" }} className={"far fa-thumbs-up"} />
-  }
-  const LikeIcon = ({ movie }) => {
-    let icon
-    if (user?.likedMovies?.[movie._id] || user?.addedMovies?.[movie._id]) {
-      icon = (<button className={styles.likeBtn} onClick={(e) => handleUnlike(e, movie._id)}>
-        <i style={{ color: "#f7f7ed" }} className={["fas", "fa-thumbs-up"].join(" ")} ></i>
-      </button>)
-    } else {
-      icon = (
-        <button
-          // onMouseEnter={() => setIsHovered(true)}
-          // onMouseLeave={() => setIsHovered(false)}
-          className={styles.likeBtn} onClick={(e) => handleLike(e, movie._id)}>
-
-          <ThumbsIcon />
-        </button>)
-    }
-    return (
-      <>
-        <span>{movie.likes} </span>
-        {icon}
-      </>
-    )
-  }
-
   const likeButton = (movie) => {
-    // console.log(user?.likedMovies?.[movie._id] || user?.addedMovies?.[movie._id])
-    const [liked, setLiked] = useState(user?.likedMovies?.[movie._id] || user?.addedMovies?.[movie._id]);
-    // setLiked(user?.likedMovies?.[movie._id] || user?.addedMovies?.[movie._id])
+    const [liked, setLiked] = useState(user?.likedMovies?.[movie._id]);
     const handleLikeClick = async () => {
+      if (movie.likes <= 0) return
       if (liked) {
         console.log("unlike call")
         try {
@@ -79,76 +46,17 @@ function MyCard({ movie, i, user, refetch }) {
         }
       }
       refetch()
-
     };
 
     return (
       <button className={styles.likeBtn} onClick={handleLikeClick}>
         {liked ? (
-          <><span style={{ color: "#f7f7ed" }}>{movie.likes} </span><i style={{ color: "#f7f7ed" }} className="fas fa-thumbs-up" ></i></>) : (<><span style={{ color: "#f7f7ed" }}>{movie.likes} </span><i style={{ color: "#f7f7ed" }} className="far fa-thumbs-up" /></>
-
+          <><span style={{ color: "#f7f7ed" }}>{movie.likes} </span><i style={{ color: "#f7f7ed" }} className="fas fa-thumbs-up" ></i></>) : (<><span onMouseOver={() => setIsHovered(true)} style={{ color: "#f7f7ed" }}>{movie.likes} </span><i style={{ color: "#f7f7ed" }} className="far fa-thumbs-up" /></>
         )}
       </button>
     );
   };
 
-  // const handleUnlike = async (e,id) => {
-  //   // e.preventDefault()
-  //   // action="home/removeLike/{movie[i]._id%>?_method=PUT"
-  //   // method="POST"
-  //   // className=""
-  //   console.log("unlike",id,e.target.parentNode)
-  //   // console.log(e.target.className)
-  //   // e.target.className = q"far fa-thumbs-up"
-  //   // console.log("after",e.target.className)
-
-  //   try {
-  //     const response = await fetch(`/api/home/removeLike/${id}`, {
-  //       method: "PUT",
-  //       body: {},
-  //       credentials: "include",
-  //     });
-  //     const data = await response.json();
-  //     e.target.parentNode = (<button
-  //       className={styles.likeBtn} onClick={(e)=>handleLike(e,movie._id)}>
-
-  //       <ThumbsIcon  />
-  //     </button>)
-  //     refetch()
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-
-  // }
-  // const handleLike = async (e,id) => {
-  //   // e.preventDefault()
-  //   // action="home/addLike/{movie[i]._id%>?_method=PUT"
-  //   // method="POST"
-  //   // className=""
-  //   console.log("like",id,e)
-  //   // console.log(e.target.className)
-  //   // e.target.className = "fas fa-thumbs-up"
-  //   // console.log("after",e.target.className)
-  //   try {
-  //     const response = await fetch(`/api/home/addLike/${id}`, {
-  //       method: "PUT",
-  //       body: {},
-  //       credentials: "include",
-  //     });
-  //     const data = await response.json();
-  //     e.target.parentNode=(<button className={styles.likeBtn} onClick={(e)=>handleUnlike(e,movie._id)}>
-  //     <i style={{color:"#f7f7ed"}} className={["fas", "fa-thumbs-up"].join(" ")} ></i>
-  //   </button>)
-  //     refetch()
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-
-
-  // }
-  const theme = createTheme({
-    shadows: ["none"]
-  });
   return (
     <section className={styles.card}>
       <PlaceBadge value={i} />

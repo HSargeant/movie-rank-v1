@@ -10,9 +10,10 @@ module.exports = {
             for(let id in user.likedMovies ){
                 ids.push(id)
             }
-            for(let id in user.addedMovies ){
-                ids.push(id)
-            }
+            // //if we want added and liked movies on page
+            // for(let id in user.addedMovies ){
+            //     ids.push(id)
+            // }
             // const uniqueIds = [...new Set(ids)]
             const allMovies = await Movies.find({ '_id': { $in: ids } }).lean().sort({likes:-1});
             // res.render('profile.ejs', {movie: allMovies, user: req.user})

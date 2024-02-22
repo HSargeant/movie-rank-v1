@@ -1,6 +1,5 @@
 const Movies = require('../models/movies')
 const User = require('../models/user')
-// const fetch = require('node-fetch')
 
 module.exports = {
     getHomepage: async (req, res) => {
@@ -33,7 +32,6 @@ module.exports = {
 
             //check if exist
             const check = await Movies.find({ name: data.results[0].original_title })
-            console.log(check)
             if (check.length) {
                 res.redirect('/home')
                 return
@@ -55,7 +53,9 @@ module.exports = {
                     $set: { [`addedMovies.${newEntry._id}`]: true, [`likedMovies.${newEntry._id}`]: true }
                 })
             console.log('Movie Added')
-            res.redirect('/home')
+            // res.redirect('/home')
+            // res.redirect('/home')
+            res.sendStatus(201)
         } catch (error) {
             console.log(error)
         }
@@ -65,9 +65,7 @@ module.exports = {
         try {
             const checkMovie = await Movies.findOne({ _id: req.params.id })
             const user = await User.findOne({ _id: req.user.id }).lean()
-            // let stringOBJs = currentMovies.likedMovies.map(x=>x.toString())
-            // console.log(stringOBJs,"-----------")
-            // console.log(currentMovies.likedMovies[checkMovie._id], "does it exist")
+
             if (!user.likedMovies[checkMovie._id]) {
                 await checkMovie.update({ $inc: { likes: 1 }, })
                 await User.findOneAndUpdate({ _id: req.user.id },
@@ -78,14 +76,12 @@ module.exports = {
             } 
         } catch (err) {
             console.log(err)
-            res.send({"status":"error"})
+            res.sendStatus(200)
         }
     },
     removeLike: async (req, res) => {
         try {
             const user = await User.findOne({ _id: req.user.id })
-            console.log("----",user.likedMovies.get(req.params.id))
-            console.log("----",user.likedMovies[req.params.id])
             if (user.addedMovies[req.params.id]) {
                 res.redirect("back")
                 return
@@ -96,8 +92,9 @@ module.exports = {
             // const newArray = moviesArray.likedMovies.filter(x=>x.toString()!==currentMovie._id.toString())
             // await moviesArray.update({$set:{likedMovies: newArray }})
 
-            res.redirect("back")
+            // res.redirect("back")
             console.log('removed like')
+            res.sendStatus(200)
         } catch (err) {
             console.log(err)
         }

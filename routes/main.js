@@ -10,7 +10,7 @@ const passport = require('passport')
 router.get('/auth/google',passport.authenticate('google',{scope: ['profile']}))
 // router.post('/login', authController.postLogin)
 
-router.post('/api/logout', authController.logout)
+router.post('/api/logout', ensureAuth,authController.logout)
 
 router.get('/auth/google/callback',passport.authenticate('google',{failureRedirect:'/'}),(req, res)=>{
     console.log("user logged in")

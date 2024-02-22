@@ -14,10 +14,12 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Link as RouterLink } from "react-router-dom"
 import { Link } from '@mui/material';
+import AddMovie from './addMovie';
 
 const drawerWidth = 240;
 
 export default function MyAppBar(props) {
+  1
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
@@ -62,6 +64,42 @@ export default function MyAppBar(props) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
+  const NavLinks = () => {
+    if (props.profile) {
+      return (
+        <Link component={RouterLink} to="/home">
+          <Button sx={{ color: '#fff' }}>
+            Home
+          </Button>
+        </Link>
+      )
+    }
+    if (props.add) {
+      return (
+        <>
+          <Link component={RouterLink} to="/home">
+            <Button sx={{ color: '#fff' }}>
+              Home
+            </Button>
+          </Link>
+          <Link component={RouterLink} to="/profile">
+            <Button sx={{ color: '#fff' }}>
+              Your Movies
+            </Button>
+          </Link>
+        </>
+      )
+    }
+    return (
+      <Link component={RouterLink} to="/profile">
+        <Button sx={{ color: '#fff' }}>
+          Your Movies
+        </Button>
+      </Link>
+
+    )
+  }
+
   return (
     <Box sx={{ display: 'flex', height: 70 }}>
       <AppBar component="nav" position='static' color="transparent" elevation={0}>
@@ -83,22 +121,8 @@ export default function MyAppBar(props) {
             {/* */}
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block', height: "auto" } }}>
-            {
-              props.profile ? (
-                <Link component={RouterLink} to="/home">
-                  <Button sx={{ color: '#fff' }}>
-                    Home
-                  </Button>
-                </Link>
-              ) : (
-                <Link component={RouterLink} to="/profile">
-                  <Button sx={{ color: '#fff' }}>
-                    Your Movies
-                  </Button>
-                </Link>
-              )
-            }
-            <Link component={RouterLink} to="/add">
+            <NavLinks/>
+            <Link className="addLink" id="addMovie">
               <Button sx={{ color: '#fff' }}>
                 Add Your Favorite Movies
               </Button>

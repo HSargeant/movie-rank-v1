@@ -12,6 +12,7 @@ import { loader as indexLoader } from "./loaders/index"
 import { loader as profileLoader } from "./loaders/profile";
 import ErrorPage  from './pages/ErrorPage.jsx';
 import "./App.css"
+import AddMovie from './pages/AddMovie.jsx';
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
                 path: "/profile",
                 element: <Profile />,
                 loader: profileLoader
+            },
+            {
+                path: "/add",
+                element: <AddMovie />,
             },
         ]
     },
