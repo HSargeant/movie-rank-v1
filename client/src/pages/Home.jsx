@@ -2,9 +2,7 @@ import { useLoaderData } from "react-router-dom"
 import { CircularProgress, Typography } from '@mui/material';
 import SearchBar from "../components/SearchBar"
 import MyCard from "../components/CardSection"
-import LogoImage from "../components/Logo"
-import MyAppBar from "../components/Menu"
-import AddMovie from "../components/addMovie";
+import Header from "../components/Header"
 import { useQuery } from '@tanstack/react-query'
 import styles from "./home.module.css"
 
@@ -25,9 +23,8 @@ export default function Home() {
 
   if (isPending ) return (
     <div className={styles.container}>
+      <Header/>
       <h1 className={styles.hide}>Movie Rank</h1>
-      <MyAppBar />
-      <LogoImage />
       <section>
         <div style={{
           display: "flex",
@@ -39,12 +36,11 @@ export default function Home() {
       </section>
     </div>
   )
-
+  console.log(user)
   return (
     <div className={styles.container}>
+      <Header/>
       <h1 className={styles.hide}>Movie Rank</h1>
-      <MyAppBar />
-      <LogoImage />
       <SearchBar />
       <section className={styles.cards}>
         {

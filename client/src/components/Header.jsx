@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Link as RouterLink } from "react-router-dom"
 import { Link } from '@mui/material';
-import AddMovie from './addMovie';
+import lightLogo from "../logo-light.png"
 
 const drawerWidth = 240;
 
@@ -101,61 +101,67 @@ export default function MyAppBar(props) {
   }
 
   return (
-    <Box sx={{ display: 'flex', height: 70 }}>
-      <AppBar component="nav" position='static' color="transparent" elevation={0}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon sx={{ color: "#eee" }} />
-          </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-            {/* */}
-          </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block', height: "auto" } }}>
-            <NavLinks/>
-            <Link className="addLink" id="addMovie">
+    <>
+      <Box sx={{ display: 'flex', height: 70 }}>
+        <AppBar component="nav" position='static' color="transparent" elevation={0}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}
+            >
+              <MenuIcon sx={{ color: "#eee" }} />
+            </IconButton>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            >
+              {/* */}
+            </Typography>
+            <Box sx={{ display: { xs: 'none', sm: 'block', height: "auto" } }}>
+              <NavLinks />
+              <Link component={RouterLink} to={"/add"}>
+                <Button sx={{ color: '#fff' }}>
+                  Add Your Favorite Movies
+                </Button>
+              </Link>
               <Button sx={{ color: '#fff' }}>
-                Add Your Favorite Movies
+                About
               </Button>
-            </Link>
-            <Button sx={{ color: '#fff' }}>
-              About
-            </Button>
-            <Link component={RouterLink} to={"/logout"}>
-              <Button sx={{ color: '#fff' }}>
-                Logout
-              </Button>
-            </Link>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        container={container}
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-        sx={{
-          display: { xs: 'block', sm: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-        }}
-      >
-        {drawer}
-      </Drawer>
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
+              <Link component={RouterLink} to={"/logout"}>
+                <Button sx={{ color: '#fff' }}>
+                  Logout
+                </Button>
+              </Link>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+        >
+          {drawer}
+        </Drawer>
+        <Box component="main" sx={{ p: 3 }}>
+          <Toolbar />
+        </Box>
       </Box>
-    </Box>
+      <div style={{ textAlign: 'center' }}>
+        <img src={lightLogo} alt="Logo" width={400} />
+        <i styles={{ color: "black" }} className={["fa", "fa-thumb-up"].join(" ")} ></i>
+      </div>
+    </>
   );
 }

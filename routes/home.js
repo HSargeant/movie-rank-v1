@@ -10,6 +10,7 @@ router.get("/", ensureAuth,homeController.getHomepage)
 router.post("/addMovie",ensureAuth,homeController.addMovie)
 router.put("/addLike/:id",ensureAuth,homeController.addLike)
 router.put("/removeLike/:id",ensureAuth,homeController.removeLike)
+router.post("/movieQuery",ensureAuth,homeController.movieQuery)
 
 module.exports = router
 

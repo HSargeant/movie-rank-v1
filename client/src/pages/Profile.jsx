@@ -3,7 +3,7 @@ import { Typography, CircularProgress } from '@mui/material';
 import SearchBar from "../components/SearchBar"
 import MyCard from "../components/CardSection"
 import LogoImage from "../components/Logo"
-import MyAppBar from "../components/Menu"
+import Header from "../components/Header"
 import { useQuery } from '@tanstack/react-query'
 import styles from "./home.module.css"
 
@@ -15,20 +15,19 @@ export default function Profile() {
     console.log(data)
     return data
   }
-  const { isPending, error, data: movies, isFetching } = useQuery({
-    queryKey: ['movies'],
+  const { isPending, error, data: movies, isFetching,refetch } = useQuery({
+    queryKey: ['profile-movies'],
     queryFn: getMovies,
     refetchOnWindowFocus: false,
     initialData: loaderData
 
   })
 
-  if (isFetching) {
+  if (isPending) {
     return (
       <div className={styles.container}>
         <h1 className={styles.hide}>Movie Rank</h1>
-        <MyAppBar profile="profile" />
-        <LogoImage />
+        <Header profile="profile" />
         <section style={{ color: "#eee" }}>
           <h1>{user.displayName}'s Top Movies</h1>
         </section>
@@ -48,8 +47,7 @@ export default function Profile() {
     return (
       <div className={styles.container}>
         <h1 className={styles.hide}>Movie Rank</h1>
-        <MyAppBar profile="profile" />
-        <LogoImage />
+        <Header profile="profile" />
         <section style={{ color: "#eee" }}>
           <h1>{user.displayName}'s Top Movies</h1>
         </section>
@@ -79,7 +77,7 @@ export default function Profile() {
       <section className={styles.cards}>
         {
           movies.map((movie, i) => (
-            <MyCard movie={movie} i={i} backgroundColor={"#333"} user={user} />
+            <MyCard movie={movie} i={i} user={user} key={movie._id} refetch={refetch} />
           ))
         }
       </section>

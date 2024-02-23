@@ -14,11 +14,11 @@ function MyCard({ movie, i, user, refetch }) {
   const likeButton = (movie) => {
     const [liked, setLiked] = useState(user?.likedMovies?.[movie._id]);
     const handleLikeClick = async () => {
-      if (movie.likes <= 0) return
+      console.log("clicked")
       if (liked) {
+        if (movie.likes <= 0) return
         console.log("unlike call")
         try {
-          console.log("unlike call")
           const response = await fetch(`/api/home/removeLike/${movie._id}`, {
             method: "PUT",
             body: {},
@@ -51,7 +51,7 @@ function MyCard({ movie, i, user, refetch }) {
     return (
       <button className={styles.likeBtn} onClick={handleLikeClick}>
         {liked ? (
-          <><span style={{ color: "#f7f7ed" }}>{movie.likes} </span><i style={{ color: "#f7f7ed" }} className="fas fa-thumbs-up" ></i></>) : (<><span onMouseOver={() => setIsHovered(true)} style={{ color: "#f7f7ed" }}>{movie.likes} </span><i style={{ color: "#f7f7ed" }} className="far fa-thumbs-up" /></>
+          <><span style={{ color: "#f7f7ed" }}>{movie.likes} </span><i style={{ color: "#f7f7ed" }} className="fas fa-thumbs-up" ></i></>) : (<><span style={{ color: "#f7f7ed" }}>{movie.likes} </span><i style={{ color: "#f7f7ed" }} className="far fa-thumbs-up" /></>
         )}
       </button>
     );

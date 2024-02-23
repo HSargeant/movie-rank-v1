@@ -37,10 +37,6 @@ module.exports = {
                 return
             }
             //send to db
-            // const post = await db.collection('movie-names').insertOne({name: data.results[0].original_title,
-            // image: path, year: data.results[0].release_date.split("-")[0],  likes: 0})
-            //////////////
-            // console.log(data.results[0].original_title,path,data.results[0].release_date.split("-")[0])
             const newEntry = await Movies.create({
                 name: data.results[0].original_title,
                 image: path,
@@ -53,8 +49,6 @@ module.exports = {
                     $set: { [`addedMovies.${newEntry._id}`]: true, [`likedMovies.${newEntry._id}`]: true }
                 })
             console.log('Movie Added')
-            // res.redirect('/home')
-            // res.redirect('/home')
             res.sendStatus(201)
         } catch (error) {
             console.log(error)
@@ -72,8 +66,8 @@ module.exports = {
                     { $set: { [`likedMovies.${checkMovie._id}`]: true } }
                 )
                 console.log('added like')
-                res.send({"status":"success"})
-            } 
+                res.send({ "status": "success" })
+            }
         } catch (err) {
             console.log(err)
             res.sendStatus(200)
@@ -110,4 +104,39 @@ module.exports = {
     //         }
 
     // }
+    movieQuery: async (req, res) => {
+        console.log(req.body)
+        res.send({})
+        // if (!req.body.name) {
+        //     res.redirect('/home')
+        //     return
+        // }
+        // let movieName = req.body.name.toLowerCase().trim()
+        // let year = req.body.year.trim()
+        // //get api data
+        // try {
+        //     const apikey = process.env.APIKEY
+        //     const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${movieName}&year=${year}`)
+        //     const data = await response.json()
+        //     if (data.total_results == 0) {
+        //         res.redirect('/home')
+        //         return
+        //     }
+        //     const results = []
+        //     for (let movie of data.results) {
+        //         const check = await Movies.find({ name: movie.original_title })
+        //         if (!check.length) {
+        //             let obj = {
+        //                 "name": movie.original_title,
+        //                 "year": movie.release_date.split("-")[0],
+        //                 "image": `https://image.tmdb.org/t/p/original${movie.poster_path}`
+        //             }
+        //             results.push(obj)
+        //         }
+        //     }
+        //     res.send(results)
+        // } catch (error) {
+        //     console.log(error)
+        // }
+    },
 }
