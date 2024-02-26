@@ -13,46 +13,70 @@ module.exports = {
         }
     },
     addMovie: async (req, res) => {
-        if (!req.body.name) {
-            res.redirect('/home')
-            return
-        }
-        let movieName = req.body.name.toLowerCase().trim()
-        let year = req.body.year.trim()
-        //get api data
+        const data = req.body
         try {
-            const apikey = process.env.APIKEY
-            const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${movieName}&year=${year}`)
-            const data = await response.json()
-            if (data.total_results == 0) {
-                res.redirect('/home')
-                return
+            for (elem of data) {
+                elem["userId"] = req.user.id
+                elem["likes"] = 1
             }
-            const path = `https://image.tmdb.org/t/p/original${data.results[0].poster_path}` || 'https://skydomepictures.com/wp-content/uploads/2018/08/movie-poster-coming-soon-2.png'
-
-            //check if exist
-            const check = await Movies.find({ name: data.results[0].original_title })
-            if (check.length) {
-                res.redirect('/home')
-                return
+            const result = await Movies.create(data)
+            for (newEntry of result) {
+                await User.findOneAndUpdate({ _id: req.user.id },
+                    {
+                        $set: { [`addedMovies.${newEntry._id}`]: true, [`likedMovies.${newEntry._id}`]: true }
+                    })
             }
-            //send to db
-            const newEntry = await Movies.create({
-                name: data.results[0].original_title,
-                image: path,
-                year: data.results[0].release_date.split("-")[0],
-                userId: req.user.id,
-                likes: 1
-            })
-            await User.findOneAndUpdate({ _id: req.user.id },
-                {
-                    $set: { [`addedMovies.${newEntry._id}`]: true, [`likedMovies.${newEntry._id}`]: true }
-                })
-            console.log('Movie Added')
+            // console.log(result)
+            console.log('Movie/s Added')
             res.sendStatus(201)
+
+
         } catch (error) {
-            console.log(error)
+            console.error(error)
+
         }
+        // res.send({ "done": true })
+        // if (!req.body.name) {
+        //     res.redirect('/home')
+        //     return
+        // }
+        // let movieName = req.body.name.toLowerCase().trim()
+        // let year = req.body.year.trim()
+        //get api data
+        // try {
+        //     const apikey = process.env.APIKEY
+        //     const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${movieName}&year=${year}`)
+        //     const data = await response.json()
+        //     if (data.total_results == 0) {
+        //         res.redirect('/home')
+        //         return
+        //     }
+        //     const path = `https://image.tmdb.org/t/p/original${data.results[0].poster_path}` || 'https://skydomepictures.com/wp-content/uploads/2018/08/movie-poster-coming-soon-2.png'
+
+        //     //check if exist
+        //     const check = await Movies.find({ name: data.results[0].original_title })
+        //     if (check.length) {
+        //         res.redirect('/home')
+        //         return
+        //     }
+        //send to db
+        // const newEntry = await Movies.create({
+        //     name: data.results[0].original_title,
+        //     image: path,
+        //     year: data.results[0].release_date.split("-")[0],
+        //     userId: req.user.id,
+        //     likes: 1
+        // })
+        //     Movies.create()
+        //     await User.findOneAndUpdate({ _id: req.user.id },
+        //         {
+        //             $set: { [`addedMovies.${newEntry._id}`]: true, [`likedMovies.${newEntry._id}`]: true }
+        //         })
+        //     console.log('Movie Added')
+        //     res.sendStatus(201)
+        // } catch (error) {
+        //     console.log(error)
+        // }
 
     },
     addLike: async (req, res) => {
@@ -61,7 +85,7 @@ module.exports = {
             const user = await User.findOne({ _id: req.user.id }).lean()
 
             if (!user.likedMovies[checkMovie._id]) {
-                await checkMovie.update({ $inc: { likes: 1 }, })
+                await checkMovie.updateOne({ $inc: { likes: 1 }, })
                 await User.findOneAndUpdate({ _id: req.user.id },
                     { $set: { [`likedMovies.${checkMovie._id}`]: true } }
                 )
@@ -82,7 +106,7 @@ module.exports = {
             }
 
             await Movies.findOneAndUpdate({ _id: req.params.id }, { $inc: { likes: -1 }, })
-            await user.update({ $unset: { [`likedMovies.${req.params.id}`]: true } })
+            await user.updateOne({ $unset: { [`likedMovies.${req.params.id}`]: true } })
             // const newArray = moviesArray.likedMovies.filter(x=>x.toString()!==currentMovie._id.toString())
             // await moviesArray.update({$set:{likedMovies: newArray }})
 
@@ -105,38 +129,41 @@ module.exports = {
 
     // }
     movieQuery: async (req, res) => {
-        console.log(req.body)
-        res.send({})
-        // if (!req.body.name) {
-        //     res.redirect('/home')
-        //     return
-        // }
-        // let movieName = req.body.name.toLowerCase().trim()
-        // let year = req.body.year.trim()
+        // console.log(req.body)
+        // console.log(typeof req.body)
+        // console.log(req.body["fff"])
+        let { name, year } = req.body
+        console.log(name, year)
+        name = name.toLowerCase().trim()
+        year = year.trim()
+        // res.send({"here":"ttt"})
         // //get api data
-        // try {
-        //     const apikey = process.env.APIKEY
-        //     const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${movieName}&year=${year}`)
-        //     const data = await response.json()
-        //     if (data.total_results == 0) {
-        //         res.redirect('/home')
-        //         return
-        //     }
-        //     const results = []
-        //     for (let movie of data.results) {
-        //         const check = await Movies.find({ name: movie.original_title })
-        //         if (!check.length) {
-        //             let obj = {
-        //                 "name": movie.original_title,
-        //                 "year": movie.release_date.split("-")[0],
-        //                 "image": `https://image.tmdb.org/t/p/original${movie.poster_path}`
-        //             }
-        //             results.push(obj)
-        //         }
-        //     }
-        //     res.send(results)
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        try {
+            const apikey = process.env.APIKEY
+            const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${name}&year=${year}`)
+            const data = await response.json()
+            console.log("asdfasf")
+            console.log(data)
+            if (data.total_results == 0) {
+                res.redirect('/home')
+                return
+            }
+            const results = []
+            for (let movie of data.results) {
+                const check = await Movies.find({ name: movie.original_title })
+                if (!check.length) {
+                    let obj = {
+                        "name": movie.original_title,
+                        "year": movie.release_date.split("-")[0],
+                        "image": `https://image.tmdb.org/t/p/original${movie.poster_path}`,
+                        "id": movie.id
+                    }
+                    results.push(obj)
+                }
+            }
+            res.send(results)
+        } catch (error) {
+            console.log(error)
+        }
     },
 }

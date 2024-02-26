@@ -1,158 +1,118 @@
-import { Box, Grid, Card, CardContent, Typography, Button, Link, FormControlLabel, Checkbox, Container, TextField,ThemeProvider,createTheme } from '@mui/material';
+import { Box, Grid, Card, CardContent, Typography, Button, Link, FormControlLabel, Checkbox, Container, TextField, ThemeProvider, createTheme } from '@mui/material';
 import Menu from "../components/Header"
 import styles from "./home.module.css"
 import { useState } from 'react';
+import { API_BASE } from "../constants"
+import MovieTable from '../components/MovieTable';
 
-// Your form component (replace with actual form fields)
-const MyForm = () => {
-  // Implement your form logic here
-  return (
-    <Container component="main" maxWidth="xs">
-      {/* <CssBaseline /> */}
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <LockOutlinedIcon />
-      </Avatar> */}
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <Box component="form" onSubmit={null} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    </Container>
-  );
-};
-
-// Sample data for the cards (replace with actual data)
-const cardData = [
-  { id: 1, title: 'Card 1', content: 'Some data for Card 1' },
-  { id: 2, title: 'Card 2', content: 'Some data for Card 2' },
-  // Add more cards as needed
-];
-const theme = createTheme({
-  palette: {
-      type: 'dark',
-  },
-})
-const handleSubmit= async (e)=>{
-  e.preventDefault()
-
-  try {
-    const form = e.target;
-    const response = await fetch(form.getAttribute("action"), {
-      method: form.method,
-      body: new FormData(form),
-      credentials: "include",
-    });
-    const data = await response.json();
-  } catch (err) {
-    console.log("Error:" + err);
-  }
-  // const response = await fetch(url,{})
-
-}
 const AddMovie = () => {
-  const [name,setName] =useState("")
-  const [year,setYear] = useState("")
-  const [results,setResults] = useState([])
-  const [choices,setChoices] = useState([])
+  const [name, setName] = useState("")
+  const [year, setYear] = useState("")
+  const [results, setResults] = useState([])
+  const [choices, setChoices] = useState([])
+  // console.log(name,year)
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // console.log("sent")
+    try {
+      const form = e.currentTarget;
+      const body = {
+        "name":name,
+        "year":year
+      }
+      const response = await fetch(form.getAttribute("action"), {
+        method: form.method,
+        body: JSON.stringify(body),
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setResults(data)
+      console.log(data)
+    } catch (err) {
+      console.log("Error:" + err);
+    }
+    // if (data.messages) setMessages(data.messages);
+    // navigate(-1);  // const response = await fetch(url,{})
+  
+  }
 
+  const handleSelection= async (selected,setSelected)=>{
+    console.log(selected)
+    try {
+      const post = await fetch("/api/home/addMovie", {
+        method: "POST",
+        body: JSON.stringify(selected),
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      setResults([])
+      const response = await post.json();
+      setSelected([])
+      console.log(response)
+    } catch (err) {
+      console.log("Error:" + err);
+    }
+
+
+  }
 
   return (
-    <div className={styles.container}>
+    <>
+    <Box component={"header"} className={styles.container}>
       <Menu add="add" />
-      <div className={styles["modal-body"]}>
+    </Box>
+    <Grid container justifyContent={"center"} flexDirection={"column"} alignContent={"center"} margin={"0 auto"} maxWidth={1220}>
+      <Grid item flex alignContent={{md: "row", sm: "column"}}>
         <span style={{
-          color:"#f7f7ed",
+          color: "#f7f7ed",
           display: "flex",
           justifyContent: "center",
           margin: "20px 0 0 0"
-          }}>**Tip: Including the release year is helpful when dealing with a movie that has sequels or has been
+        }}>**Tip: Including the release year is helpful when dealing with a movie that has sequels or has been
           remade**</span>
-        <form action="/api/home/movieQuery" method="POST"
-        style={{
-          color:"#f7f7ed",
-          display: "flex",
-          justifyContent: "center",
-          marginTop:15,
-          alignItems:"baseline"
-        }}
-        encType="multipart/form-data"
-        onSubmit={handleSubmit}
+        <form
+          action="/api/home/movieQuery"
+          encType="multipart/form-data"
+          method="POST"
+          onSubmit={handleSubmit}
+          style={{
+            color: "#f7f7ed",
+            display: "flex",
+            justifyContent: "center",
+            marginTop: 15,
+            alignItems: "baseline"
+          }}
         >
-          {/* <input type="text" placeholder="Movie Name" name="name" id="name" /> */}
-          {/* <TextField id="filled-basic" label="Filled" variant="filled" /> */}
-
-          {/* <input type="number" placeholder="Release Year (optional)" name="year" id="year" /> */}
-          <div class="form__group field">
-  <input type="input" class="form__field" placeholder="Name" name="name" id='name' required style={{marginRight:20}} onChange={(e)=>setName(e.target.value)} value={name} />
-  <label for="name" class="form__label" >Name</label>
-</div>
-          <div class="form__group field">
-  <input type="input" class="form__field" placeholder="Year" name="year" id='year' onChange={(e)=>setYear(e.target.value)} value={year}/>
-  <label for="year" class="form__label">Year (optional)</label>
-</div>
-
-          {/* <input type="input" class="form__field" placeholder="Year" name="year" id='year' required />
-  <label for="year" class="form__label">Name</label> */}
-          {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" InputLabelProps={{className: "textField__text"}} inputProps={{className:"inputColor"}} /> */}
-          <Button sx={{height:35}} variant="contained" size="small" type='submit'>Submit</Button>
-
-          {/* <input type="submit" id="submitMovie" value="Submit" className={styles.btn + " " + styles["btn-primary"]} /> */}
+          <div className="form__group field">
+            <input
+              type="input"
+              className="form__field"
+              placeholder="Name"
+              name="name"
+              id='name'
+              required
+              style={{ marginRight: 20 }}
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+            />
+            <label htmlFor="name" className="form__label" >Name</label>
+          </div>
+          <div className="form__group field">
+            <input type="text" min="1900" max="2099" className="form__field" placeholder="Year" name="year" id='year' onChange={(e) => setYear(e.target.value)} value={year} />
+            <label htmlFor="year" className="form__label">Year (optional)</label>
+          </div>
+          <Button sx={{ height: 35 }} variant="contained" size="small" type="submit">Submit</Button>
         </form>
-      </div>
-    </div>
+      </Grid>
+      <MovieTable data={results} handleSelection={handleSelection} style={{width: 800}} />
+    </Grid>
+    </>
   );
 };
 
