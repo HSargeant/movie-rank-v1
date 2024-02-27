@@ -5,8 +5,6 @@ module.exports = {
     getHomepage: async (req, res) => {
         try {
             const movies = await Movies.find().lean().sort({ likes: -1 })
-                .populate('userId')
-            // res.render('home.ejs', { movie: movies, user: req.user })
             res.json(movies)
         } catch (err) {
             console.log(err)
@@ -26,58 +24,11 @@ module.exports = {
                         $set: { [`addedMovies.${newEntry._id}`]: true, [`likedMovies.${newEntry._id}`]: true }
                     })
             }
-            // console.log(result)
             console.log('Movie/s Added')
             res.sendStatus(201)
-
-
         } catch (error) {
             console.error(error)
-
         }
-        // res.send({ "done": true })
-        // if (!req.body.name) {
-        //     res.redirect('/home')
-        //     return
-        // }
-        // let movieName = req.body.name.toLowerCase().trim()
-        // let year = req.body.year.trim()
-        //get api data
-        // try {
-        //     const apikey = process.env.APIKEY
-        //     const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${movieName}&year=${year}`)
-        //     const data = await response.json()
-        //     if (data.total_results == 0) {
-        //         res.redirect('/home')
-        //         return
-        //     }
-        //     const path = `https://image.tmdb.org/t/p/original${data.results[0].poster_path}` || 'https://skydomepictures.com/wp-content/uploads/2018/08/movie-poster-coming-soon-2.png'
-
-        //     //check if exist
-        //     const check = await Movies.find({ name: data.results[0].original_title })
-        //     if (check.length) {
-        //         res.redirect('/home')
-        //         return
-        //     }
-        //send to db
-        // const newEntry = await Movies.create({
-        //     name: data.results[0].original_title,
-        //     image: path,
-        //     year: data.results[0].release_date.split("-")[0],
-        //     userId: req.user.id,
-        //     likes: 1
-        // })
-        //     Movies.create()
-        //     await User.findOneAndUpdate({ _id: req.user.id },
-        //         {
-        //             $set: { [`addedMovies.${newEntry._id}`]: true, [`likedMovies.${newEntry._id}`]: true }
-        //         })
-        //     console.log('Movie Added')
-        //     res.sendStatus(201)
-        // } catch (error) {
-        //     console.log(error)
-        // }
-
     },
     addLike: async (req, res) => {
         try {
@@ -107,43 +58,25 @@ module.exports = {
 
             await Movies.findOneAndUpdate({ _id: req.params.id }, { $inc: { likes: -1 }, })
             await user.updateOne({ $unset: { [`likedMovies.${req.params.id}`]: true } })
-            // const newArray = moviesArray.likedMovies.filter(x=>x.toString()!==currentMovie._id.toString())
-            // await moviesArray.update({$set:{likedMovies: newArray }})
-
-            // res.redirect("back")
             console.log('removed like')
             res.sendStatus(200)
         } catch (err) {
             console.log(err)
         }
-
     },
-    // deleteMovie: async (req,res)=>{
-    //         try{
-    //             await Movies.findOneAndDelete({_id:req.body.reviewId})
-    //             console.log('Deleted Checkin')
-    //             res.json('Deleted It')
-    //         }catch(err){
-    //             console.log(err)
-    //         }
-
-    // }
     movieQuery: async (req, res) => {
-        // console.log(req.body)
-        // console.log(typeof req.body)
-        // console.log(req.body["fff"])
         let { name, year } = req.body
-        console.log(name, year)
         name = name.toLowerCase().trim()
-        year = year.trim()
-        // res.send({"here":"ttt"})
+        if (year) {
+            year = year.trim()
+            const check = !isNaN(+year) && +year / 1000 || 0.5;
+            if (check < 1 || check >= 10 || +year < 1800 || + year > new Date().getFullYear()) { year = "" }
+        }
         // //get api data
         try {
             const apikey = process.env.APIKEY
             const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${name}&year=${year}`)
             const data = await response.json()
-            console.log("asdfasf")
-            console.log(data)
             if (data.total_results == 0) {
                 res.redirect('/home')
                 return
@@ -151,7 +84,7 @@ module.exports = {
             const results = []
             for (let movie of data.results) {
                 const check = await Movies.find({ name: movie.original_title })
-                if (!check.length) {
+                if (!check.length && movie.adult !=true) {
                     let obj = {
                         "name": movie.original_title,
                         "year": movie.release_date.split("-")[0],

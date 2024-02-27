@@ -1,6 +1,5 @@
 const Movies = require('../models/movies')
 const User = require('../models/user')
-// const fetch = require('node-fetch')
 
 module.exports = {
     getProfile: async (req,res)=>{
@@ -16,11 +15,9 @@ module.exports = {
             // }
             // const uniqueIds = [...new Set(ids)]
             const allMovies = await Movies.find({ '_id': { $in: ids } }).lean().sort({likes:-1});
-            // res.render('profile.ejs', {movie: allMovies, user: req.user})
             res.send(allMovies)
         }catch(err){
             console.log(err)
         }
     },
-//     
 }

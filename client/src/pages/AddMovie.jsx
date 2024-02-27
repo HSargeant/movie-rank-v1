@@ -1,25 +1,28 @@
 import { Box, Grid, Card, CardContent, Typography, Button, Link, FormControlLabel, Checkbox, Container, TextField, ThemeProvider, createTheme } from '@mui/material';
-import Menu from "../components/Header"
+import Header from "../components/Header"
 import styles from "./home.module.css"
 import { useState } from 'react';
 import { API_BASE } from "../constants"
 import MovieTable from '../components/MovieTable';
-
+const res = [
+  { "id": 1, "name": 22, "image": 444, "year": 2022 },
+  { "id": 2, "name": 22, "image": 444, "year": 2022 },
+  { "id": 3, "name": 22, "image": 444, "year": 2022 },
+]
 const AddMovie = () => {
   const [name, setName] = useState("")
   const [year, setYear] = useState("")
   const [results, setResults] = useState([])
-  const [choices, setChoices] = useState([])
-  // console.log(name,year)
-  
+  const [postSuccess, setPostSuccess] = useState("")
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("sent")
     try {
       const form = e.currentTarget;
       const body = {
-        "name":name,
-        "year":year
+        "name": name,
+        "year": year
       }
       const response = await fetch(form.getAttribute("action"), {
         method: form.method,
@@ -37,11 +40,10 @@ const AddMovie = () => {
     }
     // if (data.messages) setMessages(data.messages);
     // navigate(-1);  // const response = await fetch(url,{})
-  
+
   }
 
-  const handleSelection= async (selected,setSelected)=>{
-    console.log(selected)
+  const handleSelection = async (selected, setSelected, setPage) => {
     try {
       const post = await fetch("/api/home/addMovie", {
         method: "POST",
@@ -51,68 +53,68 @@ const AddMovie = () => {
           'Content-Type': 'application/json',
         },
       });
+      setPage(0)
       setResults([])
-      const response = await post.json();
+      const response = await post.text();
+      setPostSuccess(response)
       setSelected([])
       console.log(response)
     } catch (err) {
       console.log("Error:" + err);
     }
-
-
   }
 
   return (
-    <>
-    <Box component={"header"} className={styles.container}>
-      <Menu add="add" />
-    </Box>
-    <Grid container justifyContent={"center"} flexDirection={"column"} alignContent={"center"} margin={"0 auto"} maxWidth={1220}>
-      <Grid item flex alignContent={{md: "row", sm: "column"}}>
-        <span style={{
-          color: "#f7f7ed",
-          display: "flex",
-          justifyContent: "center",
-          margin: "20px 0 0 0"
-        }}>**Tip: Including the release year is helpful when dealing with a movie that has sequels or has been
-          remade**</span>
-        <form
-          action="/api/home/movieQuery"
-          encType="multipart/form-data"
-          method="POST"
-          onSubmit={handleSubmit}
-          style={{
+    <div className={styles.container}>
+      <Header add="add" />
+      <Grid container  flexDirection={"column"} alignContent={"center"}  >
+          <Box style={{
+            component:"p",
             color: "#f7f7ed",
             display: "flex",
             justifyContent: "center",
-            marginTop: 15,
-            alignItems: "baseline"
-          }}
-        >
-          <div className="form__group field">
-            <input
-              type="input"
-              className="form__field"
-              placeholder="Name"
-              name="name"
-              id='name'
-              required
-              style={{ marginRight: 20 }}
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-            />
-            <label htmlFor="name" className="form__label" >Name</label>
-          </div>
-          <div className="form__group field">
-            <input type="text" min="1900" max="2099" className="form__field" placeholder="Year" name="year" id='year' onChange={(e) => setYear(e.target.value)} value={year} />
-            <label htmlFor="year" className="form__label">Year (optional)</label>
-          </div>
-          <Button sx={{ height: 35 }} variant="contained" size="small" type="submit">Submit</Button>
-        </form>
+            margin: "20px 0 0 0",
+          }}>**Tip: Including the release year is helpful to narrow responses**
+          </Box>
+          <Box
+            component={"form"}
+            action="/api/home/movieQuery"
+            encType="multipart/form-data"
+            method="POST"
+            onSubmit={handleSubmit}
+            sx={{
+              color: "#f7f7ed",
+              display: "flex",
+              justifyContent: "center",
+              marginTop: 2,
+              marginBottom: 2,
+              alignItems: { xs: "center", sm: "baseline" },
+              flexDirection: { xs: "column", sm: "row" },
+            }}
+          >
+            <div className="form__group field" style={{ marginRight: 10  }}>
+              <input
+                type="input"
+                className="form__field"
+                placeholder="Name"
+                name="name"
+                id='name'
+                required
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+              />
+              <label htmlFor="name" className="form__label" >Name</label>
+            </div>
+            <div className="form__group field">
+              <input type="text" min="1900" max="2099" className="form__field" placeholder="Year" name="year" id='year' onChange={(e) => setYear(e.target.value)} value={year} />
+              <label htmlFor="year" className="form__label">Year (optional)</label>
+            </div>
+            <Button sx={{ height: 35, marginTop: 2, marginLeft: 1 }} variant="contained" size="small" type="submit">Submit</Button>
+          </Box>
+        <MovieTable data={results} handleSelection={handleSelection} style={{ width: 800 }} />
+        {postSuccess && <div style={{ color: "#eee" }}>Movie(s) Added</div>}
       </Grid>
-      <MovieTable data={results} handleSelection={handleSelection} style={{width: 800}} />
-    </Grid>
-    </>
+    </div>
   );
 };
 

@@ -49,7 +49,7 @@ export default function Profile() {
         <h1 className={styles.hide}>Movie Rank</h1>
         <Header profile="profile" />
         <section style={{ color: "#eee" }}>
-          <h1>{user.displayName}'s Top Movies</h1>
+          <h1>{user.firstName}'s Top Movies</h1>
         </section>
         <section>
           <div style={{
@@ -68,10 +68,9 @@ export default function Profile() {
   return (
     <div className={styles.container}>
       <h1 className={styles.hide}>Movie Rank</h1>
-      <MyAppBar profile="profile" />
-      <LogoImage />
+      <Header profile="profile" />
       <section style={{ color: "#eee" }}>
-        <h1>{user.displayName}'s Top Movies</h1>
+        <h1>{user.firstName}'s Top Movies</h1>
       </section>
       <SearchBar />
       <section className={styles.cards}>

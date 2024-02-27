@@ -36,12 +36,12 @@ body {
 
 .form__field {
   font-family: inherit;
-  /* width: 100%; */
+  width: 200px;
   border: 0;
   border-bottom: 2px solid #9b9b9b;
   outline: 0;
   font-size: 1.3rem;
-  color: #fff;
+  color: #eee;
   padding: 7px 0;
   background: transparent;
   transition: border-color 0.2s;
@@ -73,14 +73,14 @@ body {
     display: block;
     transition: 0.2s;
     font-size: 1rem;
-    color: #11998e;
+    color: #fbffff;
     font-weight:700;    
   }
   padding-bottom: 6px;  
-  font-weight: 700;
+  font-weight: 500;
   border-width: 3px;
-  border-image: linear-gradient(to right, #11998e,#38ef7d);
-  border-image-slice: 1;
+  border-color: #EEE;
+
 }
 /* reset input */
 .form__field{

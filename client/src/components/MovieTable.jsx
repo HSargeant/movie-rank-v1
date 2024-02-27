@@ -24,7 +24,25 @@ import { visuallyHidden } from '@mui/utils';
 import Modal from '@mui/material/Modal';
 import ImageModal from './ImageModal';
 import { Button } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import styles from "../pages/home.module.css"
+import {Grid} from '@mui/material';
 
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#1976D2', // Your desired primary color
+    },
+    background: {
+      default: '#333', // Dark background color
+    },
+    text: {
+      primary: '#EEEEEE', // Light text color
+    },
+  },
+});
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -136,7 +154,7 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { selected, setSelected,handleSelection } = props;
+  const { selected, setSelected,handleSelection, setPage } = props;
 
   return (
     <Toolbar
@@ -152,7 +170,7 @@ function EnhancedTableToolbar(props) {
       {selected?.length > 0 ? (
         <Typography
           sx={{ flex: '1 1 100%' }}
-          color="inherit"
+          color="#EEEEEE"
           variant="subtitle1"
           component="div"
         >
@@ -164,8 +182,9 @@ function EnhancedTableToolbar(props) {
           variant="h6"
           id="tableTitle"
           component="div"
+          color={"#EEE"}
         >
-          Nutrition
+          Movie List
         </Typography>
       )}
 
@@ -174,7 +193,7 @@ function EnhancedTableToolbar(props) {
         <Tooltip title="Add Selection">
             {/* add movie */}
           {/* <IconButton> */}
-          <Button variant="contained" onClick={()=>handleSelection(selected,setSelected)}>add</Button>
+          <Button variant="contained" onClick={()=>handleSelection(selected,setSelected, setPage)}>add</Button>
           {/* </IconButton> */}
         </Tooltip>
         </>
@@ -259,12 +278,16 @@ export default function MovieTable({data,handleSelection}) {
   );
 
   return (
-    data.length&&(<Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar selected={selected} handleSelection={handleSelection} setSelected={setSelected} />
+    
+    data.length !=0 && (
+      <ThemeProvider theme={darkTheme}>
+
+    <Grid>
+      {/* <Paper sx={{ width: '100%', mb: 2 }}> */}
+        <EnhancedTableToolbar selected={selected} handleSelection={handleSelection} setSelected={setSelected} setPage={setPage} />
         <TableContainer>
           <Table
-            sx={{ minWidth: 750 }}
+            // sx={{ maxWidth: 750 }}
             aria-labelledby="tableTitle"
             size='small'
           >
@@ -306,6 +329,7 @@ export default function MovieTable({data,handleSelection}) {
                       id={labelId}
                       scope="row"
                       padding="none"
+                      sx={{fontSize:{xs:"0.75em"}}}
                     >
                       {row.name}
                     </TableCell>
@@ -337,7 +361,8 @@ export default function MovieTable({data,handleSelection}) {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </Paper>
-    </Box>)
+      {/* </Paper> */}
+    </Grid>
+    </ThemeProvider>)
   );
 }

@@ -18,7 +18,6 @@ module.exports = function (passport) {
         addedMovies: new Map(),
         likedMovies: new Map()
       }
-      console.log("------------",newUser)
 
       try {
         let user = await User.findOne({ googleId: profile.id })
@@ -27,11 +26,6 @@ module.exports = function (passport) {
           done(null, user)
         } else {
           user = await User.create(newUser)
-          // user = await User.findOne({ googleId: profile.id })
-          // user.addedMovies={}
-          // user.likedMovies = {}
-          // await user.save()
-          console.log("done",user)
           done(null, user)
         }
       } catch (err) {
