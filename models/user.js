@@ -13,20 +13,17 @@ const GoogleUserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  lastName: {
-    type: String,
-    required: true,
-  },
   image: {
     type: String,
   },
-  movies:{
-    type:Array
+  likedMovies: {
+    type: Map,
+    of: Boolean
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  }
-})
+  addedMovies: {
+    type:Map,
+    of: Boolean
+  },
+}, { timestamps: true })
 
 module.exports = mongoose.model('G-User', GoogleUserSchema)

@@ -1,0 +1,349 @@
+
+a {
+    cursor: pointer;
+}
+
+.light,
+.liked.light {
+    color: #2a2a2a;
+}
+
+a {
+    color: #eee;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a.light {
+    color: #2a2a2a
+}
+
+#footer a {
+    border-bottom: #eee dotted 1px;
+    font-size: 1.05em;
+
+}
+
+#footer a:hover {
+    border-bottom: #eee solid 1px;
+    font-size: 1.07em;
+}
+
+a:hover {
+    font-weight: bold;
+    border-bottom: #eee solid 1px;
+
+}
+
+a.light:hover {
+    font-weight: bold;
+    border-bottom: #2a2a2a solid 1px;
+
+}
+
+#footer a.light {
+    font-weight: bold;
+    border-bottom: #2a2a2a dotted 1px;
+
+}
+
+#footer a.light:hover {
+    font-weight: bold;
+    border-bottom: #2a2a2a solid 1px;
+    font-size: 1.128em;
+
+}
+
+.container {
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 250px;
+}
+
+header nav {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mainLogo {
+    width: 400px;
+}
+
+header nav ul {
+    display: flex;
+    align-items: left;
+    width: 600px;
+    justify-content: space-between;
+    padding: 1% 0;
+    list-style: none;
+    font-size: 1.1em;
+}
+
+.search {
+    height: 50px;
+}
+
+input[type="search"] {
+    display: block;
+    padding: 10px;
+    font-size: 20px;
+    border: 0;
+    border-radius: 5px;
+    width: 60%;
+    margin: 0 auto;
+    border-bottom: 1px #333 solid;
+    background-color: transparent;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 1rem;
+    gap: 1rem;
+}
+
+.card {
+    height: auto;
+}
+
+.card img {
+    width: 100%;
+}
+
+.card li {
+    list-style: none;
+    padding-bottom: 5px;
+}
+
+.card h2 {
+    font-size: 18px;
+
+}
+
+.docImg {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+}
+
+.fa-thumbs-up,
+.fa-trash,
+.fa-sun,
+.fa-moon {
+    cursor: pointer;
+}
+
+footer {
+    margin-top: 25px;
+    padding: 25px 0;
+    width: 100%;
+    text-align: center;
+}
+
+footer a {
+    margin-right: 1em;
+}
+
+footer.light a {
+    color: #333;
+}
+
+.count {
+    display: block;
+    position: relative;
+    top: 20px;
+    background-color: black;
+    height: 20px;
+    width: 25px;
+    text-align: center;
+    color: #f7f7ed;
+}
+
+.count.light {
+    color: black;
+    background-color: #f7f7ed;
+}
+
+.count.longCount {
+    width: 40px;
+}
+
+span.count.first-place {
+    background-color: gold;
+    color: black;
+
+}
+
+span.count.second-place {
+    background-color: #c0c0c0;
+    color: black;
+
+}
+
+span.count.third-place {
+    background-color: #cd7F32;
+    color: black;
+}
+
+.hide {
+    display: none !important;
+}
+
+.aboutMenu:hover,
+.addLink:hover {
+    border-bottom: #f7f7ed solid 1px;
+}
+
+.aboutMenu.light:hover,
+.addLink.light:hover {
+    border-bottom: #2a2a2a solid 1px;
+}
+
+.card .longName {
+    font-size: 1em;
+}
+
+.dark-mode {
+    background-color: #222;
+    color: #f7f7ed;
+}
+
+.dark-mode input[type="search"] {
+    color: #f7f7ed;
+    border-bottom: #f7f7ed 1px solid;
+
+}
+
+.popUpSection h3 {
+    font-size: 1.8em;
+    padding: 10px;
+}
+
+@media (max-width: 1000px) {
+    .card h2 {
+        font-size: 1em;
+    }
+
+    .card .longName {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 950px) {
+
+    .card .longName {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 776px) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card .longName {
+        font-size: 0.75em;
+    }
+
+}
+
+@media (max-width: 775px) {
+
+
+
+}
+
+@media (max-width: 550px) {
+
+
+}
+
+@media (max-width: 480px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+        font-size: 1em;
+    }
+
+    .mainLogo {
+        width: 300px;
+    }
+
+    .card .longName {
+        font-size: 0.85em;
+    }
+
+    .addMovie input+input {
+        width: auto;
+    }
+
+    #submitMovie {
+        margin-top: 3px;
+    }
+
+}
+
+@media (max-width: 420px) {
+
+    .card .longName {
+        font-size: 0.75em;
+    }
+
+}
+
+@media (max-width: 380px) {
+    footer {
+        padding: 40px 0;
+    }
+
+    ul a {
+        font-size: 0.85em;
+
+    }
+
+}
+
+
+.fontIcons {
+    padding-right: 10px;
+}
+
+.section {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: center;
+
+}
+
+.login-section {
+    padding-top: 3rem;
+    padding-bottom: 10rem;
+
+}
+
+.greeting {
+    font-size: 1.4em;
+    align-self: center;
+}
+
+button.likeBtn {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+}
