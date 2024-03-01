@@ -1,6 +1,5 @@
 import { useLayoutEffect } from "react";
 import logo from "../logo.png"
-import { API_BASE } from "../constants"
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -54,7 +53,7 @@ export default function Index() {
         Help Rank your favorite movies and create a collection of your personal favorites
       </Typography>
       {/* Google Login Button */}
-      <a href={API_BASE + "/auth/google"}>
+      <a href="/auth/google">
         <Button
           variant="contained"
           color="error"
