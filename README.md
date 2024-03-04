@@ -15,6 +15,4 @@ I used node/express to build the API first to handle the request to add movies a
 
 As the site is an ongoing project to allow users to create their own personalized collection of favorite movies, in additonation to the community rankings, that they can share with frieds on social media etc..
 
-## Lessons Learned:
 
-I learned to be very thoughtful and patient in testing your apps for proper performace across various browsers and devices. 
