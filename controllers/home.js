@@ -35,7 +35,7 @@ module.exports = {
             const checkMovie = await Movies.findOne({ _id: req.params.id })
             const user = await User.findOne({ _id: req.user.id }).lean()
 
-            if (!user.likedMovies[checkMovie._id]) {
+            if (!user.likedMovies.get(checkMovie._id)) {
                 await checkMovie.updateOne({ $inc: { likes: 1 }, })
                 await User.findOneAndUpdate({ _id: req.user.id },
                     { $set: { [`likedMovies.${checkMovie._id}`]: true } }
@@ -51,13 +51,11 @@ module.exports = {
     removeLike: async (req, res) => {
         try {
             const user = await User.findOne({ _id: req.user.id })
-            if (user.addedMovies[req.params.id]) {
-                res.redirect("back")
-                return
-            }
-
-            await Movies.findOneAndUpdate({ _id: req.params.id }, { $inc: { likes: -1 }, })
+            await Movies.findOneAndUpdate({ _id: req.params.id,likes:{$gte: 1} }, { $inc: { likes: -1 }, })
             await user.updateOne({ $unset: { [`likedMovies.${req.params.id}`]: true } })
+            if(user.addedMovies.get(req.params.id)){
+                await user.updateOne({ $unset: { [`addedMovies.${req.params.id}`]: true } })
+            }
             console.log('removed like')
             res.sendStatus(200)
         } catch (err) {
@@ -78,13 +76,12 @@ module.exports = {
             const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${name}&year=${year}`)
             const data = await response.json()
             if (data.total_results == 0) {
-                res.redirect('/home')
-                return
+                res.send([])
             }
             const results = []
             for (let movie of data.results) {
                 const check = await Movies.find({ name: movie.original_title })
-                if (!check.length && movie.adult !=true) {
+                if (check.length != 0 && movie.adult == false) {
                     let obj = {
                         "name": movie.original_title,
                         "year": movie.release_date.split("-")[0],
