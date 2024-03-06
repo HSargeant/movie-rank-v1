@@ -2,11 +2,14 @@ const Movies = require('../models/movies')
 const User = require('../models/user')
 
 module.exports = {
-    getProfile: async (req,res)=>{
-        try{
-            const user = await User.findOne({_id: req.user.id}).lean()
-            const ids=[]
-            for(let id in user.likedMovies ){
+    getProfile: async (req, res) => {
+        if (!req.user) {
+            res.send({ "user": false })
+        }
+        try {
+            const user = await User.findOne({ _id: req.user.id }).lean()
+            const ids = []
+            for (let id in user.likedMovies) {
                 ids.push(id)
             }
             // //if we want added and liked movies on page
@@ -14,9 +17,9 @@ module.exports = {
             //     ids.push(id)
             // }
             // const uniqueIds = [...new Set(ids)]
-            const allMovies = await Movies.find({ '_id': { $in: ids } }).lean().sort({likes:-1});
-            res.send(allMovies)
-        }catch(err){
+            const allMovies = await Movies.find({ '_id': { $in: ids } }).lean().sort({ likes: -1 });
+            res.send({ "movies": allMovies, "user": req.user })
+        } catch (err) {
             console.log(err)
         }
     },

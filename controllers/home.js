@@ -3,9 +3,12 @@ const User = require('../models/user')
 
 module.exports = {
     getHomepage: async (req, res) => {
+        if (!req.user) {
+            res.send({ "user": false })
+        }
         try {
             const movies = await Movies.find().lean().sort({ likes: -1 })
-            res.json(movies)
+            res.send({ "movies": movies, "user": req.user })
         } catch (err) {
             console.log(err)
         }
@@ -33,31 +36,28 @@ module.exports = {
     addLike: async (req, res) => {
         try {
             const checkMovie = await Movies.findOne({ _id: req.params.id })
-            const user = await User.findOne({ _id: req.user.id }).lean()
-
+            const user = await User.findOne({ _id: req.user.id })
             if (!user.likedMovies.get(checkMovie._id)) {
                 await checkMovie.updateOne({ $inc: { likes: 1 }, })
-                await User.findOneAndUpdate({ _id: req.user.id },
-                    { $set: { [`likedMovies.${checkMovie._id}`]: true } }
-                )
+                await user.updateOne({ $set: { [`likedMovies.${checkMovie._id}`]: true } })
                 console.log('added like')
                 res.send({ "status": "success" })
             }
         } catch (err) {
             console.log(err)
-            res.sendStatus(200)
+            res.status(202).end()
         }
     },
     removeLike: async (req, res) => {
         try {
             const user = await User.findOne({ _id: req.user.id })
-            await Movies.findOneAndUpdate({ _id: req.params.id,likes:{$gte: 1} }, { $inc: { likes: -1 }, })
+            await Movies.findOneAndUpdate({ _id: req.params.id, likes: { $gte: 1 } }, { $inc: { likes: -1 }, })
             await user.updateOne({ $unset: { [`likedMovies.${req.params.id}`]: true } })
-            if(user.addedMovies.get(req.params.id)){
+            if (user.addedMovies.get(req.params.id)) {
                 await user.updateOne({ $unset: { [`addedMovies.${req.params.id}`]: true } })
             }
             console.log('removed like')
-            res.sendStatus(200)
+            res.status(202).end()
         } catch (err) {
             console.log(err)
         }

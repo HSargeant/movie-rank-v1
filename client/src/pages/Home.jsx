@@ -11,19 +11,19 @@ export default function Home() {
   const getMovies = async () => {
     const res = await fetch("/api/home")
     const data = await res.json()
-    console.log(data)
-    return data
+    return data.movies
   }
-  const { isPending, error, data: movies, isFetching,refetch, isLoading} = useQuery({
+  const { isPending, data: movies, refetch } = useQuery({
     queryKey: ['movies'],
     queryFn: getMovies,
     refetchOnWindowFocus: false,
     initialData: loaderData,
+    staleTime: 1000,
   })
 
-  if (isPending ) return (
+  if (isPending) return (
     <div className={styles.container}>
-      <Header/>
+      <Header />
       <h1 className={styles.hide}>Movie Rank</h1>
       <section>
         <div style={{
@@ -36,10 +36,9 @@ export default function Home() {
       </section>
     </div>
   )
-  console.log(user)
   return (
     <div className={styles.container}>
-      <Header/>
+      <Header />
       <h1 className={styles.hide}>Movie Rank</h1>
       <SearchBar />
       <section className={styles.cards}>

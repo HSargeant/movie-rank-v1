@@ -12,15 +12,14 @@ export default function Profile() {
   const getMovies = async () => {
     const res = await fetch("/api/profile")
     const data = await res.json()
-    console.log(data)
-    return data
+    return data.movies
   }
-  const { isPending, error, data: movies, isFetching,refetch } = useQuery({
+  const { isPending, data: movies, refetch } = useQuery({
     queryKey: ['profile-movies'],
     queryFn: getMovies,
     refetchOnWindowFocus: false,
-    initialData: loaderData
-
+    initialData: loaderData,
+    staleTime: 1000,
   })
 
   if (isPending) {

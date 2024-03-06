@@ -14,25 +14,19 @@ function MyCard({ movie, i, user, refetch }) {
   const likeButton = (movie) => {
     const [liked, setLiked] = useState(user?.likedMovies?.[movie._id]);
     const handleLikeClick = async () => {
-      console.log("clicked")
       if (liked) {
         if (movie.likes <= 0) return
-        console.log("unlike call")
         try {
-          const response = await fetch(`/api/home/removeLike/${movie._id}`, {
+          await fetch(`/api/home/removeLike/${movie._id}`, {
             method: "PUT",
             body: {},
             credentials: "include",
           });
-          // const data = await response.json();
           setLiked(false);
         } catch (error) {
           console.error(error)
         }
       } else {
-        console.log("like call")
-        // Add like (call your addLike function)
-        // Optimistically update the local state
         try {
           const response = await fetch(`/api/home/addLike/${movie._id}`, {
             method: "PUT",

@@ -17,7 +17,7 @@ export default function SearchBar() {
   }
 
   return (
-    <section className={[styles.search, styles["dark-mode"]].join(" ")} style={{ margin: "20px 0 0 0" }} z>
+    <section className={[styles.search, styles["dark-mode"]].join(" ")} style={{ margin: "20px 0 0 0" }}>
       <input id="search" type="search" placeholder="Search movie list" onKeyUp={filterCards} />
     </section>
   );
