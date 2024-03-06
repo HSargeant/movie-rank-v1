@@ -80,10 +80,10 @@ module.exports = {
             }
             const results = []
             for (let movie of data.results) {
-                const check = await Movies.find({ name: movie.original_title })
-                if (check.length != 0 && movie.adult == false) {
+                const check = await Movies.find({ name: movie.title })
+                if (check.length == 0 && movie.adult == false) {
                     let obj = {
-                        "name": movie.original_title,
+                        "name": movie.title,
                         "year": movie.release_date.split("-")[0],
                         "image": `https://image.tmdb.org/t/p/original${movie.poster_path}`,
                         "id": movie.id
