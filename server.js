@@ -24,7 +24,6 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-connectDB()
 // app.enable('trust proxy')
 
 app.use(express.static('client/dist'))
@@ -51,6 +50,8 @@ app.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/client/dist/index.html'));
 });
 
-app.listen(process.env.PORT || PORT,()=>{
-    console.log(`The server is running on port ${PORT}`)
+connectDB().then(()=>{
+  app.listen(process.env.PORT || PORT,()=>{
+      console.log(`The server is running on port ${PORT}`)
+  })
 })
