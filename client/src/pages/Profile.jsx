@@ -19,7 +19,7 @@ export default function Profile() {
     queryFn: getMovies,
     refetchOnWindowFocus: false,
     initialData: loaderData,
-    staleTime: 1000,
+    // staleTime: 1000,
   })
 
   if (isPending) {

@@ -25,45 +25,40 @@ export default function MyAppBar(props) {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }} >
-      <Typography variant="h6" sx={{ my: 2 }}>
-        Movie Rank
-      </Typography>
-      <Divider />
-      <List>
+  const MobileNavLinks= () =>{
+    if (props.profile) {
+      return (
         <ListItem disablePadding>
-          <ListItemButton to={"/profile"} element={RouterLink} sx={{ textAlign: 'center' }}>
-            <ListItemText primary="Your Top Movies" />
+          <ListItemButton to={"/home"} element={RouterLink} sx={{ textAlign: 'center' }}>
+            <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
+      )
+    }
+    if (props.add) {
+      return (
+        <>
         <ListItem disablePadding>
-          <ListItemButton sx={{ textAlign: 'center' }}>
-            <ListItemText primary="Add Your Favorite Movies" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton sx={{ textAlign: 'center' }}>
-            <ListItemText primary="About" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem element={RouterLink} disablePadding>
-          <ListItemButton sx={{ textAlign: 'center' }}>
-            <ListItemText primary="Logout" />
+          <ListItemButton to={"/home"} element={RouterLink} sx={{ textAlign: 'center' }}>
+            <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton to={"/logout"} element={RouterLink} sx={{ textAlign: 'center' }}>
-            <ListItemText primary="Logout" />
+          <ListItemButton to={"/profile"} element={RouterLink} sx={{ textAlign: 'center' }}>
+            <ListItemText primary="Your Movies" />
           </ListItemButton>
         </ListItem>
-      </List>
-    </Box>
-  );
-
-  const container = window !== undefined ? () => window().document.body : undefined;
-
+        </>
+      )
+    }
+    return (
+      <ListItem disablePadding>
+      <ListItemButton to={"/profile"} element={RouterLink} sx={{ textAlign: 'center' }}>
+        <ListItemText primary="Your Movies" />
+      </ListItemButton>
+    </ListItem>
+    )
+  }
   const NavLinks = () => {
     if (props.profile) {
       return (
@@ -99,6 +94,35 @@ export default function MyAppBar(props) {
 
     )
   }
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }} >
+      <Typography variant="h6" sx={{ my: 2 }}>
+        Movie Rank
+      </Typography>
+      <Divider />
+      <List>
+        <MobileNavLinks />
+        <ListItem disablePadding>
+          <ListItemButton to={"/add"} element={RouterLink} sx={{ textAlign: 'center' }}>
+            <ListItemText primary="Add Your Favorite Movies" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemText primary="About" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem element={RouterLink} disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemText primary="Logout" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </Box>
+  );
+
+  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <>
