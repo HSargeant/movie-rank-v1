@@ -1,4 +1,5 @@
 {
+  "type":"module",
   "name": "movierank-v1",
   "version": "1.0.0",
   "description": "Movie Rank is where people can help build of a list and help to rank everyones favorite movies.",

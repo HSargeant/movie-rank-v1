@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+import { Schema, model } from 'mongoose'
 
-const GoogleUserSchema = new mongoose.Schema({
+const GoogleUserSchema = new Schema({
   googleId: {
     type: String,
     required: true,
@@ -26,4 +26,4 @@ const GoogleUserSchema = new mongoose.Schema({
   },
 }, { timestamps: true })
 
-module.exports = mongoose.model('G-User', GoogleUserSchema)
+export default model('G-User', GoogleUserSchema)

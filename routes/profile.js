@@ -1,14 +1,14 @@
-const express = require('express')
-const router = express.Router()
-const profileController = require('../controllers/profile')
-const {ensureAuth, ensureGuest} = require('../middleware/authMiddleware')
+import { Router } from 'express'
+const router = Router()
+import { getProfile } from '../controllers/profile.js'
+import { ensureAuth, ensureGuest } from '../middleware/authMiddleware.js'
 
 
-router.get("/", ensureAuth,profileController.getProfile)
+router.get("/", ensureAuth,getProfile)
 
 // router.post("/addMovie",ensureAuth,homeController.addMovie)
 // router.put("/addLike/:id",ensureAuth,homeController.addLike)
 // router.put("/removeLike/:id",ensureAuth,homeController.removeLike)
 
-module.exports = router
+export default router
 

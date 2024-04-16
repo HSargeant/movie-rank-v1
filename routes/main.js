@@ -1,17 +1,17 @@
-const express = require('express')
-const router = express.Router()
-const authController = require('../controllers/auth') 
-const { ensureAuth,ensureGuest } = require('../middleware/authMiddleware')
-const passport = require('passport')
+import { Router } from 'express'
+const router = Router()
+import { logout, getUser } from '../controllers/auth.js' 
+import { ensureAuth, ensureGuest } from '../middleware/authMiddleware.js'
+import passport  from 'passport'
 
 router.get('/auth/google',passport.authenticate('google',{scope: ['profile']}))
 
-router.post('/api/logout', ensureAuth,authController.logout)
+router.post('/api/logout', ensureAuth,logout)
 
 router.get('/auth/google/callback',passport.authenticate('google',{failureRedirect:'/'}),(req, res)=>{
     console.log("user logged in")
     res.redirect('/home')
 })
-router.get("/api/user",authController.getUser )
+router.get("/api/user",getUser )
 
-module.exports = router
+export default router

@@ -1,16 +1,15 @@
-const express = require('express')
-const router = express.Router()
-const authController = require('../controllers/auth') 
-const homeController = require('../controllers/home')
-const {ensureAuth, ensureGuest} = require('../middleware/authMiddleware')
+import { Router } from 'express'
+const router = Router()
+import { getHomepage, addMovie, addLike, removeLike, movieQuery } from '../controllers/home.js'
+import { ensureAuth, ensureGuest } from '../middleware/authMiddleware.js'
 
 
-router.get("/", ensureAuth,homeController.getHomepage)
+router.get("/", ensureAuth,getHomepage)
 
-router.post("/addMovie",ensureAuth,homeController.addMovie)
-router.put("/addLike/:id",ensureAuth,homeController.addLike)
-router.put("/removeLike/:id",ensureAuth,homeController.removeLike)
-router.post("/movieQuery",ensureAuth,homeController.movieQuery)
+router.post("/addMovie",ensureAuth,addMovie)
+router.put("/addLike/:id",ensureAuth,addLike)
+router.put("/removeLike/:id",ensureAuth,removeLike)
+router.post("/movieQuery",ensureAuth,movieQuery)
 
-module.exports = router
+export default router
 

@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+import { Schema, model } from 'mongoose'
 
-const MoviesSchema = new mongoose.Schema({
+const MoviesSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -18,9 +18,9 @@ const MoviesSchema = new mongoose.Schema({
     default: 0,
   },
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "G-User"
   }
 },{ timestamps: true })
 
-module.exports = mongoose.model('Movies', MoviesSchema)
+export default model('Movies', MoviesSchema)

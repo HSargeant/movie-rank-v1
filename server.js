@@ -1,28 +1,32 @@
-const express = require("express")
+import express, { urlencoded, json } from "express";
 const app = express()
-const path = require('path')
-const logger = require("morgan");
-const cors = require('cors');
+import path from 'path';
+import logger from "morgan";
+import cors from 'cors';
 const PORT = 8500
-const passport = require('passport')
-const session = require('express-session')
-const mainRoutes = require('./routes/main')
-const homeRoutes = require('./routes/home')
-const profileRoutes = require('./routes/profile')
-const MongoStore = require('connect-mongo')
-const connectDB = require('./config/database')
-require('dotenv').config({path: './.env'})
+import passport from 'passport';
+import session from 'express-session';
+import mainRoutes from './routes/main.js';
+import homeRoutes from './routes/home.js';
+import profileRoutes from './routes/profile.js';
+import MongoStore from 'connect-mongo';
+import connectDB from './config/database.js';
+// require('dotenv').config({path: './.env'})
+import dotenv from 'dotenv'
+import passportConfig from "./config/passport.js"
+
+dotenv.config({ path: './.env' })
 
 //require pass config
-require('./config/passport')(passport)
-
+// require('./config/passport').default(passport)
+passportConfig(passport)
 app.use(logger("dev"));
 app.use(cors({
   origin: (origin, callback) => callback(null, true),
   credentials: true
 }));
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+app.use(urlencoded({ extended: true }))
+app.use(json())
 
 // app.enable('trust proxy')
 
@@ -47,6 +51,7 @@ app.use('/api/home', homeRoutes)
 app.use('/api/profile', profileRoutes)
 
 app.use('*', (req, res) => {
+    const __dirname = path.resolve();
     res.sendFile(path.join(__dirname, '/client/dist/index.html'));
 });
 
