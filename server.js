@@ -55,3 +55,19 @@ connectDB().then(()=>{
       console.log(`The server is running on port ${PORT}`)
   })
 })
+
+
+const makeRequest = async () => { 
+  try {
+      const url=process.env.NODE_ENV =="development" ? "http://localhost:8500/api/user" : "https://movierank.onrender.com/api/user"
+      const res = await fetch(url)
+      const data=  await res.text()
+
+    
+  } catch (error) {
+    console.log("ERROR: ",error)
+    
+  }
+}
+
+setInterval(makeRequest, 10*60*1000);
