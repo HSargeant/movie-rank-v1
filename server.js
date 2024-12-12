@@ -70,4 +70,4 @@ const makeRequest = async () => {
   }
 }
 
-setInterval(makeRequest, 10*60*1000);
+// setInterval(makeRequest, 14*60*1000);
