@@ -21,9 +21,13 @@ const GoogleUserSchema = new mongoose.Schema({
     of: Boolean
   },
   addedMovies: {
-    type:Map,
+    type: Map,
     of: Boolean
   },
+  votes: {
+    type: Number,
+    default: 0
+  }
 }, { timestamps: true })
 
 module.exports = mongoose.model('G-User', GoogleUserSchema)

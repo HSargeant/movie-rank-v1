@@ -17,10 +17,19 @@ const MoviesSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  rating: {
+    type: Number,
+    default: 1500
+  },
+  matchups: {
+    type: Number,
+    default: 0
+
+  },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "G-User"
   }
-},{ timestamps: true })
+}, { timestamps: true })
 
 module.exports = mongoose.model('Movies', MoviesSchema)
