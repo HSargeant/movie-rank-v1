@@ -1,4 +1,4 @@
-import { useState,useEffect,useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -26,7 +26,7 @@ import ImageModal from './ImageModal';
 import { Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styles from "../pages/home.module.css"
-import {Grid} from '@mui/material';
+import { Grid } from '@mui/material';
 
 
 const darkTheme = createTheme({
@@ -58,22 +58,6 @@ function getComparator(order, orderBy) {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
-function stableSort(array, comparator) {
-  const stabilizedThis = array?.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
 }
 
 const headCells = [
@@ -154,7 +138,7 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { selected, setSelected,handleSelection, setPage } = props;
+  const { selected, setSelected, handleSelection, setPage } = props;
 
   return (
     <Toolbar
@@ -189,13 +173,11 @@ function EnhancedTableToolbar(props) {
       )}
 
       {selected?.length > 0 && (
-          <>
-        <Tooltip title="Add Selection">
+        <>
+          <Tooltip title="Add Selection">
             {/* add movie */}
-          {/* <IconButton> */}
-          <Button variant="contained" onClick={()=>handleSelection(selected,setSelected, setPage)}>add</Button>
-          {/* </IconButton> */}
-        </Tooltip>
+            <Button variant="contained" onClick={() => handleSelection(selected, setSelected, setPage)}>add</Button>
+          </Tooltip>
         </>
       )}
     </Toolbar>
@@ -207,12 +189,12 @@ function EnhancedTableToolbar(props) {
 // };
 
 
-export default function MovieTable({data,handleSelection}) {
+export default function MovieTable({ data, handleSelection }) {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
 
   const handleRequestSort = (event, property) => {
@@ -231,7 +213,7 @@ export default function MovieTable({data,handleSelection}) {
   };
 
   const handleClick = (event, row) => {
-    const selectedIndex = selected.findIndex(item=>item.id===row.id);
+    const selectedIndex = selected.findIndex(item => item.id === row.id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
@@ -254,15 +236,17 @@ export default function MovieTable({data,handleSelection}) {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    if (event.target.value == -1) {
+      setRowsPerPage(parseInt(data?.length, 10));
+    } else setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-//   const handleChangeDense = (event) => {
-//     setDense(event.target.checked);
-//   };
+  //   const handleChangeDense = (event) => {
+  //     setDense(event.target.checked);
+  //   };
 
-  const isSelected = (row) => selected.findIndex(item=>item.id==row.id) !== -1;
+  const isSelected = (row) => selected.findIndex(item => item.id == row.id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -270,99 +254,98 @@ export default function MovieTable({data,handleSelection}) {
 
   const visibleRows = useMemo(
     () =>
-      stableSort(data, getComparator(order, orderBy)).slice(
+      data.slice().sort(getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [order, orderBy, page, rowsPerPage,data],
+    [order, orderBy, page, rowsPerPage, data],
   );
 
   return (
-    
-    data.length !=0 && (
+    data.length != 0 && (
       <ThemeProvider theme={darkTheme}>
+        <Grid sx={{
+          width: {xs: '100%',sm: '100%',md: '75%',lg: '75%'},
+        }}
+        >
+          <Paper sx={{ width: '100%', mb: 2 }}>
+            <EnhancedTableToolbar selected={selected} handleSelection={handleSelection} setSelected={setSelected} setPage={setPage} />
+            <TableContainer>
+              <Table
+                // sx={{ maxWidth: 750 }}
+                aria-labelledby="tableTitle"
+                size='small'
+              >
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onSelectAllClick={handleSelectAllClick}
+                  onRequestSort={handleRequestSort}
+                  rowCount={data.length}
+                />
+                <TableBody>
+                  {visibleRows.map((row, index) => {
+                    const isItemSelected = isSelected(row);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-    <Grid>
-      {/* <Paper sx={{ width: '100%', mb: 2 }}> */}
-        <EnhancedTableToolbar selected={selected} handleSelection={handleSelection} setSelected={setSelected} setPage={setPage} />
-        <TableContainer>
-          <Table
-            // sx={{ maxWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size='small'
-          >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={data.length}
-            />
-            <TableBody>
-              {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row);
-                const labelId = `enhanced-table-checkbox-${index}`;
-
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.id}
-                    selected={isItemSelected}
-                    sx={{ cursor: 'pointer' }}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          'aria-labelledby': labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                      sx={{fontSize:{xs:"0.75em"}}}
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, row)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.id}
+                        selected={isItemSelected}
+                        sx={{ cursor: 'pointer' }}
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            color="primary"
+                            checked={isItemSelected}
+                            inputProps={{
+                              'aria-labelledby': labelId,
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                          sx={{ fontSize: { xs: "0.75em" } }}
+                        >
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="right"><ImageModal poster={row.image} /></TableCell>
+                        <TableCell align="right">{row.year}</TableCell>
+                      </TableRow>
+                    );
+                  })}
+                  {emptyRows > 0 && (
+                    <TableRow
+                      style={{
+                        height: 33 * emptyRows,
+                      }}
                     >
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right"><ImageModal poster={row.image}/></TableCell>
-                    <TableCell align="right">{row.year}</TableCell>
-                    {/* <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell> */}
-                  </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: 33 * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      {/* </Paper> */}
-    </Grid>
-    </ThemeProvider>)
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 20, { value: data?.length || -1, label: 'All' }]}
+              component="div"
+              count={data.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </Grid>
+      </ThemeProvider>)
   );
 }
