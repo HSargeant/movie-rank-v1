@@ -49,6 +49,7 @@ app.use('/api/profile', profileRoutes)
 app.use('/api/rank', rankRoutes)
 
 app.use('*', (req, res) => {
+  console.log("no hitting")
   res.sendFile(path.join(__dirname, '/client/dist/index.html'));
 });
 

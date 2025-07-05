@@ -34,7 +34,6 @@ module.exports = {
         book1 = movies[randomIndex1];
         book2 = movies[randomIndex2];
       } while (book1._id === book2._id); // Ensure they are different
-
       res.json({ book1, book2 });
 
     } catch (error) {
