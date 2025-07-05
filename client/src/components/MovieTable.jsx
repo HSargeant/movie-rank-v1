@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -14,20 +14,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import Modal from '@mui/material/Modal';
 import ImageModal from './ImageModal';
 import { Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import styles from "../pages/home.module.css"
 import { Grid } from '@mui/material';
-
 
 const darkTheme = createTheme({
   palette: {
@@ -175,7 +167,6 @@ function EnhancedTableToolbar(props) {
       {selected?.length > 0 && (
         <>
           <Tooltip title="Add Selection">
-            {/* add movie */}
             <Button variant="contained" onClick={() => handleSelection(selected, setSelected, setPage)}>add</Button>
           </Tooltip>
         </>
@@ -183,11 +174,6 @@ function EnhancedTableToolbar(props) {
     </Toolbar>
   );
 }
-
-// EnhancedTableToolbar.propTypes = {
-//   numSelected: PropTypes.number.isRequired,
-// };
-
 
 export default function MovieTable({ data, handleSelection }) {
   const [order, setOrder] = useState('asc');
@@ -242,10 +228,6 @@ export default function MovieTable({ data, handleSelection }) {
     setPage(0);
   };
 
-  //   const handleChangeDense = (event) => {
-  //     setDense(event.target.checked);
-  //   };
-
   const isSelected = (row) => selected.findIndex(item => item.id == row.id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -265,7 +247,7 @@ export default function MovieTable({ data, handleSelection }) {
     data.length != 0 && (
       <ThemeProvider theme={darkTheme}>
         <Grid sx={{
-          width: {xs: '100%',sm: '100%',md: '75%',lg: '75%'},
+          width: { xs: '100%', sm: '100%', md: '75%', lg: '75%' },
         }}
         >
           <Paper sx={{ width: '100%', mb: 2 }}>
