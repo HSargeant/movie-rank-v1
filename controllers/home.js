@@ -8,6 +8,7 @@ module.exports = {
         }
         try {
             const movies = await Movies.find().lean().sort({ likes: -1 })
+            // const movies = await Movies.find().lean().sort({ rating: -1 }) // by rating when ready
             res.send({ "movies": movies, "user": req.user })
         } catch (err) {
             console.log(err)

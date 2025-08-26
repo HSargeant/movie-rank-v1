@@ -34,9 +34,8 @@ const AddMovie = () => {
       });
       const data = await response.json();
       setResults(data)
-      console.log(data)
     } catch (err) {
-      console.log("Error:" + err);
+      console.error("Error:" + err);
     }
     // if (data.messages) setMessages(data.messages);
     // navigate(-1);  // const response = await fetch(url,{})
